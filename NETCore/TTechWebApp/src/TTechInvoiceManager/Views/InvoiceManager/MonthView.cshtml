@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Month View";
+}
+
+<h4>@ViewData["Title"].</h4>
+<h5>@ViewData["Message"]</h5>
+
+<div class="container-fluid">
+    @model NTWebApp.Models.InvoiceManager.MonthViewPagerViewModel
+    <br />
+    <br />
+    <div class="row">
+        <table class="table table-striped">
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <span class="input-group-addon" style="width: 100px;" id="searchYear">Year: </span>
+                        @Html.DropDownListFor(m => m.Year, new SelectList(Model.YearsOpts), new { @class = "form-control", aria_describedby = "searchYear" })
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

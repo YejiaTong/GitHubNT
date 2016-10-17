@@ -1,0 +1,87 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<section>
+    @model NTWebApp.Models.InvoiceManager.AllExpenseViewModel
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th hidden>Expense Id</th>
+                        <th>Category</th>
+                        <th>Expense Name</th>
+                        <th>Cost</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Expenses.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-info" role="alert">
+                                    <p>...No item...</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @for (int i = 0; i < Model.Expenses.Count(); ++i)
+                        {
+                            <tr>
+                                <td hidden>@Html.HiddenFor(m => m.Expenses[i].ExpenseId)</td>
+                                <td>@Html.DisplayFor(m => m.Expenses[i].ExpenseCateg.ExpenseCategName, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                                <td>@Html.DisplayFor(m => m.Expenses[i].Name, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                                <td>@Html.DisplayFor(m => m.Expenses[i].Cost, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                                <td>@Html.DisplayFor(m => m.Expenses[i].Time, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                                <td>@Html.DisplayFor(m => m.Expenses[i].Address, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        @if (ViewData["WarningMessage"] != null)
+            {
+            <p class="bg-warning">@Html.Raw(@ViewData["WarningMessage"])</p>
+        }
+    </div>
+    <div class="row">
+        <nav aria-label="Search expense results pages">
+            <ul class="pager">
+                @if (ViewData["WarningMessage"] != null)
+                {
+                    <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+                }
+                else
+                {
+                    @if (Model.Pager.PageIndex == 1)
+                    {
+                        <li class="previous disabled"><a role="button"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    }
+                    else
+                    {
+                        <li class="previous"><a role="button" onclick="location.href='@Url.Action("AllExpense", "InvoiceManager", new { jsonConvertObject = Model.Pager.JsonConvertObject, pageIndex = Model.Pager.PageIndex - 1 })'"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    }
+                    @if (Model.Expenses.Count() < Model.Pager.PageSize)
+                    {
+                        <li class="next disabled"><a role="button">Next <span aria-hidden="true">&rarr;</span></a></li>
+                    }
+                    else
+                    {
+                        <li class="next"><a role="button" onclick="location.href='@Url.Action("AllExpense", "InvoiceManager", new { jsonConvertObject = Model.Pager.JsonConvertObject, pageIndex = Model.Pager.PageIndex + 1 })'">Next <span aria-hidden="true">&rarr;</span></a></li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
+</section>

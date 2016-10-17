@@ -1,0 +1,69 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Account";
+}
+
+<h4>@ViewData["Title"].</h4>
+<hr />
+
+@model NTWebApp.Models.Home.AccountViewModel
+@if (Model.UserId != 0)
+{
+    <div>
+        <p class="bg-success"><strong>Welcome!  </strong> @Model.FirstName @Model.LastName</p>
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="row">
+                <a href="#">
+                    <img class="img-circle img-responsive" src="@Model.ProfilePhotoUrl" alt="Profile Photo">
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#profilePic">Change</button>
+                </div>
+                <div class="modal fade bs-example-modal-sm" id="profilePic" tabindex="-1" role="dialog" aria-labelledby="profilePicLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form asp-controller="Home" asp-action="ChangeProfilePic" method="post">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="profilePicLabel">Change Profile Photo</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="small">Please enter the link to your profile photo.</p>
+                                    <p class="small">Invoice Manager does not save image due to its light weight nature~</p>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="profilePicURL">URL: </span>
+                                        <input type="text" class="form-control" placeholder="E.g. https://c1.staticflickr.com/4/3180/2530791208_e77c2fc1bd.jpg" aria-describedby="profilePicURL" id="ProfilePhotoUrl" name="ProfilePhotoUrl">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save change</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <h5>Password</h5>
+            <div class="row">
+                @await Component.InvokeAsync("Password", new { model = new NTWebApp.Models.Home.PasswordViewModel() { UserId = Model.UserId, UserName = Model.UserName, Email = Model.Email } })
+            </div>
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+        <div class="col-sm-8">
+            @await Component.InvokeAsync("UserDetail", new { model = new NTWebApp.Models.Home.UserDetailViewModel() { UserId = Model.UserId, UserName = Model.UserName, Email = Model.Email, FirstName = Model.FirstName, LastName = Model.LastName, Gender = Model.Gender, Address = Model.Address, PostalCode = Model.PostalCode, Description = Model.Description } })
+        </div>
+    </div>
+</div>

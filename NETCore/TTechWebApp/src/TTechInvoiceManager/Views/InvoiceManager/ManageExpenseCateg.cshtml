@@ -1,0 +1,162 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Manage Expense Category";
+}
+
+<div class="container-fluid">
+    @model NTWebApp.Models.InvoiceManager.ManageExpenseCategViewModel
+    <br />
+    <div>
+        @if (ViewData["SuccessMessage"] != null)
+            {
+            <p class="bg-success">@Html.Raw(@ViewData["SuccessMessage"])</p>
+        }
+    </div>
+    <br />
+    <kbd>Add New</kbd>
+    <br />
+    <br />
+    <form action="@Url.Action("ManageExpenseCateg", "InvoiceManager")" method="post">
+        <div class="row">
+            <p>
+                <button type="submit" class="btn btn-xs" id="submit" name="submit" value="Add"><span class="glyphicon glyphicon-plus"></span> Add</button>
+            </p>
+        </div>
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th hidden>Expense Categ Id</th>
+                            <th></th>
+                            <th>Expense Category</th>
+                            <th>Display Order</th>
+                        </tr>
+                    </thead>
+                    @{
+                        int indexNew = 0;
+                        string indexNewStr = String.Empty;
+                    }
+                    <tbody>
+                        @if (Model.NewExpenseCategs.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="3">
+                                    <div class="alert alert-info" role="alert">
+                                        <p>...Add New Item...</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @for (int i = 0; i < Model.NewExpenseCategs.Count(); ++i)
+                            {
+                                <tr>
+                                    @{
+                                        indexNewStr = "new_" + indexNew;
+                                    }
+                                    <td hidden>@Html.HiddenFor(m => m.NewExpenseCategs[i].ExpenseCategId)</td>
+                                    <td><button type="submit" class="btn btn-sm" id="submit" name="submit" value="@indexNewStr"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                    <td>@Html.EditorFor(m => m.NewExpenseCategs[i].ExpenseCategName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.NewExpenseCategs[i].ExpenseCategName, "", new { @class = "bg-warning" })</td>
+                                    <td>@Html.EditorFor(m => m.NewExpenseCategs[i].OrderVal, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.NewExpenseCategs[i].OrderVal, "", new { @class = "bg-warning" })</td>
+                                    @{
+                                        indexNew++;
+                                    }
+                                </tr>
+                              }
+                         }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <p>
+                <button type="submit" class="btn btn-primary small" id="submit" name="submit" value="Confirm">Confirm</button>
+            </p>
+        </div>
+        <div>
+            @if (ViewData["NewItemWarningMessage"] != null)
+            {
+                <p class="bg-warning">@Html.Raw(@ViewData["NewItemWarningMessage"])</p>
+            }
+        </div>
+    </form>
+    <br />
+    <hr />
+    <br />
+    <kbd>User Expense Categories</kbd>
+    <br />
+    <br />
+    <form action="@Url.Action("ManageExpenseCateg", "InvoiceManager")" method="post">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th hidden>Expense Categ Id</th>
+                            <th></th>
+                            <th>Expense Category</th>
+                            <th>Display Order</th>
+                        </tr>
+                    </thead>
+                    @{
+                        int indexExisting = 0;
+                        string indexExistingStr = String.Empty;
+                    }
+                    <tbody>
+                        @if (Model.ExistingExpenseCategs.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="3">
+                                    <div class="alert alert-info" role="alert">
+                                        <p>...No item...</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @for (int i = 0; i < Model.ExistingExpenseCategs.Count(); ++i)
+                            {
+                                <tr>
+                                    @{
+                                        indexExistingStr = "existing_" + indexExisting;
+                                    }
+                                    <td hidden>@Html.HiddenFor(m => m.ExistingExpenseCategs[i].ExpenseCategId)</td>
+                                    <td><button type="submit" class="btn btn-sm" id="submit" name="submit" value="@indexExistingStr"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                    <td>
+                                        @Html.EditorFor(m => m.ExistingExpenseCategs[i].ExpenseCategName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(m => m.ExistingExpenseCategs[i].ExpenseCategName, "", new { @class = "bg-warning" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(m => m.ExistingExpenseCategs[i].OrderVal, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(m => m.ExistingExpenseCategs[i].OrderVal, "", new { @class = "bg-warning" })
+                            </td>
+                            @{
+                                indexExisting++;
+                            }
+                        </tr>
+                                }
+                                }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <p>
+                <button type="submit" class="btn btn-primary small" id="submit" name="submit" value="Update">Update items</button>
+            </p>
+        </div>
+        <div>
+            @if (ViewData["ExistingItemWarningMessage"] != null)
+            {
+                <p class="bg-warning">@Html.Raw(@ViewData["ExistingItemWarningMessage"])</p>
+            }
+        </div>
+    </form>
+</div>

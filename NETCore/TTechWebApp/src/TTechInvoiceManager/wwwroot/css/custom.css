@@ -1,0 +1,37 @@
+/*!
+ * Invoice Manager - Custom CSS
+ * ---
+ * Noah Tong
+ */
+.im-addexpense-minwidth {
+    min-width: 100px;
+}
+.im-allexpense-minwidth {
+    min-width: 100px;
+}
+.im-manageexpensecateg-minwidth {
+    min-width: 100px;
+}
+.im-p-segoeui {
+	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+}
+.im-slide-minheight {
+	min-height: 300px;
+}
+.im-slide-background-none {
+    margin: 50px;
+    background: none;
+}
+.im-slide-background {
+    background-image: url("../images/slider-background-min.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+.im-messageboard-textarea {
+    min-height: 200px;
+    min-width: 450px;
+}

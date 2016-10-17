@@ -1,0 +1,130 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<section>
+    @model NTWebApp.Models.Home.UserDetailViewModel
+    <form asp-controller="Home" asp-action="EditProfile" method="post">
+        <div class="row">
+            <table class="table table-striped">
+                <tr>
+                    <td>
+                        <div class="hidden">
+                            @Html.EditorFor(m => m.UserId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserName, "Username", htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-5">
+                                @Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "form-control small", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "bg-warning" })
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FirstName, "First Name", htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-5">
+                                @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control small" } })
+                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "bg-warning" })
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.LastName, "Last Name", htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-5">
+                                @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control small" } })
+                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "bg-warning" })
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, "Email Address", htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-5">
+                                @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control small", @readonly = "readonly" } })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "bg-warning" })
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Address, "Address", htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-5">
+                                @Html.EditorFor(m => m.Address, new { htmlAttributes = new { @class = "form-control small" } })
+                                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "bg-warning" })
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PostalCode, "Postal Code", htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-5">
+                                @Html.EditorFor(m => m.PostalCode, new { htmlAttributes = new { @class = "form-control small" } })
+                                @Html.ValidationMessageFor(m => m.PostalCode, "", new { @class = "bg-warning" })
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Gender, "Gender", htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-5">
+                                @Html.DropDownListFor(m => m.Gender, new SelectList(new[] { "Male", "Female", "Unknown" }), new { @class = "form-control small" })
+                                @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "bg-warning" })
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Description, "Description", htmlAttributes: new { @class = "control-label col-sm-3" })
+                            <div class="col-sm-5">
+                                @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control small" } })
+                                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "bg-warning" })
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-default">Edit Profile</button>
+        </div>
+        <div class="row">
+            @if (ViewData["ProfileErrorMessage"] != null)
+            {
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <p class="bg-warning">@Html.Raw(@ViewData["ProfileErrorMessage"])</p>
+                    </div>
+                </div>
+            }
+            @if (ViewData["ProfileSuccessMessage"] != null)
+            {
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <p class="bg-success">@Html.Raw(@ViewData["ProfileSuccessMessage"])</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </form>
+</section>

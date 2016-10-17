@@ -1,0 +1,98 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Add Expense";
+}
+
+<div class="container-fluid">
+    @model NTWebApp.Models.InvoiceManager.AddExpenseViewModel
+    <br />
+    <div>
+        @if (ViewData["SuccessMessage"] != null)
+            {
+            <p class="bg-success">@Html.Raw(@ViewData["SuccessMessage"])</p>
+        }
+    </div>
+    <br />
+    <form action="@Url.Action("AddExpense", "InvoiceManager")" method="post">
+        <div class="row">
+            <p>
+                <button type="submit" class="btn btn-xs" id="submit" name="submit" value="AddNewItem"><span class="glyphicon glyphicon-plus"></span> Add</button>
+            </p>
+        </div>
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th hidden>Expense Id</th>
+                            <th></th>
+                            <th>Category</th>
+                            <th>Expense Name</th>
+                            <th>Cost</th>
+                            <th>Time</th>
+                            <th>Location</th>
+                            <!--
+                                <th>Description</th>
+                            -->
+                        </tr>
+                    </thead>
+                    @{
+                        int index = 0;
+                    }
+                    <tbody>
+                        @if (Model.Expenses.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="6">
+                                    <div class="alert alert-info" role="alert">
+                                        <p>...Add New Item...</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+
+                            @for (int i = 0; i < Model.Expenses.Count(); ++i)
+                            {
+                                <tr>
+                                    <td hidden>@Html.HiddenFor(m => m.Expenses[i].ExpenseId)</td>
+                                    <td><button type="submit" class="btn btn-sm" id="submit" name="submit" value="@index"><span class="glyphicon glyphicon-remove"></span></button></td>
+                                    <td>@Html.DropDownListFor(m => m.Expenses[i].ExpenseCategId, new SelectList(Model.ExpenseCategs, "ExpenseCategId", "ExpenseCategName"), new { @class = "form-control im-addexpense-minwidth" })</td>
+                                    <td>@Html.EditorFor(m => m.Expenses[i].Name, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth" } })
+                                    @Html.ValidationMessageFor(m => m.Expenses[i].Name, "", new { @class = "bg-warning" })</td>
+                                    <td>@Html.EditorFor(m => m.Expenses[i].Cost, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth" } })
+                                    @Html.ValidationMessageFor(m => m.Expenses[i].Cost, "", new { @class = "bg-warning" })</td>
+                                    <td>@Html.EditorFor(m => m.Expenses[i].Time, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", } })
+                                    @Html.ValidationMessageFor(m => m.Expenses[i].Time, "", new { @class = "bg-warning" })</td>
+                                    <td>@Html.EditorFor(m => m.Expenses[i].Address, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(m => m.Expenses[i].Address, "", new { @class = "bg-warning" })</td>
+                                    <!--
+                                        <td>@Html.EditorFor(m => m.Expenses[i].Description, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth" } })</td>
+                                    -->
+                                    @{
+                                        index++;
+                                    }
+                                </tr>
+                             }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <p>
+                <button type="submit" class="btn btn-primary small" id="submit" name="submit" value="SubmitExpenses">Submit Expenses</button>
+            </p>
+        </div>
+        <div>
+            @if (ViewData["WarningMessage"] != null)
+            {
+                <p class="bg-warning">@Html.Raw(@ViewData["WarningMessage"])</p>
+            }
+        </div>
+    </form>
+</div>
