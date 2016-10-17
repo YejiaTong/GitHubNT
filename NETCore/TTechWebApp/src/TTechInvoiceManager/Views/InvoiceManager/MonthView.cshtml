@@ -1,6 +1,10 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@section Scripts
+{
+    <script src="@Url.Content("~/js/monthview/monthview.js")"></script>
+}
 @{
     ViewData["Title"] = "Month View";
 }
@@ -13,15 +17,33 @@
     <br />
     <br />
     <div class="row">
-        <table class="table table-striped">
-            <tr>
-                <td>
-                    <div class="input-group">
-                        <span class="input-group-addon" style="width: 100px;" id="searchYear">Year: </span>
-                        @Html.DropDownListFor(m => m.Year, new SelectList(Model.YearsOpts), new { @class = "form-control im-addexpense-minwidth", aria_describedby = "searchYear" })
-                    </div>
-                </td>
-            </tr>
-        </table>
+        <form asp-controller="InvoiceManager" asp-action="MonthView" method="post">
+            <table class="table table-striped">
+                <tr>
+                    <td>
+                        <div hidden>
+                            @Html.EditorFor(m => m.Month, new { @class = "form-control", id = "Month" })
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" style="width: 100px;" id="searchYear">Year: </span>
+                            @Html.DropDownListFor(m => m.Year, new SelectList(Model.YearsOpts), new { @class = "form-control im-addexpense-minwidth", aria_describedby = "searchYear" })
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group im-monthview-month-selection-div">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-primary">Get Month Report</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
 </div>

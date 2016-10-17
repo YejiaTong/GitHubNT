@@ -31,6 +31,8 @@ namespace NTWebApp.Models.InvoiceManager
 
         public int Year { get; set; } = DateTime.Today.Year;
 
+        public int Month { get; set; } = 0;
+
         public int Week { get; set; } = 0;
     }
 }

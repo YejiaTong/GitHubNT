@@ -462,14 +462,31 @@ namespace NTWebApp.Controllers
             }
         }
 
-        public IActionResult MonthView(MonthViewPagerViewModel model)
+        public IActionResult MonthView(MonthViewPagerViewModel model, int Year, int Month)
         {
             ViewData["Message"] = "To be expected...";
+
+            if (Request.Method.Equals("GET") && Year == 0)
+            {
+                ModelState.Clear();
+
+                model.Year = Year;
+                model.Month = Month;
+
+                return View(model);
+            }
+            else if(Year != 0)
+            {
+                model.Year = Year;
+                model.Month = Month;
+
+                return View(model);
+            }
 
             return View(model);
         }
 
-        public IActionResult WeekView(WeekViewPagerViewModel model)
+        public IActionResult WeekView(WeekViewPagerViewModel model, int Year, int Month, int Week)
         {
             ViewData["Message"] = "To be expected...";
 

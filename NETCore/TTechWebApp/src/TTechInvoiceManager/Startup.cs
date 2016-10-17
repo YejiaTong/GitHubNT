@@ -91,7 +91,7 @@ namespace NTWebApp
                 AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Forbidden/"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
-                //CookieDomain = ".ttechcode.com",
+                CookieDomain = ".ttechcode.com",
                 ExpireTimeSpan = TimeSpan.FromDays(3),
                 SlidingExpiration = true
             });

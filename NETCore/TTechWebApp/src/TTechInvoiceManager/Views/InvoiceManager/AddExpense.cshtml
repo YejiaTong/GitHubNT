@@ -15,7 +15,7 @@
         }
     </div>
     <br />
-    <form action="@Url.Action("AddExpense", "InvoiceManager")" method="post">
+    <form asp-controller="InvoiceManager" asp-action="AddExpense" method="post">
         <div class="row">
             <p>
                 <button type="submit" class="btn btn-xs" id="submit" name="submit" value="AddNewItem"><span class="glyphicon glyphicon-plus"></span> Add</button>
@@ -61,14 +61,22 @@
                                     <td hidden>@Html.HiddenFor(m => m.Expenses[i].ExpenseId)</td>
                                     <td><button type="submit" class="btn btn-sm" id="submit" name="submit" value="@index"><span class="glyphicon glyphicon-remove"></span></button></td>
                                     <td>@Html.DropDownListFor(m => m.Expenses[i].ExpenseCategId, new SelectList(Model.ExpenseCategs, "ExpenseCategId", "ExpenseCategName"), new { @class = "form-control im-addexpense-minwidth" })</td>
-                                    <td>@Html.EditorFor(m => m.Expenses[i].Name, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth" } })
-                                    @Html.ValidationMessageFor(m => m.Expenses[i].Name, "", new { @class = "bg-warning" })</td>
-                                    <td>@Html.EditorFor(m => m.Expenses[i].Cost, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth" } })
-                                    @Html.ValidationMessageFor(m => m.Expenses[i].Cost, "", new { @class = "bg-warning" })</td>
-                                    <td>@Html.EditorFor(m => m.Expenses[i].Time, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", } })
-                                    @Html.ValidationMessageFor(m => m.Expenses[i].Time, "", new { @class = "bg-warning" })</td>
-                                    <td>@Html.EditorFor(m => m.Expenses[i].Address, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", @readonly = "readonly" } })
-                                    @Html.ValidationMessageFor(m => m.Expenses[i].Address, "", new { @class = "bg-warning" })</td>
+                                    <td>
+                                        @Html.EditorFor(m => m.Expenses[i].Name, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth" } })
+                                        @Html.ValidationMessageFor(m => m.Expenses[i].Name, "", new { @class = "bg-warning" })
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(m => m.Expenses[i].Cost, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth" } })
+                                        @Html.ValidationMessageFor(m => m.Expenses[i].Cost, "", new { @class = "bg-warning" })
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(m => m.Expenses[i].Time, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", } })
+                                        @Html.ValidationMessageFor(m => m.Expenses[i].Time, "", new { @class = "bg-warning" })
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(m => m.Expenses[i].Address, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(m => m.Expenses[i].Address, "", new { @class = "bg-warning" })
+                                    </td>
                                     <!--
                                         <td>@Html.EditorFor(m => m.Expenses[i].Description, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth" } })</td>
                                     -->
@@ -76,8 +84,8 @@
                                         index++;
                                     }
                                 </tr>
-                             }
-                        }
+                                        }
+                                        }
                     </tbody>
                 </table>
             </div>

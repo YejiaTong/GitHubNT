@@ -18,7 +18,7 @@
     <kbd>Add New</kbd>
     <br />
     <br />
-    <form action="@Url.Action("ManageExpenseCateg", "InvoiceManager")" method="post">
+    <form asp-controller="InvoiceManager" asp-action="ManageExpenseCateg" method="post">
         <div class="row">
             <p>
                 <button type="submit" class="btn btn-xs" id="submit" name="submit" value="Add"><span class="glyphicon glyphicon-plus"></span> Add</button>
@@ -92,7 +92,7 @@
     <kbd>User Expense Categories</kbd>
     <br />
     <br />
-    <form action="@Url.Action("ManageExpenseCateg", "InvoiceManager")" method="post">
+    <form asp-controller="InvoiceManager" asp-action="ManageExpenseCateg" method="post">
         <div class="row">
             <div class="table-responsive">
                 <table class="table table-striped">
