@@ -13,21 +13,23 @@ namespace NTWebApp.Models.InvoiceManager
         [DisplayName("Month Start")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime WeekStartTs { get; set; }
+        public DateTime MonthStartTs { get; set; }
 
         [DisplayName("Month End")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime WeekEndTs { get; set; }
+        public DateTime MonthEndTs { get; set; }
 
         public int MonthNum { get; set; }
     }
 
     public class MonthViewPagerViewModel
     {
-        public int[] YearsOpts { get; set; } = YearGenerator.GetYears(3).ToArray();
+        public List<int> YearsOpts { get; set; } = YearGenerator.GetYears(10).ToList();
 
-        public MonthViewModel[] MonthsOpts { get; set; }
+        public List<MonthViewModel> MonthsOpts { get; set; }
+
+        public MonthViewModel SelectedMonth { get; set; }
 
         public int Year { get; set; } = DateTime.Today.Year;
 

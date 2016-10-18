@@ -1,0 +1,74 @@
+﻿using System;
+using System.Linq;
+using System.Text;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+using MySql.Data.MySqlClient;
+
+namespace NTWebApp.DBAccess
+{
+    public class MonthExpensesContext : DBWorker
+    {
+        public static IEnumerable<MonthExpense> LoadUserMonthExpenses(User usr, DateTime startTs, DateTime endTs)
+        {
+            List<MonthExpense> ret = new List<MonthExpense>();
+            try
+            {
+                using (MySqlConnection connection = database.CreateConnection(DBMapperFactory.DBMapper[usr.DBInstance]))
+                {
+                    connection.Open();
+                    string commandText = "SELECT expCat.ExpenseCategId, expCat.ExpenseCategName, expCat.OrderVal, ROUND(SUM(exp.Cost), 2) AS TotalCost, exp.UserId "
+                        + "FROM Expenses exp "
+                        + "INNER JOIN CA001_IM.ExpenseCategs expCat ON exp.ExpenseCategId = expCat.ExpenseCategId "
+                        + "AND exp.UserId = expCat.UserId "
+                        + "WHERE exp.UserId = " + usr.UserId + " "
+                        + "AND exp.Time > DATE_SUB(STR_TO_DATE('" + startTs.ToString("MM/dd/yyyy") + "','%m/%d/%Y'), INTERVAL 1 SECOND) "
+                        + "AND exp.Time < DATE_ADD(STR_TO_DATE('" + endTs.ToString("MM/dd/yyyy") + "','%m/%d/%Y'), INTERVAL 1 DAY) "
+                        + "GROUP BY expCat.ExpenseCategId, expCat.ExpenseCategName, expCat.OrderVal, exp.UserId "
+                        + "ORDER BY expCat.OrderVal";
+                    using (MySqlCommand command = database.CreateCommand(commandText, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                MonthExpense item = new MonthExpense();
+                                item.UserId = usr.UserId;
+                                item.ExpenseCategId = !reader.IsDBNull(reader.GetOrdinal("ExpenseCategId")) ? reader.GetInt32("ExpenseCategId") : 0;
+                                item.ExpenseCategName = !reader.IsDBNull(reader.GetOrdinal("ExpenseCategName")) ? reader.GetString("ExpenseCategName") : String.Empty;
+                                item.OrderVal = !reader.IsDBNull(reader.GetOrdinal("OrderVal")) ? reader.GetInt32("OrderVal") : 0;
+                                item.TotalCost = !reader.IsDBNull(reader.GetOrdinal("TotalCost")) ? reader.GetDouble("TotalCost") : 0.0;
+
+
+                                ret.Add(item);
+                            }
+                        }
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Unexpected failure");
+            }
+
+            return ret;
+        }
+    }
+
+    public class MonthExpense
+    {
+        public int UserId { get; set; }
+
+        public int ExpenseCategId { get; set; }
+
+        public string ExpenseCategName { get; set; }
+
+        public int OrderVal { get; set; }
+
+        public double TotalCost { get; set; }
+    }
+}

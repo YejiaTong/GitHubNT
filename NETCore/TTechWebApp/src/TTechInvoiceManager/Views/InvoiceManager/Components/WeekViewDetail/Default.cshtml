@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<section>
+    @model NTWebApp.Models.InvoiceManager.WeekViewViewModel
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Total Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.WeekViewItems.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="2">
+                                <div class="alert alert-info" role="alert">
+                                    <p>...No item...</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @for (int i = 0; i < Model.WeekViewItems.Count(); ++i)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(m => m.WeekViewItems[i].ExpenseCategName, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                                <td>@Html.DisplayFor(m => m.WeekViewItems[i].TotalCost, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                            </tr>
+                        }
+                    }
+                    <tr>
+                        <td colspan="2">
+                            <h4>Week Report Summary</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => m.Pager.SelectedWeek.WeekStartTs, new { htmlAttributes = new { @class = "form-control" } })
+                            <span> - </span>
+                            @Html.DisplayFor(m => m.Pager.SelectedWeek.WeekEndTs, new { htmlAttributes = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            <span>Month Total Cost: </span>
+                            <strong>@Html.DisplayFor(m => m.WeekTotalCost, new { htmlAttributes = new { @class = "form-control" } })</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        @if (ViewData["WarningMessage"] != null)
+            {
+            <p class="bg-warning">@Html.Raw(@ViewData["WarningMessage"])</p>
+        }
+    </div>
+</section>

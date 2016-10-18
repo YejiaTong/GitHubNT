@@ -25,9 +25,11 @@ namespace NTWebApp.Models.InvoiceManager
 
     public class WeekViewPagerViewModel
     {
-        public int[] YearsOpts { get; set; } = YearGenerator.GetYears(3).ToArray();
+        public int[] YearsOpts { get; set; } = YearGenerator.GetYears(10).ToArray();
 
         public WeekViewModel[] WeeksOpts { get; set; }
+
+        public WeekViewModel SelectedWeek { get; set; }
 
         public int Year { get; set; } = DateTime.Today.Year;
 

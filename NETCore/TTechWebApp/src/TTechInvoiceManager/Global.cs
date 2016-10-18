@@ -89,7 +89,7 @@ namespace NTWebApp
                     .TakeWhile(x => x.weekStart.Year <= jan1.Year)
                     .Select(x => new {
                         x.weekStart,
-                        weekFinish = x.weekStart.AddDays(4)
+                        weekFinish = x.weekStart.AddDays(6)
                     })
                     .SkipWhile(x => x.weekFinish < jan1.AddDays(1))
                     .Select((x, i) => new Dictionary<string, object>()
@@ -108,27 +108,27 @@ namespace NTWebApp
         public static IEnumerable<Dictionary<string, object>> GetAllMonthsForYear(int year)
         {
             var jan1 = new DateTime(year, 1, 1);
-            var startOfFirstWeek = jan1.AddDays(1 - (int)(jan1.DayOfWeek));
-            var weeks =
+            var startOfFirstMonth = jan1;
+            var months =
                 Enumerable
-                    .Range(0, 54)
+                    .Range(0, 11)
                     .Select(i => new {
-                        weekStart = startOfFirstWeek.AddDays(i * 7)
+                        monthStart = startOfFirstMonth.AddMonths(i)
                     })
-                    .TakeWhile(x => x.weekStart.Year <= jan1.Year)
+                    .TakeWhile(x => x.monthStart.Year <= jan1.Year)
                     .Select(x => new {
-                        x.weekStart,
-                        weekFinish = x.weekStart.AddDays(4)
+                        x.monthStart,
+                        monthFinish = x.monthStart.AddMonths(1).AddDays(-1)
                     })
-                    .SkipWhile(x => x.weekFinish < jan1.AddDays(1))
+                    .SkipWhile(x => x.monthFinish < jan1.AddDays(1))
                     .Select((x, i) => new Dictionary<string, object>()
                     {
-                        { "WeekStart", x.weekStart},
-                        { "WeekEnd", x.weekFinish},
-                        { "WeekNum", i + 1}
+                        { "MonthStart", x.monthStart},
+                        { "MonthEnd", x.monthFinish},
+                        { "MonthNum", i + 1}
                     });
 
-            return weeks;
+            return months;
         }
     }
 
@@ -153,6 +153,8 @@ namespace NTWebApp
         public static MapperConfiguration ExpenseCategViewModel_UIExpenseCateg;
         public static MapperConfiguration ExpenseViewModel_UIExpense;
         public static MapperConfiguration MessageBoardMsgViewModel_UIMessageBoardMsg;
+        public static MapperConfiguration MonthViewItemViewModel_UIMonthExpense;
+        public static MapperConfiguration WeekViewItemViewModel_UIWeekExpense;
 
         public static void InitializeAutoMapperFactory()
         {
@@ -223,12 +225,30 @@ namespace NTWebApp
                     .ForMember(dest => dest.MessageId, opt => opt.Ignore())
                     .ReverseMap());
 
+                MonthViewItemViewModel_UIMonthExpense = new MapperConfiguration(cfg => cfg.CreateMap<MonthViewItemViewModel, UIMonthExpense>()
+                    .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                    .ForMember(dest => dest.ExpenseCategId, opt => opt.MapFrom(src => src.ExpenseCategId))
+                    .ForMember(dest => dest.ExpenseCategName, opt => opt.MapFrom(src => src.ExpenseCategName))
+                    .ForMember(dest => dest.OrderVal, opt => opt.MapFrom(src => src.OrderVal))
+                    .ForMember(dest => dest.TotalCost, opt => opt.MapFrom(src => src.TotalCost))
+                    .ReverseMap());
+
+                WeekViewItemViewModel_UIWeekExpense = new MapperConfiguration(cfg => cfg.CreateMap<WeekViewItemViewModel, UIWeekExpense>()
+                     .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                     .ForMember(dest => dest.ExpenseCategId, opt => opt.MapFrom(src => src.ExpenseCategId))
+                     .ForMember(dest => dest.ExpenseCategName, opt => opt.MapFrom(src => src.ExpenseCategName))
+                     .ForMember(dest => dest.OrderVal, opt => opt.MapFrom(src => src.OrderVal))
+                     .ForMember(dest => dest.TotalCost, opt => opt.MapFrom(src => src.TotalCost))
+                     .ReverseMap());
+
                 // Validate all mappings
                 AccountViewModel_UIUserMapping.AssertConfigurationIsValid();
                 UserDetailViewModel_UIUserMapping.AssertConfigurationIsValid();
                 ExpenseCategViewModel_UIExpenseCateg.AssertConfigurationIsValid();
                 ExpenseViewModel_UIExpense.AssertConfigurationIsValid();
                 MessageBoardMsgViewModel_UIMessageBoardMsg.AssertConfigurationIsValid();
+                MonthViewItemViewModel_UIMonthExpense.AssertConfigurationIsValid();
+                WeekViewItemViewModel_UIWeekExpense.AssertConfigurationIsValid();
             }
             catch(Exception ex)
             {

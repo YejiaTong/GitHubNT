@@ -9,41 +9,30 @@
     ViewData["Title"] = "Month View";
 }
 
-<h4>@ViewData["Title"].</h4>
-<h5>@ViewData["Message"]</h5>
-
 <div class="container-fluid">
     @model NTWebApp.Models.InvoiceManager.MonthViewPagerViewModel
     <br />
     <br />
     <div class="row">
         <form asp-controller="InvoiceManager" asp-action="MonthView" method="post">
-            <table class="table table-striped">
-                <tr>
-                    <td>
-                        <div hidden>
-                            @Html.EditorFor(m => m.Month, new { @class = "form-control", id = "Month" })
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" style="width: 100px;" id="searchYear">Year: </span>
-                            @Html.DropDownListFor(m => m.Year, new SelectList(Model.YearsOpts), new { @class = "form-control im-addexpense-minwidth", aria_describedby = "searchYear" })
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="input-group im-monthview-month-selection-div">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="input-group">
-                            <button type="submit" class="btn btn-primary">Get Month Report</button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+            <div hidden>
+                @Html.EditorFor(m => m.Month, new { @class = "form-control", id = "Month" })
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" style="width: 100px;" id="searchYear">Year: </span>
+                @Html.DropDownListFor(m => m.Year, new SelectList(Model.YearsOpts), new { @class = "form-control im-addexpense-minwidth", aria_describedby = "searchYear", id = "Year" })
+            </div>
+            <div class="input-group im-monthview-month-selection-div">
+            </div>
+            <div class="input-group im-monthview-month-selection-label-div">
+            </div>
+            <div class="input-group">
+                <button type="submit" class="btn btn-primary">Get Month Report</button>
+            </div>
         </form>
+    </div>
+    <hr />
+    <div class="row">
+        @await Component.InvokeAsync("MonthViewDetail", new { pagerModel = Model })
     </div>
 </div>

@@ -464,33 +464,72 @@ namespace NTWebApp.Controllers
 
         public IActionResult MonthView(MonthViewPagerViewModel model, int Year, int Month)
         {
-            ViewData["Message"] = "To be expected...";
-
             if (Request.Method.Equals("GET") && Year == 0)
             {
+                model.Month = DateTime.Today.Month - 1;
+
                 ModelState.Clear();
-
-                model.Year = Year;
-                model.Month = Month;
-
-                return View(model);
             }
             else if(Year != 0)
             {
                 model.Year = Year;
                 model.Month = Month;
-
-                return View(model);
             }
 
-            return View(model);
+            var monthDicItem = MonthGenerator.GetAllMonthsForYear(model.Year).FirstOrDefault(x => (int)x["MonthNum"] == model.Month + 1);
+            if(monthDicItem != null)
+            {
+                model.SelectedMonth = new MonthViewModel() { MonthStartTs = (DateTime)monthDicItem["MonthStart"], MonthEndTs = (DateTime)monthDicItem["MonthEnd"], MonthNum = model.Month + 1 };
+            }
+
+            if (ModelState.IsValid)
+            {
+                return View(model);
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         public IActionResult WeekView(WeekViewPagerViewModel model, int Year, int Month, int Week)
         {
-            ViewData["Message"] = "To be expected...";
+            if (Request.Method.Equals("GET") && Year == 0)
+            {
+                model.Month = DateTime.Today.Month - 1;
 
-            return View(model);
+                DateTime firstDayoftheWeek = DateTime.Today.AddDays(1 - (int)(DateTime.Today.DayOfWeek));
+                var weekDicItem = WeekGenerator.GetAllWeeksForYear(model.Year).FirstOrDefault(x => ((DateTime)x["WeekStart"]).Equals(firstDayoftheWeek));
+                if (weekDicItem != null)
+                {
+                    model.SelectedWeek = new WeekViewModel() { WeekStartTs = (DateTime)weekDicItem["WeekStart"], WeekEndTs = (DateTime)weekDicItem["WeekEnd"], WeekNum = (int)weekDicItem["WeekNum"] };
+                }
+
+                model.Week = model.SelectedWeek.WeekNum;
+
+                ModelState.Clear();
+            }
+            else if (Year != 0)
+            {
+                model.Year = Year;
+                model.Month = Month;
+                model.Week = Week;
+
+                var weekDicItem = WeekGenerator.GetAllWeeksForYear(model.Year).FirstOrDefault(x => ((int)x["WeekNum"]).Equals(model.Week));
+                if (weekDicItem != null)
+                {
+                    model.SelectedWeek = new WeekViewModel() { WeekStartTs = (DateTime)weekDicItem["WeekStart"], WeekEndTs = (DateTime)weekDicItem["WeekEnd"], WeekNum = model.Week };
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                return View(model);
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         private ExpenseViewModel GetInitialUIExpenseItem()

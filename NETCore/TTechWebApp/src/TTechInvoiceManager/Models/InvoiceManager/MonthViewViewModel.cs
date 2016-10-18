@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NTWebApp.Models.InvoiceManager
 {
-    public class WeekViewItemViewModel
+    public class MonthViewItemViewModel
     {
         public int UserId { get; set; }
 
@@ -18,12 +18,12 @@ namespace NTWebApp.Models.InvoiceManager
         public double TotalCost { get; set; }
     }
 
-    public class WeekViewViewModel
+    public class MonthViewViewModel
     {
-        public List<WeekViewItemViewModel> WeekViewItems { get; set; }
+        public List<MonthViewItemViewModel> MonthViewItems { get; set; }
 
-        public WeekViewPagerViewModel Pager { get; set; }
+        public MonthViewPagerViewModel Pager { get; set; }
 
-        public double WeekTotalCost { get; set; } = 0.0;
+        public double MonthTotalCost { get; set; } = 0.0;
     }
 }
