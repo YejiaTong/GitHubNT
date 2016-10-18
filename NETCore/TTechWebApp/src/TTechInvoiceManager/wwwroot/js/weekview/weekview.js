@@ -7,13 +7,14 @@
     }
 }
 
-function findFirstDayoftheMonth(m) {
+/*function findFirstDayoftheMonth(m) {
     return new Date(m.getFullYear(), m.getMonth(), 1);
-}
+}*/
 
 function findWeekNum(d) {
     var jan1 = new Date(d.getFullYear(), 0, 1);
-    return Math.ceil((((d - jan1) / 86400000) + jan1.getDay() + 1) / 7);
+    var firstDayofWeek = getMonday(jan1);
+    return Math.ceil(((d.getTime() - firstDayofWeek.getTime()) / 86400000) / 7);
 }
 
 function getDateOfISOWeek(w, y) {
@@ -44,24 +45,22 @@ function showWeek() {
     var selectionDiv = $('.im-monthview-week-selection-div');
     var y = $('#Year').val();
     var n = $('#Month').val();
-    var m = new Date(y, n, 1);
-    var d = findFirstDayoftheMonth(m);
+    var d = new Date(y, n, 1);
     var w = findWeekNum(d);
     var fd = getDateOfISOWeek(w, y);
     var date = fd;
     selectionDiv.empty();
     var htmlContent = '';
     var today = new Date();
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 6; i++) {
         date = getDateOfISOWeek(w + i, y);
         var ld = new Date();
         ld.setTime(date.getTime() + (24 * 60 * 60 * 1000) * 6);
+        if (date.getMonth() == d.getMonth() || ld.getMonth() == d.getMonth()) {
 
-        if (!(date.getFullYear() == d.getFullYear() && date.getMonth() == d.getMonth())
-            && !(ld.getFullYear() == d.getFullYear() && ld.getMonth() == d.getMonth())) {
-            break;
+        } else {
+            continue;
         }
-
         htmlContent += "<option value=\"" + (w + i) + "\">" + ((date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()) + " - " + ((ld.getMonth() + 1) + "/" + ld.getDate() + "/" + ld.getFullYear()) + "</option>";
     }
     htmlContent = "<span class=\"input-group-addon\" style=\"width: 100px;\" id=\"searchWeek\">Week: </span><select class=\"form-control im-addexpense-minwidth im-monthview-week-selector\" aria-describedby=\"searchWeek\" onchange=\"weekChange()\">" + htmlContent + "</select>";
@@ -89,8 +88,7 @@ function monthChange() {
     var selectedMonth = $('.im-monthview-month-selector').find("option:selected").val();
     $('#Month').val(selectedMonth);
     var selectedYear = $('#Year').val();
-    var m = new Date(selectedYear, selectedMonth, 1);
-    var d = findFirstDayoftheMonth(m);
+    var d = new Date(selectedYear, selectedMonth, 1);
     var w = findWeekNum(d);
     $('#Week').val(w);
     showWeek();

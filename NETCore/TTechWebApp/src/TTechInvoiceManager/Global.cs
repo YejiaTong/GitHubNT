@@ -79,19 +79,19 @@ namespace NTWebApp
         public static IEnumerable<Dictionary<string, object>> GetAllWeeksForYear(int year)
         {
             var jan1 = new DateTime(year, 1, 1);
-            var startOfFirstWeek = jan1.AddDays(1 - (int)(jan1.DayOfWeek));
+            var startOfFirstWeek = ((int)(jan1.DayOfWeek) == 0) ? jan1.AddDays(-6) : jan1.AddDays(1 - (int)(jan1.DayOfWeek));
             var weeks =
                 Enumerable
-                    .Range(0, 54)
+                    .Range(0, 60)
                     .Select(i => new {
                         weekStart = startOfFirstWeek.AddDays(i * 7)
                     })
-                    .TakeWhile(x => x.weekStart.Year <= jan1.Year)
+                    //.TakeWhile(x => x.weekStart.Year <= jan1.Year)
                     .Select(x => new {
                         x.weekStart,
                         weekFinish = x.weekStart.AddDays(6)
                     })
-                    .SkipWhile(x => x.weekFinish < jan1.AddDays(1))
+                    //.SkipWhile(x => x.weekFinish < jan1.AddDays(1))
                     .Select((x, i) => new Dictionary<string, object>()
                     {
                         { "WeekStart", x.weekStart},
@@ -111,16 +111,16 @@ namespace NTWebApp
             var startOfFirstMonth = jan1;
             var months =
                 Enumerable
-                    .Range(0, 11)
+                    .Range(0, 12)
                     .Select(i => new {
                         monthStart = startOfFirstMonth.AddMonths(i)
                     })
-                    .TakeWhile(x => x.monthStart.Year <= jan1.Year)
+                    //.TakeWhile(x => x.monthStart.Year <= jan1.Year)
                     .Select(x => new {
                         x.monthStart,
                         monthFinish = x.monthStart.AddMonths(1).AddDays(-1)
                     })
-                    .SkipWhile(x => x.monthFinish < jan1.AddDays(1))
+                    //.SkipWhile(x => x.monthFinish < jan1.AddDays(1))
                     .Select((x, i) => new Dictionary<string, object>()
                     {
                         { "MonthStart", x.monthStart},

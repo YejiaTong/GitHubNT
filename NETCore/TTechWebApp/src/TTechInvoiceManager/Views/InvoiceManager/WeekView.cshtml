@@ -36,6 +36,13 @@
     </div>
     <hr />
     <div class="row">
-        @await Component.InvokeAsync("WeekViewDetail", new { pagerModel = Model })
+        @if (ViewData["WarningMessage"] != null)
+        {
+            <p class="bg-warning">@Html.Raw(@ViewData["WarningMessage"])</p>
+        }
+        else
+        {
+            @await Component.InvokeAsync("WeekViewDetail", new { pagerModel = Model })
+        }
     </div>
 </div>

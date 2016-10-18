@@ -33,6 +33,13 @@
     </div>
     <hr />
     <div class="row">
-        @await Component.InvokeAsync("MonthViewDetail", new { pagerModel = Model })
+        @if (ViewData["WarningMessage"] != null)
+        {
+            <p class="bg-warning">@Html.Raw(@ViewData["WarningMessage"])</p>
+        }
+        else
+        {
+            @await Component.InvokeAsync("MonthViewDetail", new { pagerModel = Model })
+        }
     </div>
 </div>

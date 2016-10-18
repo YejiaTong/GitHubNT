@@ -464,37 +464,87 @@ namespace NTWebApp.Controllers
 
         public IActionResult MonthView(MonthViewPagerViewModel model, int Year, int Month)
         {
-            if (Request.Method.Equals("GET") && Year == 0)
+            try
+            {
+                if (Request.Method.Equals("GET") && Year == 0)
+                {
+                    model.Month = DateTime.Today.Month - 1;
+
+                    ModelState.Clear();
+                }
+                else if (Year != 0)
+                {
+                    model.Year = Year;
+                    model.Month = Month;
+                }
+
+                var monthDicItem = MonthGenerator.GetAllMonthsForYear(model.Year).FirstOrDefault(x => (int)x["MonthNum"] == model.Month + 1);
+                if (monthDicItem != null)
+                {
+                    model.SelectedMonth = new MonthViewModel() { MonthStartTs = (DateTime)monthDicItem["MonthStart"], MonthEndTs = (DateTime)monthDicItem["MonthEnd"], MonthNum = model.Month + 1 };
+                }
+
+                if (ModelState.IsValid)
+                {
+                    return View(model);
+                }
+                else
+                {
+                    return View(model);
+                }
+            }
+            catch(Exception ex)
             {
                 model.Month = DateTime.Today.Month - 1;
 
-                ModelState.Clear();
-            }
-            else if(Year != 0)
-            {
-                model.Year = Year;
-                model.Month = Month;
-            }
+                ViewData["WarningMessage"] = ex.Message;
 
-            var monthDicItem = MonthGenerator.GetAllMonthsForYear(model.Year).FirstOrDefault(x => (int)x["MonthNum"] == model.Month + 1);
-            if(monthDicItem != null)
-            {
-                model.SelectedMonth = new MonthViewModel() { MonthStartTs = (DateTime)monthDicItem["MonthStart"], MonthEndTs = (DateTime)monthDicItem["MonthEnd"], MonthNum = model.Month + 1 };
-            }
-
-            if (ModelState.IsValid)
-            {
-                return View(model);
-            }
-            else
-            {
                 return View(model);
             }
         }
 
         public IActionResult WeekView(WeekViewPagerViewModel model, int Year, int Month, int Week)
         {
-            if (Request.Method.Equals("GET") && Year == 0)
+            try
+            {
+                if (Request.Method.Equals("GET") && Year == 0)
+                {
+                    model.Month = DateTime.Today.Month - 1;
+
+                    DateTime firstDayoftheWeek = DateTime.Today.AddDays(1 - (int)(DateTime.Today.DayOfWeek));
+                    var weekDicItem = WeekGenerator.GetAllWeeksForYear(model.Year).FirstOrDefault(x => ((DateTime)x["WeekStart"]).Equals(firstDayoftheWeek));
+                    if (weekDicItem != null)
+                    {
+                        model.SelectedWeek = new WeekViewModel() { WeekStartTs = (DateTime)weekDicItem["WeekStart"], WeekEndTs = (DateTime)weekDicItem["WeekEnd"], WeekNum = (int)weekDicItem["WeekNum"] };
+                    }
+
+                    model.Week = model.SelectedWeek.WeekNum;
+
+                    ModelState.Clear();
+                }
+                else if (Year != 0)
+                {
+                    model.Year = Year;
+                    model.Month = Month;
+                    model.Week = Week;
+
+                    var weekDicItem = WeekGenerator.GetAllWeeksForYear(model.Year).FirstOrDefault(x => ((int)x["WeekNum"]).Equals(model.Week));
+                    if (weekDicItem != null)
+                    {
+                        model.SelectedWeek = new WeekViewModel() { WeekStartTs = (DateTime)weekDicItem["WeekStart"], WeekEndTs = (DateTime)weekDicItem["WeekEnd"], WeekNum = model.Week };
+                    }
+                }
+
+                if (ModelState.IsValid)
+                {
+                    return View(model);
+                }
+                else
+                {
+                    return View(model);
+                }
+            }
+            catch(Exception ex)
             {
                 model.Month = DateTime.Today.Month - 1;
 
@@ -507,27 +557,8 @@ namespace NTWebApp.Controllers
 
                 model.Week = model.SelectedWeek.WeekNum;
 
-                ModelState.Clear();
-            }
-            else if (Year != 0)
-            {
-                model.Year = Year;
-                model.Month = Month;
-                model.Week = Week;
+                ViewData["WarningMessage"] = ex.Message;
 
-                var weekDicItem = WeekGenerator.GetAllWeeksForYear(model.Year).FirstOrDefault(x => ((int)x["WeekNum"]).Equals(model.Week));
-                if (weekDicItem != null)
-                {
-                    model.SelectedWeek = new WeekViewModel() { WeekStartTs = (DateTime)weekDicItem["WeekStart"], WeekEndTs = (DateTime)weekDicItem["WeekEnd"], WeekNum = model.Week };
-                }
-            }
-
-            if (ModelState.IsValid)
-            {
-                return View(model);
-            }
-            else
-            {
                 return View(model);
             }
         }
