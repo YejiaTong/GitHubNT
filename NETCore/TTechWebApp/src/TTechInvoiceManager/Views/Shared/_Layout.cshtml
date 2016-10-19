@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="T Tech Invoice Manager">
     <meta name="author" content="Noah Tong">
+    <link rel="apple-touch-icon" sizes="57x57" href="~/images/appicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/images/appicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/images/appicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/images/appicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/images/appicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/images/appicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/images/appicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/images/appicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/appicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/images/appicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/images/appicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/images/appicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/images/appicons/favicon-16x16.png">
+    <link rel="manifest" href="~/images/appicons/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
     <title>@ViewData["Title"] - T Tech - Invoice Manager</title>
 
     <environment names="Development">
@@ -31,6 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <a href="#" class="navbar-left"><img src="~/images/appicons/android-icon-48x48.png" />@Html.Raw("&nbsp;&nbsp;&nbsp;")</a>
                 <a asp-area="" asp-controller="Home" asp-action="Account" class="navbar-brand">T Tech - Invoice Manager</a>
             </div>
             <div class="navbar-collapse collapse">
@@ -41,6 +59,9 @@
                         <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Message Board</a></li>
                         <li><a asp-area="" asp-controller="Account" asp-action="About" hidden>About</a></li>
                         <li><a asp-area="" asp-controller="Account" asp-action="Contact">Contact</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a asp-area="" asp-controller="Account" asp-action="Register"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expense</span></a></li>
                     </ul>
                 }
                 else
@@ -62,6 +83,7 @@
                         <li><a asp-area="" asp-controller="Account" asp-action="Contact">Contact</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a asp-area="" asp-controller="InvoiceManager" asp-action="AddExpense"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expense</span></a></li>
                         <li><a asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                     </ul>
                 }
@@ -69,6 +91,7 @@
         </div>
     </div>
     <div class="container body-content">
+        <!--<a href="#" data-toggle="tooltip" data-placement="bottom" title="Add New Expense"><span class="badge">+</span></a>-->
         @RenderBody()
         <hr />
         <footer>

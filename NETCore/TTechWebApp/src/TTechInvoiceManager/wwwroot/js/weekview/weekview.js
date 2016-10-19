@@ -14,7 +14,8 @@
 function findWeekNum(d) {
     var jan1 = new Date(d.getFullYear(), 0, 1);
     var firstDayofWeek = getMonday(jan1);
-    return Math.ceil(((d.getTime() - firstDayofWeek.getTime()) / 86400000) / 7);
+    var firstDayofTargetWeek = getMonday(d);
+    return Math.ceil(((firstDayofTargetWeek.getTime() - firstDayofWeek.getTime()) / 86400000) / 7) + 1;
 }
 
 function getDateOfISOWeek(w, y) {
