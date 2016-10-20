@@ -54,7 +54,66 @@ namespace NTWebApp.Controllers
             }
         }
 
-        public async Task<IActionResult> ValidateLogin(LoginViewModel model)
+        public async Task<JsonResult> ValidateLogin(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                UIUser usr = new UIUser();
+                usr.UserName = model.LoginId;
+                usr.Email = model.LoginId;
+                usr.Password = model.Password;
+
+                try
+                {
+                    try
+                    {
+                        usr.Assign(UsersContext.ValidateUser(usr));
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewData["LoginErrorMessage"] = ex.Message;
+
+                        return this.Json("Login info does not pass validation");
+                        //return View("Login");
+                    }
+
+                    // User  Authentication handling
+                    const string Issuer = "Noah Tong";
+                    var claims = new List<Claim>();
+                    claims.Add(new Claim(ClaimTypes.Name, usr.FirstName + " " + usr.LastName, ClaimValueTypes.String, Issuer));
+                    claims.Add(new Claim(ClaimTypes.Role, "Member", ClaimValueTypes.String, Issuer));
+                    claims.Add(new Claim(ClaimTypes.UserData, usr.UserId.ToString(), ClaimValueTypes.Integer32, Issuer));
+                    var userIdentity = new ClaimsIdentity("SecureLogin");
+                    userIdentity.AddClaims(claims);
+                    var userPrincipal = new ClaimsPrincipal(userIdentity);
+
+                    await HttpContext.Authentication.SignInAsync("CookieMiddlewareInstance", userPrincipal,
+                        new AuthenticationProperties
+                        {
+                            IsPersistent = model.RememberMe,
+                            AllowRefresh = false
+                        });
+
+                    var obj = AutoMapperFactory.AccountViewModel_UIUserMapping.CreateMapper().Map<AccountViewModel>(usr);
+
+                    return this.Json("Pass");
+                    //return RedirectToAction("Account", "Home", obj);
+                }
+                catch (Exception ex)
+                {
+                    ViewData["LoginErrorMessage"] = ex.Message;
+
+                    return this.Json("Login info does not pass validation");
+                    //return View("Login");
+                }
+            }
+            else
+            {
+                return this.Json("Login info does not pass validation");
+            }
+        }
+
+        /*public async Task<IActionResult> ValidateLogin(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +147,6 @@ namespace NTWebApp.Controllers
                     await HttpContext.Authentication.SignInAsync("CookieMiddlewareInstance", userPrincipal,
                         new AuthenticationProperties
                         {
-                            /*ExpiresUtc = DateTime.UtcNow.AddMinutes(30),*/
                             IsPersistent = model.RememberMe,
                             AllowRefresh = false
                         });
@@ -108,7 +166,7 @@ namespace NTWebApp.Controllers
             {
                 return View("Login");
             }
-        }
+        }*/
 
         public async Task<IActionResult> Logout()
         {

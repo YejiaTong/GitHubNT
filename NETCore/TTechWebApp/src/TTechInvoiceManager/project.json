@@ -30,7 +30,7 @@
     "Microsoft.AspNetCore.Authentication": "1.0.0",
     "System.Text.Encodings.Web": "4.0.0",
     "Microsoft.jQuery.Unobtrusive.Ajax": "3.2.3",
-    "AutoMapper": "5.1.1" },
+    "AutoMapper": "5.1.1"},
 
   "tools": {
     "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",

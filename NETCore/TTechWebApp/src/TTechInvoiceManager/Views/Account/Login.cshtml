@@ -1,6 +1,11 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@section scripts
+{
+    <link href="~/css/login.css" rel="stylesheet" asp-file-version="true" />
+    <script src="@Url.Content("~/js/login/login.js")"></script>
+}
 @{
     ViewData["Title"] = "Login";
 }
@@ -10,25 +15,10 @@
 <section>
     <div class="container-fluid">
         <div class="row">
-            @await Component.InvokeAsync("LoginCarousel")
+            @await Component.InvokeAsync("LoginWidget")
         </div>
         <div class="row">
-            <div class="col-sm-4">
-                @await Component.InvokeAsync("LoginControl")
-            </div>
-            <div class="col-sm-2">
-                <br />
-                <br />
-                <h3>Or</h3>
-            </div>
-            <div class="col-sm-4">
-                <section>
-                    <h2><small>Connect with</small></h2>
-                    <p><button type="button" class="btn btn-lg" disabled>Facebook</button></p>
-                    <p><button type="button" class="btn btn-lg" disabled>Google+</button></p>
-                    <p><button type="button" class="btn btn-lg" disabled>Linkedin</button></p>
-                </section>
-            </div>
+            @await Component.InvokeAsync("LoginCarousel")
         </div>
     </div>
 </section>
