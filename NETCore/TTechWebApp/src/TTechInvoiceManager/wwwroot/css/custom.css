@@ -3,6 +3,9 @@
  * ---
  * Noah Tong
  */
+.im-socials {
+    padding: 10px;  
+}  
 .im-addexpense-minwidth {
     min-width: 100px;
 }

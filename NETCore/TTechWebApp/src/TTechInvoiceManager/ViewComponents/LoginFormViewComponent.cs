@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NTWebApp.ViewComponents
 {
-    public class LoginWidgetViewComponent : ViewComponent
+    public class LoginFormViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {

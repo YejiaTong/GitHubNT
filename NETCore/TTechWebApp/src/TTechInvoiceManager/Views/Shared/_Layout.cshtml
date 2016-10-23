@@ -39,16 +39,18 @@
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img alt="T Tech - Invoice Manager" src="~/images/appicons/ms-icon-70x70.png">
+                </a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="#" class="navbar-left"><img src="~/images/appicons/android-icon-48x48.png" />@Html.Raw("&nbsp;&nbsp;&nbsp;")</a>
                 <a asp-area="" asp-controller="Home" asp-action="Account" class="navbar-brand">T Tech - Invoice Manager</a>
             </div>
             <div class="navbar-collapse collapse">
@@ -56,9 +58,14 @@
                 {
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-user"></span> Login</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Message Board</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="About" hidden>About</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Contact">Contact</a></li>
+                        <li class="dropdown" role="menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> About <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="im-socials"><a asp-area="" asp-controller="Account" asp-action="About" hidden>About</a></li>
+                                <li class="im-socials"><a asp-area="" asp-controller="Account" asp-action="Contact">Contact</a></li>
+                            </ul>
+                        </li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Get In Touch</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a asp-area="" asp-controller="Account" asp-action="Register"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expense</span></a></li>
@@ -68,19 +75,24 @@
                 {
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Home" asp-action="Account"><span class="glyphicon glyphicon-home"></span> Account</a></li>
-                        <li class="dropdown">
+                        <li class="dropdown" role="menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span> Invoice Management <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a asp-area="" asp-controller="InvoiceManager" asp-action="AddExpense">Add Expenses</a></li>
-                                <li><a asp-area="" asp-controller="InvoiceManager" asp-action="ManageExpenseCateg">Manage Expense Categories</a></li>
-                                <li><a asp-area="" asp-controller="InvoiceManager" asp-action="AllExpense">All Expenses</a></li>
-                                <li><a asp-area="" asp-controller="InvoiceManager" asp-action="MonthView">Month View</a></li>
-                                <li><a asp-area="" asp-controller="InvoiceManager" asp-action="WeekView">Week View</a></li>
+                            <ul class="dropdown-menu">
+                                <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="AddExpense">Add Expenses</a></li>
+                                <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="ManageExpenseCateg">Manage Expense Categories</a></li>
+                                <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="AllExpense">All Expenses</a></li>
+                                <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="MonthView">Month View</a></li>
+                                <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="WeekView">Week View</a></li>
                             </ul>
                         </li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Message Board</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="About" hidden>About</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Contact">Contact</a></li>
+                        <li class="dropdown" role="menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> About <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="im-socials"><a asp-area="" asp-controller="Account" asp-action="About" hidden>About</a></li>
+                                <li class="im-socials"><a asp-area="" asp-controller="Account" asp-action="Contact">Contact</a></li>
+                            </ul>
+                        </li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Get In Touch</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a asp-area="" asp-controller="InvoiceManager" asp-action="AddExpense"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expense</span></a></li>
@@ -91,7 +103,7 @@
         </div>
     </div>
     <div class="container body-content">
-        <!--<a href="#" data-toggle="tooltip" data-placement="bottom" title="Add New Expense"><span class="badge">+</span></a>-->
+        <br />
         @RenderBody()
         <hr />
         <footer>

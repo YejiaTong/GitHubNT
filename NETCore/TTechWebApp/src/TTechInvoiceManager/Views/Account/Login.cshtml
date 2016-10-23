@@ -3,8 +3,12 @@
 *@
 @section scripts
 {
-    <link href="~/css/login.css" rel="stylesheet" asp-file-version="true" />
-    <script src="@Url.Content("~/js/login/login.js")"></script>
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500" rel="stylesheet" asp-file-version="true" />
+    <link href="~/css/login/font-awesome.min.css" rel="stylesheet" asp-file-version="true" />
+    <link href="~/css/login/form-elements.css" rel="stylesheet" asp-file-version="true" />
+    <link href="~/css/login/style.css" rel="stylesheet" asp-file-version="true" />
+    <script src="@Url.Content("~/js/login/jquery.backstretch.min.js")"></script>
+    <script src="@Url.Content("~/js/login/scripts.js")"></script>
 }
 @{
     ViewData["Title"] = "Login";
@@ -15,10 +19,7 @@
 <section>
     <div class="container-fluid">
         <div class="row">
-            @await Component.InvokeAsync("LoginWidget")
-        </div>
-        <div class="row">
-            @await Component.InvokeAsync("LoginCarousel")
+            @await Component.InvokeAsync("LoginForm")
         </div>
     </div>
 </section>
