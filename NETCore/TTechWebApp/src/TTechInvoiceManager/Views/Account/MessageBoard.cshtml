@@ -19,7 +19,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.Message, "Message", htmlAttributes: new { @class = "control-label col-sm-3" })
                 <div>
-                    @Html.TextAreaFor(m => m.Message, new { cols = 60, rows = 10, @class = "form-control" })
+                    @Html.TextAreaFor(m => m.Message, new { cols = 60, rows = 10, @class = "form-control im-messageboard-textarea" })
                     @Html.ValidationMessageFor(m => m.Message, "", new { @class = "bg-warning" })
                 </div>
             </div>

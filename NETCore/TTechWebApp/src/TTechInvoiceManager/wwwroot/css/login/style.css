@@ -5,16 +5,16 @@ body {
     font-weight: 300;
     color: #888;
     line-height: 30px;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 strong { font-weight: 500; }
 
-a, a:hover, a:focus {
+/*a, a:hover, a:focus {
 	color: #de995e;
 	text-decoration: none;
     -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
-}
+}*/
 
 h1, h2 {
 	margin-top: 10px;
@@ -35,7 +35,6 @@ img { max-width: 100%; }
 
 ::-moz-selection { background: #de995e; color: #fff; text-shadow: none; }
 ::selection { background: #de995e; color: #fff; text-shadow: none; }
-
 
 .btn-link-1 {
 	display: inline-block;
