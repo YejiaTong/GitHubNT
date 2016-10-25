@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace NTWebApp.Models.InvoiceManager
 {
@@ -15,6 +14,7 @@ namespace NTWebApp.Models.InvoiceManager
 
         public int OrderVal { get; set; }
 
+        [DataType(DataType.Currency)]
         public double TotalCost { get; set; }
     }
 
@@ -24,6 +24,7 @@ namespace NTWebApp.Models.InvoiceManager
 
         public WeekViewPagerViewModel Pager { get; set; }
 
+        [DataType(DataType.Currency)]
         public double WeekTotalCost { get; set; } = 0.0;
     }
 }
