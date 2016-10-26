@@ -144,9 +144,11 @@ namespace NTWebApp.DBAccess
                     string commandText = "SELECT UserId, UserName, Email, FirstName, LastName, Address, "
                         + "PostalCode, Gender, IsActive, Password, SecurityToken, Description, ProfilePhotoUrl, DBInstance "
                         + "FROM Users "
-                        + "WHERE UserId = " + userId;
+                        + "WHERE UserId = @userId";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@userId", userId);
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -189,10 +191,13 @@ namespace NTWebApp.DBAccess
                     int existed = 0;
                     string commandText = "SELECT COUNT(UserId) AS Num "
                         + "FROM Users "
-                        + "WHERE UserName = '" + usr.UserName + "' "
-                        + "OR Email = '" + usr.Email + "'";
+                        + "WHERE UserName = @usrUserName "
+                        + "OR Email = @usrEmail";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                        command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -232,10 +237,15 @@ namespace NTWebApp.DBAccess
                             + "(UserName, Email, FirstName, LastName, Address, "
                             + "PostalCode, Gender, IsActive, Password, SecurityToken, Description) "
                             + "VALUES "
-                            + "('" + usr.UserName + "', '" + usr.Email + "', NULL, NULL, NULL, "
-                            + "NULL, NULL, 0, '" + hash + "', '" + token + "', NULL)";
+                            + "(@usrUserName, @usrEmail, NULL, NULL, NULL, "
+                            + "NULL, NULL, 0, @hash, @token, NULL)";
                         using (MySqlCommand command = database.CreateCommand(commandText, connection))
                         {
+                            command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                            command.Parameters.AddWithValue("@usrEmail", usr.Email);
+                            command.Parameters.AddWithValue("@hash", hash);
+                            command.Parameters.AddWithValue("@token", token);
+
                             int row = command.ExecuteNonQuery();
 
                             if(row == 0)
@@ -269,12 +279,15 @@ namespace NTWebApp.DBAccess
                                 + "( "
                                 + "SELECT UserId "
                                 + "FROM Users "
-                                + "WHERE UserName = '" + usr.UserName + "' "
-                                + "OR Email = '" + usr.Email + "' "
+                                + "WHERE UserName = @usrUserName "
+                                + "OR Email = @usrEmail "
                                 + ") t "
                                 + ")";
                             using (MySqlCommand command = database.CreateCommand(commandText, connection))
                             {
+                                command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                                command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
                                 command.ExecuteNonQuery();
                             }
 
@@ -317,10 +330,13 @@ namespace NTWebApp.DBAccess
                     int existed = 0;
                     string commandText = "SELECT COUNT(UserId) AS Num "
                         + "FROM Users "
-                        + "WHERE UserName = '" + usr.UserName + "' "
-                        + "AND Email = '" + usr.Email + "'";
+                        + "WHERE UserName = @usrUserName "
+                        + "AND Email = @usrEmail";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                        command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -357,8 +373,8 @@ namespace NTWebApp.DBAccess
                         }
 
                         commandText = "UPDATE Users "
-                            + "SET Password = '" + hash + "', "
-                            + "SecurityToken = '" + token + "' "
+                            + "SET Password = @hash, "
+                            + "SecurityToken = @token "
                             + "WHERE Userid IN "
                             + "( "
                             + "SELECT UserId "
@@ -366,12 +382,17 @@ namespace NTWebApp.DBAccess
                             + "( "
                             + "SELECT UserId "
                             + "FROM Users "
-                            + "WHERE UserName = '" + usr.UserName + "' "
-                            + "OR Email = '" + usr.Email + "' "
+                            + "WHERE UserName = @usrUserName "
+                            + "OR Email = @usrEmail "
                             + ") t "
                             + ")";
                         using (MySqlCommand command = database.CreateCommand(commandText, connection))
                         {
+                            command.Parameters.AddWithValue("@hash", hash);
+                            command.Parameters.AddWithValue("@token", token);
+                            command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                            command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
                             int row = command.ExecuteNonQuery();
 
                             if (row == 0)
@@ -458,12 +479,12 @@ namespace NTWebApp.DBAccess
                 {
                     connection.Open();
                     string commandText = "UPDATE Users "
-                        + "SET FirstName = '" + usr.FirstName + "', "
-                        + "LastName = '" + usr.LastName + "', "
-                        + "Address = '" + usr.Address + "', "
-                        + "PostalCode = '" + usr.PostalCode + "', "
-                        + "Gender = '" + usr.Gender + "', "
-                        + "Description = '" + usr.Description + "' "
+                        + "SET FirstName = @usrFirstName, "
+                        + "LastName = @usrLastName, "
+                        + "Address = @usrAddress, "
+                        + "PostalCode = @usrPostalCode, "
+                        + "Gender = @usrGender, "
+                        + "Description = @usrDescription "
                         + "WHERE Userid IN "
                         + "( "
                         + "SELECT UserId "
@@ -471,12 +492,21 @@ namespace NTWebApp.DBAccess
                         + "( "
                         + "SELECT UserId "
                         + "FROM Users "
-                        + "WHERE UserName = '" + usr.UserName + "' "
-                        + "OR Email = '" + usr.Email + "' "
+                        + "WHERE UserName = @usrUserName "
+                        + "OR Email = @usrEmail "
                         + ") t "
                         + ")";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@usrFirstName", usr.FirstName);
+                        command.Parameters.AddWithValue("@usrLastName", usr.LastName);
+                        command.Parameters.AddWithValue("@usrAddress", usr.Address);
+                        command.Parameters.AddWithValue("@usrPostalCode", usr.PostalCode);
+                        command.Parameters.AddWithValue("@usrGender", usr.Gender);
+                        command.Parameters.AddWithValue("@usrDescription", usr.Description);
+                        command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                        command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
                         int row = command.ExecuteNonQuery();
 
                         if (row == 0)
@@ -515,12 +545,15 @@ namespace NTWebApp.DBAccess
                         + "( "
                         + "SELECT UserId "
                         + "FROM Users "
-                        + "WHERE UserName = '" + usr.UserName + "' "
-                        + "OR Email = '" + usr.Email + "' "
+                        + "WHERE UserName = @usrUserName "
+                        + "OR Email = @usrEmail "
                         + ") t "
                         + ")";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                        command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -537,7 +570,7 @@ namespace NTWebApp.DBAccess
                     }
 
                     commandText = "UPDATE Users "
-                        + "SET Password = '" + hash + "' "
+                        + "SET Password = @hash "
                         + "WHERE Userid IN "
                         + "( "
                         + "SELECT UserId "
@@ -545,12 +578,16 @@ namespace NTWebApp.DBAccess
                         + "( "
                         + "SELECT UserId "
                         + "FROM Users "
-                        + "WHERE UserName = '" + usr.UserName + "' "
-                        + "OR Email = '" + usr.Email + "' "
+                        + "WHERE UserName = @usrUserName "
+                        + "OR Email = @usrEmail "
                         + ") t "
                         + ")";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@hash", hash);
+                        command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                        command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
                         int row = command.ExecuteNonQuery();
 
                         if (row == 0)
@@ -580,7 +617,7 @@ namespace NTWebApp.DBAccess
                 {
                     connection.Open();
                     string commandText = "UPDATE Users "
-                        + "SET ProfilePhotoUrl = '" + usr.ProfilePhotoUrl + "' "
+                        + "SET ProfilePhotoUrl = @usrProfilePhotoUrl "
                         + "WHERE Userid IN "
                         + "( "
                         + "SELECT UserId "
@@ -588,12 +625,16 @@ namespace NTWebApp.DBAccess
                         + "( "
                         + "SELECT UserId "
                         + "FROM Users "
-                        + "WHERE UserName = '" + usr.UserName + "' "
-                        + "OR Email = '" + usr.Email + "' "
+                        + "WHERE UserName = @usrUserName "
+                        + "OR Email = @usrEmail "
                         + ") t "
                         + ")";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@usrProfilePhotoUrl", usr.ProfilePhotoUrl);
+                        command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                        command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
                         int row = command.ExecuteNonQuery();
 
                         if (row == 0)

@@ -38,9 +38,15 @@ namespace NTWebApp.DBAccess
                         string commandText = "INSERT INTO MessageBoard "
                             + "(UserId, Message, Time, Email, Name) "
                             + "VALUES "
-                            + "(" + usr.UserId + ", '" + msg.Message + "', STR_TO_DATE('" + msg.Time.ToString("MM/dd/yyyy") + "','%m/%d/%Y'), '" + usr.Email + "', '" + userFullName + "')";
+                            + "(@usrUserId, @msgMessage, STR_TO_DATE(@msgTime,'%m/%d/%Y'), @usrEmail, @userFullName)";
                         using (MySqlCommand command = database.CreateCommand(commandText, connection))
                         {
+                            command.Parameters.AddWithValue("@usrUserId", usr.UserId);
+                            command.Parameters.AddWithValue("@msgMessage", msg.Message);
+                            command.Parameters.AddWithValue("@msgTime", msg.Time.ToString("MM/dd/yyyy"));
+                            command.Parameters.AddWithValue("@usrEmail", usr.Email);
+                            command.Parameters.AddWithValue("@userFullName", userFullName);
+
                             command.Transaction = transaction;
 
                             int row = command.ExecuteNonQuery();

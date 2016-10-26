@@ -81,7 +81,7 @@ img { max-width: 100%; }
 /***** Top content *****/
 
 .inner-bg {
-    padding: 100px 0 170px 0;
+    padding: 60px 0 120px 0;
 }
 
 .top-content .text {
@@ -152,6 +152,7 @@ img { max-width: 100%; }
 }
 
 .social-login {
+    text-align: center;
 	margin-top: 35px;
 }
 

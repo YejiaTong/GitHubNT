@@ -24,13 +24,17 @@ namespace NTWebApp.DBAccess
                         + "FROM Expenses exp "
                         + "INNER JOIN CA001_IM.ExpenseCategs expCat ON exp.ExpenseCategId = expCat.ExpenseCategId "
                         + "AND exp.UserId = expCat.UserId "
-                        + "WHERE exp.UserId = " + usr.UserId + " "
-                        + "AND exp.Time > DATE_SUB(STR_TO_DATE('" + startTs.ToString("MM/dd/yyyy") + "','%m/%d/%Y'), INTERVAL 1 SECOND) "
-                        + "AND exp.Time < DATE_ADD(STR_TO_DATE('" + endTs.ToString("MM/dd/yyyy") + "','%m/%d/%Y'), INTERVAL 1 DAY) "
+                        + "WHERE exp.UserId = @usrUserId "
+                        + "AND exp.Time > DATE_SUB(STR_TO_DATE(@startTs,'%m/%d/%Y'), INTERVAL 1 SECOND) "
+                        + "AND exp.Time < DATE_ADD(STR_TO_DATE(@endTs,'%m/%d/%Y'), INTERVAL 1 DAY) "
                         + "GROUP BY expCat.ExpenseCategId, expCat.ExpenseCategName, expCat.OrderVal, exp.UserId "
                         + "ORDER BY expCat.OrderVal";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@usrUserId", usr.UserId);
+                        command.Parameters.AddWithValue("@startTs", startTs.ToString("MM/dd/yyyy"));
+                        command.Parameters.AddWithValue("@endTs", endTs.ToString("MM/dd/yyyy"));
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())

@@ -22,10 +22,12 @@ namespace NTWebApp.DBAccess
                     connection.Open();
                     string commandText = "SELECT ExpenseCategId, ExpenseCategName, UserId, IsDefault, OrderVal "
                         + "FROM ExpenseCategs "
-                        + "WHERE UserId = " + usr.UserId + " "
+                        + "WHERE UserId = @usrUserId "
                         + "ORDER BY OrderVal, ExpenseCategName";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@usrUserId", usr.UserId);
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -67,9 +69,13 @@ namespace NTWebApp.DBAccess
                         {
                             string commandText = "INSERT INTO ExpenseCategs "
                                 + "(ExpenseCategName, UserId, IsDefault, OrderVal) "
-                                + "VALUES('" + item.ExpenseCategName + "', " + usr.UserId + ", 1, " + item.OrderVal + ")";
+                                + "VALUES(@itemExpenseCategName, @usrUserId, 1, @itemOrderVal)";
                             using (MySqlCommand command = database.CreateCommand(commandText, connection))
                             {
+                                command.Parameters.AddWithValue("@itemExpenseCategName", item.ExpenseCategName);
+                                command.Parameters.AddWithValue("@usrUserId", usr.UserId);
+                                command.Parameters.AddWithValue("@itemOrderVal", item.OrderVal);
+
                                 command.Transaction = transaction;
 
                                 int row = command.ExecuteNonQuery();
@@ -145,11 +151,15 @@ namespace NTWebApp.DBAccess
                         foreach (var item in list)
                         {
                             commandText = "UPDATE ExpenseCategs "
-                                + "SET ExpenseCategName = '" + item.ExpenseCategName + "', "
-                                + "OrderVal = " + item.OrderVal + " "
-                                + "WHERE ExpenseCategId = " + item.ExpenseCategId;
+                                + "SET ExpenseCategName = @itemExpenseCategName, "
+                                + "OrderVal = @itemOrderVal "
+                                + "WHERE ExpenseCategId = @itemExpenseCategId";
                             using (MySqlCommand command = database.CreateCommand(commandText, connection))
                             {
+                                command.Parameters.AddWithValue("@itemExpenseCategName", item.ExpenseCategName);
+                                command.Parameters.AddWithValue("@itemOrderVal", item.OrderVal);
+                                command.Parameters.AddWithValue("@itemExpenseCategId", item.ExpenseCategId);
+
                                 command.Transaction = transaction;
 
                                 int row = command.ExecuteNonQuery();

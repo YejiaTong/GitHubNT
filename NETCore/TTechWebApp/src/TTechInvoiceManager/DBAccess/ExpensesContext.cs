@@ -24,10 +24,12 @@ namespace NTWebApp.DBAccess
                         + "FROM Expenses exp "
                         + "INNER JOIN ExpenseCategs expCat ON exp.ExpenseCategId = expCat.ExpenseCategId "
                         + "AND exp.UserId = expCat.UserId "
-                        + "WHERE exp.UserId = " + usr.UserId + " "
+                        + "WHERE exp.UserId = @usrUserId "
                         + "ORDER BY exp.Time";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@usrUserId", usr.UserId);
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -69,13 +71,17 @@ namespace NTWebApp.DBAccess
                         + "FROM Expenses exp "
                         + "INNER JOIN ExpenseCategs expCat ON exp.ExpenseCategId = expCat.ExpenseCategId "
                         + "AND exp.UserId = expCat.UserId "
-                        + "WHERE exp.UserId = " + usr.UserId + " "
-                        + "AND exp.Time > DATE_SUB(STR_TO_DATE('" + startTs.ToString("MM/dd/yyyy") + "','%m/%d/%Y'), INTERVAL 1 SECOND) "
-                        + "AND exp.Time < DATE_ADD(STR_TO_DATE('" + endTs.ToString("MM/dd/yyyy") + "','%m/%d/%Y'), INTERVAL 1 DAY) "
+                        + "WHERE exp.UserId = @usrUserId "
+                        + "AND exp.Time > DATE_SUB(STR_TO_DATE(@startTs,'%m/%d/%Y'), INTERVAL 1 SECOND) "
+                        + "AND exp.Time < DATE_ADD(STR_TO_DATE(@endTs,'%m/%d/%Y'), INTERVAL 1 DAY) "
                         + "ORDER BY exp.Time "
                         + "LIMIT " + pageSize;
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@usrUserId", usr.UserId);
+                        command.Parameters.AddWithValue("@startTs", startTs.ToString("MM/dd/yyyy"));
+                        command.Parameters.AddWithValue("@endTs", endTs.ToString("MM/dd/yyyy"));
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -119,13 +125,17 @@ namespace NTWebApp.DBAccess
                         + "FROM Expenses exp "
                         + "INNER JOIN ExpenseCategs expCat ON exp.ExpenseCategId = expCat.ExpenseCategId "
                         + "AND exp.UserId = expCat.UserId "
-                        + "WHERE exp.UserId = " + usr.UserId + " "
-                        + "AND exp.Time > DATE_SUB(STR_TO_DATE('" + startTs.ToString("MM/dd/yyyy") + "','%m/%d/%Y'), INTERVAL 1 SECOND) "
-                        + "AND exp.Time < DATE_ADD(STR_TO_DATE('" + endTs.ToString("MM/dd/yyyy") + "','%m/%d/%Y'), INTERVAL 1 DAY) "
+                        + "WHERE exp.UserId = @usrUserId "
+                        + "AND exp.Time > DATE_SUB(STR_TO_DATE(@startTs,'%m/%d/%Y'), INTERVAL 1 SECOND) "
+                        + "AND exp.Time < DATE_ADD(STR_TO_DATE(@endTs,'%m/%d/%Y'), INTERVAL 1 DAY) "
                         + "ORDER BY exp.Time "
                         + "LIMIT " + startIndex + ", " + pageSize;
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
+                        command.Parameters.AddWithValue("@usrUserId", usr.UserId);
+                        command.Parameters.AddWithValue("@startTs", startTs.ToString("MM/dd/yyyy"));
+                        command.Parameters.AddWithValue("@endTs", endTs.ToString("MM/dd/yyyy"));
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -171,9 +181,17 @@ namespace NTWebApp.DBAccess
                             string commandText = "INSERT INTO Expenses "
                                 + "(ExpenseName, ExpenseCategId, Cost, Time, Address, Description, UserId) "
                                 + "VALUES "
-                                + "('" + item.Name + "', " + item.ExpenseCategId + ", " + item.Cost + ",  STR_TO_DATE('" + item.Time.ToString("MM/dd/yyyy") + "','%m/%d/%Y'), '" + item.Address + "', '" + item.Description + "', " + usr.UserId + ")";
+                                + "(@itemName, @itemExpenseCategId, @itemCost,  STR_TO_DATE(@itemTime,'%m/%d/%Y'), @itemAddress, @itemDescription, @usrUserId)";
                             using (MySqlCommand command = database.CreateCommand(commandText, connection))
                             {
+                                command.Parameters.AddWithValue("@itemName", item.Name);
+                                command.Parameters.AddWithValue("@itemExpenseCategId", item.ExpenseCategId);
+                                command.Parameters.AddWithValue("@itemCost", item.Cost);
+                                command.Parameters.AddWithValue("@itemTime", item.Time.ToString("MM/dd/yyyy"));
+                                command.Parameters.AddWithValue("@itemAddress", item.Address);
+                                command.Parameters.AddWithValue("@itemDescription", item.Description);
+                                command.Parameters.AddWithValue("@usrUserId", usr.UserId);
+
                                 command.Transaction = transaction;
 
                                 int row = command.ExecuteNonQuery();
