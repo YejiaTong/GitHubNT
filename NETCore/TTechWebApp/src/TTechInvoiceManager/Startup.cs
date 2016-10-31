@@ -92,7 +92,7 @@ namespace NTWebApp
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 CookieDomain = ".ttechcode.com",
-                ExpireTimeSpan = TimeSpan.FromDays(3),
+                ExpireTimeSpan = TimeSpan.FromDays(7),
                 SlidingExpiration = true
             });
 

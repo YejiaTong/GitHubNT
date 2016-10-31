@@ -254,7 +254,7 @@ namespace NTWebApp.DBAccess
                             }
                         }
 
-                        string subject = "T Tech Invoice Manger account receipt for " + usr.Email;
+                        string subject = "TY Tech Invoice Manger account receipt for " + usr.Email;
                         string body = "Welcome! " + usr.UserName
                             + Environment.NewLine + "Your account has been created and please use the following pass code for your Invoice Manger login"
                             + Environment.NewLine
@@ -401,7 +401,7 @@ namespace NTWebApp.DBAccess
                             }
                         }
 
-                        string subject = "T Tech Invoice Manger password reset for " + usr.Email;
+                        string subject = "TY Tech Invoice Manger password reset for " + usr.Email;
                         string body = "Your password has been reset and please use the following pass code for your Invoice Manger login"
                             + Environment.NewLine
                             + Environment.NewLine + "Code: " + passCode
