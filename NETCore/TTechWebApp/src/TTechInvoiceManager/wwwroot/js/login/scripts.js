@@ -1,6 +1,5 @@
+jQuery(document).ready(function () {
 
-jQuery(document).ready(function() {
-	
     var $formLogin = $('#login-form');
     var $divForms = $('#div-forms');
     var $modalAnimateTime = 300;

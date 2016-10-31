@@ -45,7 +45,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-offset-4 col-sm-8">
                                         @Html.LabelFor(m => m.RememberMe, "Remember Me?", htmlAttributes: new { @class = "control-label" })
-                                        @Html.CheckBoxFor(m => m.RememberMe, new { htmlAttributes = new { @class = "form-control checkbox" } })
+                                        @Html.CheckBoxFor(m => m.RememberMe, new { htmlAttributes = new { @class = "form-control checkbox" }, @checked = "checked" })
                                     </div>
                                 </div>
                                 <button id="login_btn" type="submit" class="btn btn-link-1">Login</button>
