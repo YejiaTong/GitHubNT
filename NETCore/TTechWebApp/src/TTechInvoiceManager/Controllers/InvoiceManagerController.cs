@@ -108,7 +108,7 @@ namespace NTWebApp.Controllers
                 {
                     if(String.IsNullOrEmpty(item.Address))
                     {
-                        item.Address = String.Empty;
+                        item.Address = "Current Location";
                     }
                     if (String.IsNullOrEmpty(item.Description))
                     {

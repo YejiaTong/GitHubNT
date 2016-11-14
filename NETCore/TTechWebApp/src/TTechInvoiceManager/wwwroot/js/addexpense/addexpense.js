@@ -1,12 +1,45 @@
 ﻿$(function () {
 
     var model;
+    var key = 'AIzaSyA2suLtNXrg0wmUColpRWdhT_w93KFL248';
+
+    function error(msg) {
+        alert('Error in geolocation');
+        $('#addexpense_Address').val("Current Location");
+    }
+
+    function success(position) {
+        var lats = position.coords.latitude;
+        var lngs = position.coords.longitude;
+        lats = Math.round(lats * 1000) / 1000;
+        lngs = Math.round(lngs * 1000) / 1000;
+
+        $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?key=' + key, {
+                sensor: false,
+                latlng: lats + "," + lngs
+            },
+            function (data, textStatus) {
+                $('#addexpense_Address').val(data.results[0].formatted_address);
+            }
+        );
+    };
+
+
+    $("#addexpense-modal").click(function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, error);
+        } else {
+            alert('Location not supported');
+            $('#addexpense_Address').val("Current Location");
+        }
+    });
 
     $("#addexpense-cancel").click(function () {
 
         $('#addexpense_Name').val("");
         $('#addexpense_Cost').val("");
         $('#addexpense_Time').val("");
+        $('#addexpense_Address').val("");
 
         $('#categoryGroupAlert').text("");
         $('#expenseNameAlert').text("");
@@ -22,6 +55,7 @@
         var $ae_Name = $('#addexpense_Name').val();
         var $ae_Cost = $('#addexpense_Cost').val();
         var $ae_Time = $('#addexpense_Time').val();
+        var $ae_Location = $('#addexpense_Address').val();
         var $pass = true;
 
         if ($ae_ExpenseCategId == 0) {
@@ -55,19 +89,12 @@
 
         if ($pass)
         {
-            $('#categoryGroupAlert').text("");
-            $('#expenseNameAlert').text("");
-            $('#costGroupAlert').text("");
-            $('#timeGroupAlert').text("");
-
-            $('#modalAlert').text("");
-
             var sendInfo = {
                 AddExpenseExpenseCategId: $ae_ExpenseCategId,
                 AddExpenseName: $ae_Name,
                 AddExpenseCost: $ae_Cost,
                 AddExpenseTime: $ae_Time,
-                AddExpenseAddress: ""
+                AddExpenseAddress: $ae_Location
             };
 
             $.ajax({
@@ -85,7 +112,7 @@
                                         Name: $ae_Name,
                                         Cost: $ae_Cost,
                                         Time: $ae_Time,
-                                        Address: ""
+                                        Address: $ae_Location
                                     }
                                 ]
                             };
@@ -97,7 +124,7 @@
                                 Name: $ae_Name,
                                 Cost: $ae_Cost,
                                 Time: $ae_Time,
-                                Address: ""
+                                Address: $ae_Location
                             };
                             model.Expenses.push(newItem);
                         }
@@ -112,6 +139,13 @@
 
                 data: sendInfo
             });
+
+            $('#categoryGroupAlert').text("");
+            $('#expenseNameAlert').text("");
+            $('#costGroupAlert').text("");
+            $('#timeGroupAlert').text("");
+
+            $('#modalAlert').text("");
         }
         else
         {
