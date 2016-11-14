@@ -181,7 +181,7 @@ namespace NTWebApp.DBAccess
                             string commandText = "INSERT INTO Expenses "
                                 + "(ExpenseName, ExpenseCategId, Cost, Time, Address, Description, UserId) "
                                 + "VALUES "
-                                + "(@itemName, @itemExpenseCategId, @itemCost,  STR_TO_DATE(@itemTime,'%m/%d/%Y'), @itemAddress, @itemDescription, @usrUserId)";
+                                + "(@itemName, @itemExpenseCategId, @itemCost, STR_TO_DATE(@itemTime,'%m/%d/%Y'), @itemAddress, @itemDescription, @usrUserId)";
                             using (MySqlCommand command = database.CreateCommand(commandText, connection))
                             {
                                 command.Parameters.AddWithValue("@itemName", item.Name);

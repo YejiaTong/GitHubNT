@@ -9,5 +9,7 @@ namespace NTWebApp.Models.InvoiceManager
         public List<ExpenseCategViewModel> ExpenseCategs { get; set; }
 
         public List<ExpenseViewModel> Expenses { get; set; }
+
+        public ExpenseViewModel NewExpense { get; set; }
     }
 }

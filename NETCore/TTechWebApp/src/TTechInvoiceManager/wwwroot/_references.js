@@ -1,4 +1,6 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="js/addexpense/addexpense.min.js" />
+/// <reference path="js/addexpense/login.js" />
 /// <reference path="js/fb.js" />
 /// <reference path="js/linkedin.js" />
 /// <reference path="js/login/jquery.backstretch.js" />

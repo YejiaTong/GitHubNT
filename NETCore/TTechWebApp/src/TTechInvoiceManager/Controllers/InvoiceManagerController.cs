@@ -25,6 +25,25 @@ namespace NTWebApp.Controllers
             return View();
         }
 
+        public IActionResult ValidateNewExpense(int AddExpenseExpenseCategId, string AddExpenseName, double AddExpenseCost, DateTime AddExpenseTime, string AddExpenseAddress)
+        {
+            try
+            {
+                ExpenseViewModel newItem = new ExpenseViewModel();
+                newItem.ExpenseCategId = AddExpenseExpenseCategId;
+                newItem.Name = AddExpenseName;
+                newItem.Cost = AddExpenseCost;
+                newItem.Time = AddExpenseTime;
+                newItem.Address = AddExpenseAddress;
+            }
+            catch(Exception ex)
+            {
+                return this.Json("Failed to add new expense item." 
+                    + Environment.NewLine + ex.Message);
+            }
+
+            return this.Json("Pass");
+        }
 
         public IActionResult AddExpense(AddExpenseViewModel model)
         {
@@ -46,28 +65,7 @@ namespace NTWebApp.Controllers
                 }
                 else
                 {
-                    int index = 0;
-                    if (model.Expenses == null)
-                    {
-                        model.Expenses = new List<ExpenseViewModel>();
-                    }
-
-                    if (Request.Form["submit"].Equals("AddNewItem"))
-                    {
-                        return AddNewItem(model);
-                    }
-                    else if (Request.Form["submit"].Equals("SubmitExpenses"))
-                    {
-                        return SubmitExpenses(model);
-                    }
-                    else if (Int32.TryParse(Request.Form["submit"], out index))
-                    {
-                        return RemoveItem(model, index);
-                    }
-                    else
-                    {
-                        throw new Exception("Oooops!!! Unhandled expection occurs...");
-                    }
+                    return SubmitExpenses(model);
                 }
             }
             else
@@ -102,44 +100,19 @@ namespace NTWebApp.Controllers
         {
             if (model.Expenses == null || model.Expenses.Count() == 0)
             {
-                ViewBag.WarningMessage = "No item found";
+                return this.Json("No item found");
             }
             else
             {
                 foreach (var item in model.Expenses)
                 {
-                    if (item.ExpenseCategId == 0)
+                    if(String.IsNullOrEmpty(item.Address))
                     {
-                        ViewData["WarningMessage"] = "It is found that the <strong>Expense Category</strong> is missing";
-                        model.ExpenseCategs = LoadUserExpenseCategs(GetUserInfo());
-
-                        return View(model);
+                        item.Address = String.Empty;
                     }
-
-                    if (String.IsNullOrEmpty(item.Name))
+                    if (String.IsNullOrEmpty(item.Description))
                     {
-                        ViewData["WarningMessage"] = "It is found that the Expense is <strong>Empty</strong>";
-                        model.ExpenseCategs = LoadUserExpenseCategs(GetUserInfo());
-
-                        return View(model);
-                    }
-
-                    item.Name = item.Name.Trim();
-
-                    if (item.ExpenseCategId == 0)
-                    {
-                        ViewData["WarningMessage"] = "Please select a valid <strong>Expense Category</strong>";
-                        model.ExpenseCategs = LoadUserExpenseCategs(GetUserInfo());
-
-                        return View(model);
-                    }
-
-                    if (String.IsNullOrEmpty(item.Name))
-                    {
-                        ViewData["WarningMessage"] = "It is found that the Expense is <strong>Empty</strong>";
-                        model.ExpenseCategs = LoadUserExpenseCategs(GetUserInfo());
-
-                        return View(model);
+                        item.Description = String.Empty;
                     }
                 }
 
@@ -149,22 +122,13 @@ namespace NTWebApp.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ViewData["WarningMessage"] = ex.Message;
-                    model.ExpenseCategs = LoadUserExpenseCategs(GetUserInfo());
-
-                    return View(model);
+                    return this.Json("Failed to add new expense item."
+                    + Environment.NewLine + ex.Message);
                 }
+
+                ModelState.Clear();
+                return this.Json("Pass");
             }
-
-            model.Expenses = new List<ExpenseViewModel>();
-            if (String.IsNullOrEmpty(ViewBag.WarningMessage))
-            {
-                ViewData["SuccessMessage"] = "New items were added successfully...";
-            }
-
-            ModelState.Clear();
-
-            return View(model);
         }
 
         public IActionResult RemoveItem(AddExpenseViewModel model, int index)
