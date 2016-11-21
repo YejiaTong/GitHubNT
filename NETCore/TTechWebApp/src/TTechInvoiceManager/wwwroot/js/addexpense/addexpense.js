@@ -41,7 +41,7 @@
 
     $("#addexpense-modal").click(function () {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(success, error, { timeout: 5000 });
+            navigator.geolocation.getCurrentPosition(success, error); //{ timeout: 5000 }
         } else {
             alert('Location not supported');
             $('#addexpense_Address').val("Current Location");

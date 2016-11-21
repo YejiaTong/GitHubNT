@@ -34,5 +34,9 @@ namespace NTWebApp.Models.Home
         public string DBInstance { get; set; }
 
         public string RetryPassword { get; set; }
+
+        public string DefaultController { get; set; }
+
+        public string DefaultView { get; set; }
     }
 }

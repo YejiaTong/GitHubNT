@@ -66,6 +66,8 @@ namespace NTWebApp.UIClasses
             this.Description = usr.Description;
             this.ProfilePhotoUrl = usr.ProfilePhotoUrl;
             this.DBInstance = usr.DBInstance;
+            this.DefaultController = usr.DefaultController;
+            this.DefaultView = usr.DefaultView;
         }
 
         public void Assign(User usr)
@@ -84,6 +86,8 @@ namespace NTWebApp.UIClasses
             this.Description = usr.Description;
             this.ProfilePhotoUrl = usr.ProfilePhotoUrl;
             this.DBInstance = usr.DBInstance;
+            this.DefaultController = usr.DefaultController;
+            this.DefaultView = usr.DefaultView;
         }
 
         public bool Compare(UIUser usr)

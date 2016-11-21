@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Login Router";
+}
+
+<h4>@ViewData["Title"].</h4>
+
+<p>To be redirected...</p>
+
+<script type="text/javascript">
+    window.location.href = "../../" + @ViewData["DefaultController"] + "/" + @ViewData["DefaultView"];
+</script>

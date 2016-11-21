@@ -190,9 +190,31 @@ namespace NTWebApp.Controllers
 
         public IActionResult Setting()
         {
-            ViewData["Message"] = "To be expected...";
+            SettingViewModel model = new SettingViewModel();
 
-            return View();
+            if (ModelState.IsValid)
+            {
+                UIUser usr = GetUserInfo();
+                model = new SettingViewModel();
+                model.SiteMaps = SiteMapsContext.LoadAllSiteMaps().Select(x => AutoMapperFactory.SiteMapViewModel_UISiteMap.CreateMapper().Map<SiteMapViewModel>(new UISiteMap(x))).ToList();
+                var item = model.SiteMaps.FirstOrDefault(x => x.SiteMapController.Equals(usr.DefaultController) && x.SiteMapView.Equals(usr.DefaultView));
+                item.IsSelected = true;
+            }
+            else
+            {
+                model.SiteMaps = new List<SiteMapViewModel>();
+            }
+
+            return View(model);
+        }
+
+        public IActionResult LoginRouter()
+        {
+            UIUser usr = GetUserInfo();
+
+            return RedirectToAction(usr.DefaultView, usr.DefaultController);
+
+            //return View();
         }
 
         public IActionResult Invoice()

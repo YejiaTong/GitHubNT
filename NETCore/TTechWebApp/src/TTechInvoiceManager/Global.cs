@@ -155,6 +155,7 @@ namespace NTWebApp
         public static MapperConfiguration MessageBoardMsgViewModel_UIMessageBoardMsg;
         public static MapperConfiguration MonthViewItemViewModel_UIMonthExpense;
         public static MapperConfiguration WeekViewItemViewModel_UIWeekExpense;
+        public static MapperConfiguration SiteMapViewModel_UISiteMap;
 
         public static void InitializeAutoMapperFactory()
         {
@@ -175,6 +176,8 @@ namespace NTWebApp
                     .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                     .ForMember(dest => dest.ProfilePhotoUrl, opt => opt.MapFrom(src => src.ProfilePhotoUrl))
                     .ForMember(dest => dest.DBInstance, opt => opt.MapFrom(src => src.DBInstance))
+                    .ForMember(dest => dest.DefaultController, opt => opt.MapFrom(src => src.DefaultController))
+                    .ForMember(dest => dest.DefaultView, opt => opt.MapFrom(src => src.DefaultView))
                     .ForMember(dest => dest.RetryPassword, opt => opt.MapFrom(src => src.RetryPassword))
                     .ReverseMap());
 
@@ -193,6 +196,8 @@ namespace NTWebApp
                     .ForMember(dest => dest.SecurityToken, opt => opt.Ignore())
                     .ForMember(dest => dest.ProfilePhotoUrl, opt => opt.Ignore())
                     .ForMember(dest => dest.DBInstance, opt => opt.Ignore())
+                    .ForMember(dest => dest.DefaultController, opt => opt.Ignore())
+                    .ForMember(dest => dest.DefaultView, opt => opt.Ignore())
                     .ForMember(dest => dest.RetryPassword, opt => opt.Ignore())
                     .ReverseMap());
 
@@ -241,6 +246,14 @@ namespace NTWebApp
                      .ForMember(dest => dest.TotalCost, opt => opt.MapFrom(src => src.TotalCost))
                      .ReverseMap());
 
+                SiteMapViewModel_UISiteMap = new MapperConfiguration(cfg => cfg.CreateMap<SiteMapViewModel, UISiteMap>()
+                     .ForMember(dest => dest.SiteMapId, opt => opt.MapFrom(src => src.SiteMapId))
+                     .ForMember(dest => dest.SiteMapName, opt => opt.MapFrom(src => src.SiteMapName))
+                     .ForMember(dest => dest.SiteMapController, opt => opt.MapFrom(src => src.SiteMapController))
+                     .ForMember(dest => dest.SiteMapView, opt => opt.MapFrom(src => src.SiteMapView))
+                     .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                     .ReverseMap());
+
                 // Validate all mappings
                 AccountViewModel_UIUserMapping.AssertConfigurationIsValid();
                 UserDetailViewModel_UIUserMapping.AssertConfigurationIsValid();
@@ -249,6 +262,7 @@ namespace NTWebApp
                 MessageBoardMsgViewModel_UIMessageBoardMsg.AssertConfigurationIsValid();
                 MonthViewItemViewModel_UIMonthExpense.AssertConfigurationIsValid();
                 WeekViewItemViewModel_UIWeekExpense.AssertConfigurationIsValid();
+                SiteMapViewModel_UISiteMap.AssertConfigurationIsValid();
             }
             catch(Exception ex)
             {

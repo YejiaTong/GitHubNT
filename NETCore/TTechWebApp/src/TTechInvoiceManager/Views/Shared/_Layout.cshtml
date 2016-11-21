@@ -82,7 +82,13 @@
                 else
                 {
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Account"><span class="glyphicon glyphicon-home"></span> Account</a></li>
+                        <li class="dropdown" role="menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-home"></span> Home <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="im-socials"><a asp-area="" asp-controller="Home" asp-action="Account">Account</a></li>
+                                <li class="im-socials"><a asp-area="" asp-controller="Home" asp-action="Setting">Setting</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown" role="menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span> Invoice Management <span class="caret"></span></a>
                             <ul class="dropdown-menu">

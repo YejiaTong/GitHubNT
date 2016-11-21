@@ -87,8 +87,9 @@ jQuery(document).ready(function () {
             url: "/Account/ValidateLogin",
             dataType: "json",
             success: function (msg) {
-                if (msg == "Pass") {
-                    window.location.href = "../../Home/Account";
+                msgArray = msg.split("---");
+                if (msgArray[0] == "Pass") {
+                    window.location.href = "../../" + msgArray[1];
                 } else {
                     msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "error", "glyphicon-remove", msg);
                 }

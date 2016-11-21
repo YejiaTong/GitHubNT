@@ -4,10 +4,48 @@
 
 <h4>@ViewData["Title"].</h4>
 
+@model NTWebApp.Models.Home.SettingViewModel
 <section>
     <div class="row">
-        <table class="table table-hover">
-            
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Site</th>
+                    <th>Page</th>
+                    <th>Default</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.SiteMaps.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="3">
+                            <div class="alert alert-info" role="alert">
+                                <p>...No Site Map item...</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @for (int i = 0; i < Model.SiteMaps.Count(); ++i)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => m.SiteMaps[i].SiteMapController, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                            <td>@Html.DisplayFor(m => m.SiteMaps[i].SiteMapView, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                            <td>@Html.CheckBoxFor(m => m.SiteMaps[i].IsSelected, new { htmlAttributes = new { @class = "form-control" } })</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <dl class="row">
+                                    <dt class="col-sm-3"><small>@Html.DisplayFor(m => m.SiteMaps[i].SiteMapName, new { htmlAttributes = new { @class = "form-control" } })</small></dt>
+                                    <dd class="col-sm-9">@Html.DisplayFor(m => m.SiteMaps[i].Description, new { htmlAttributes = new { @class = "form-control" } })</dd>
+                                </dl>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
         </table>
     </div>
 </section>

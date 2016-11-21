@@ -19,9 +19,11 @@ namespace NTWebApp.DBAccess
                 using (MySqlConnection connection = database.CreateConnection())
                 {
                     connection.Open();
-                    string commandText = "SELECT UserId, UserName, Email, FirstName, LastName, Address, "
-                        + "PostalCode, Gender, IsActive, Password, SecurityToken, Description, ProfilePhotoUrl, DBInstance "
-                        + "FROM Users";
+                    string commandText = "SELECT usr.UserId, usr.UserName, usr.Email, usr.FirstName, usr.LastName, usr.Address, "
+                        + "usr.PostalCode, usr.Gender, usr.IsActive, usr.Password, usr.SecurityToken, usr.Description, "
+                        + "usr.ProfilePhotoUrl, usr.DBInstance, sm.SiteMapController, sm.SiteMapView "
+                        + "FROM InvoiceManager.Users usr "
+                        + "INNER JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
@@ -41,6 +43,8 @@ namespace NTWebApp.DBAccess
                                 item.Description = !reader.IsDBNull(reader.GetOrdinal("Description")) ? reader.GetString("Description") : String.Empty;
                                 item.ProfilePhotoUrl = !reader.IsDBNull(reader.GetOrdinal("ProfilePhotoUrl")) ? reader.GetString("ProfilePhotoUrl") : String.Empty;
                                 item.DBInstance = !reader.IsDBNull(reader.GetOrdinal("DBInstance")) ? reader.GetString("DBInstance") : String.Empty;
+                                item.DefaultController = !reader.IsDBNull(reader.GetOrdinal("SiteMapController")) ? reader.GetString("SiteMapController") : String.Empty;
+                                item.DefaultView = !reader.IsDBNull(reader.GetOrdinal("SiteMapView")) ? reader.GetString("SiteMapView") : String.Empty;
 
                                 ret.Add(item);
                             }
@@ -65,16 +69,18 @@ namespace NTWebApp.DBAccess
                 using (MySqlConnection connection = database.CreateConnection())
                 {
                     connection.Open();
-                    string commandText = "SELECT UserId, UserName, Email, FirstName, LastName, Address, "
-                        + "PostalCode, Gender, IsActive, Password, SecurityToken, Description, ProfilePhotoUrl, DBInstance "
-                        + "FROM Users ";
+                    string commandText = "SELECT usr.UserId, usr.UserName, usr.Email, usr.FirstName, usr.LastName, usr.Address, "
+                        + "usr.PostalCode, usr.Gender, usr.IsActive, usr.Password, usr.SecurityToken, usr.Description, "
+                        + "usr.ProfilePhotoUrl, usr.DBInstance, sm.SiteMapController, sm.SiteMapView "
+                        + "FROM InvoiceManager.Users usr "
+                        + "INNER JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId ";
                     if (!String.IsNullOrEmpty(usr.UserName))
                     {
-                        commandText += "WHERE UserName = '" + usr.UserName + "' OR Email = '" + usr.UserName + "'";
+                        commandText += "WHERE usr.UserName = '" + usr.UserName + "' OR usr.Email = '" + usr.UserName + "'";
                     }
                     else if (!String.IsNullOrEmpty(usr.Email))
                     {
-                        commandText += "WHERE UserName = '" + usr.Email + "' OR Email = '" + usr.Email + "'";
+                        commandText += "WHERE usr.UserName = '" + usr.Email + "' OR usr.Email = '" + usr.Email + "'";
                     }
                     else
                     {
@@ -101,6 +107,8 @@ namespace NTWebApp.DBAccess
                                 ret.Description = !reader.IsDBNull(reader.GetOrdinal("Description")) ? reader.GetString("Description") : String.Empty;
                                 ret.ProfilePhotoUrl = !reader.IsDBNull(reader.GetOrdinal("ProfilePhotoUrl")) ? reader.GetString("ProfilePhotoUrl") : String.Empty;
                                 ret.DBInstance = !reader.IsDBNull(reader.GetOrdinal("DBInstance")) ? reader.GetString("DBInstance") : String.Empty;
+                                ret.DefaultController = !reader.IsDBNull(reader.GetOrdinal("SiteMapController")) ? reader.GetString("SiteMapController") : String.Empty;
+                                ret.DefaultView = !reader.IsDBNull(reader.GetOrdinal("SiteMapView")) ? reader.GetString("SiteMapView") : String.Empty;
                             }
                         }
                     }
@@ -141,10 +149,12 @@ namespace NTWebApp.DBAccess
                 using (MySqlConnection connection = database.CreateConnection())
                 {
                     connection.Open();
-                    string commandText = "SELECT UserId, UserName, Email, FirstName, LastName, Address, "
-                        + "PostalCode, Gender, IsActive, Password, SecurityToken, Description, ProfilePhotoUrl, DBInstance "
-                        + "FROM Users "
-                        + "WHERE UserId = @userId";
+                    string commandText = "SELECT usr.UserId, usr.UserName, usr.Email, usr.FirstName, usr.LastName, usr.Address, "
+                        + "usr.PostalCode, usr.Gender, usr.IsActive, usr.Password, usr.SecurityToken, usr.Description, "
+                        + "usr.ProfilePhotoUrl, usr.DBInstance, sm.SiteMapController, sm.SiteMapView "
+                        + "FROM InvoiceManager.Users usr "
+                        + "INNER JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId "
+                        + "WHERE usr.UserId = @userId";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
                         command.Parameters.AddWithValue("@userId", userId);
@@ -167,6 +177,8 @@ namespace NTWebApp.DBAccess
                                 ret.Description = !reader.IsDBNull(reader.GetOrdinal("Description")) ? reader.GetString("Description") : String.Empty;
                                 ret.ProfilePhotoUrl = !reader.IsDBNull(reader.GetOrdinal("ProfilePhotoUrl")) ? reader.GetString("ProfilePhotoUrl") : String.Empty;
                                 ret.DBInstance = !reader.IsDBNull(reader.GetOrdinal("DBInstance")) ? reader.GetString("DBInstance") : String.Empty;
+                                ret.DefaultController = !reader.IsDBNull(reader.GetOrdinal("SiteMapController")) ? reader.GetString("SiteMapController") : String.Empty;
+                                ret.DefaultView = !reader.IsDBNull(reader.GetOrdinal("SiteMapView")) ? reader.GetString("SiteMapView") : String.Empty;
                             }
                         }
                     }
@@ -693,6 +705,10 @@ namespace NTWebApp.DBAccess
         public string ProfilePhotoUrl { get; set; }
 
         public string DBInstance { get; set; }
+
+        public string DefaultController { get; set; }
+
+        public string DefaultView { get; set; }
     }
 
     /// <summary>

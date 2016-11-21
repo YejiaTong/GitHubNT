@@ -96,7 +96,7 @@ namespace NTWebApp.Controllers
 
                     var obj = AutoMapperFactory.AccountViewModel_UIUserMapping.CreateMapper().Map<AccountViewModel>(usr);
 
-                    return this.Json("Pass");
+                    return this.Json("Pass---" + obj.DefaultController + "/" + obj.DefaultView);
                     //return RedirectToAction("Account", "Home", obj);
                 }
                 catch (Exception ex)
