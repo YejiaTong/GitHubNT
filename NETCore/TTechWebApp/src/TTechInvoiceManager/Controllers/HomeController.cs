@@ -188,6 +188,13 @@ namespace NTWebApp.Controllers
             return View();
         }
 
+        public IActionResult Setting()
+        {
+            ViewData["Message"] = "To be expected...";
+
+            return View();
+        }
+
         public IActionResult Invoice()
         {
             ViewData["Message"] = "To be expected...!!!";

@@ -4,7 +4,22 @@
     var key = 'AIzaSyA2suLtNXrg0wmUColpRWdhT_w93KFL248';
 
     function error(msg) {
-        alert('Error in geolocation');
+        var errorMsg = '';
+        switch (msg.code) {
+            case msg.PERMISSION_DENIED:
+                errorMsg = "User denied the request for Geolocation. Please use https login for the sake of security."
+                break;
+            case msg.POSITION_UNAVAILABLE:
+                errorMsg = "Location information is unavailable."
+                break;
+            case msg.TIMEOUT:
+                errorMsg = "The request to get user location timed out."
+                break;
+            case msg.UNKNOWN_ERROR:
+                errorMsg = "An unknown error occurred."
+                break;
+        }
+        alert('Error in geolocation' + '\n- ' + errorMsg);
         $('#addexpense_Address').val("Current Location");
     }
 
@@ -24,10 +39,9 @@
         );
     };
 
-
     $("#addexpense-modal").click(function () {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(success, error);
+            navigator.geolocation.getCurrentPosition(success, error, { timeout: 5000 });
         } else {
             alert('Location not supported');
             $('#addexpense_Address').val("Current Location");
