@@ -23,7 +23,7 @@ namespace NTWebApp.DBAccess
                         + "usr.PostalCode, usr.Gender, usr.IsActive, usr.Password, usr.SecurityToken, usr.Description, "
                         + "usr.ProfilePhotoUrl, usr.DBInstance, sm.SiteMapController, sm.SiteMapView "
                         + "FROM InvoiceManager.Users usr "
-                        + "INNER JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId";
+                        + "LEFT JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
@@ -73,7 +73,7 @@ namespace NTWebApp.DBAccess
                         + "usr.PostalCode, usr.Gender, usr.IsActive, usr.Password, usr.SecurityToken, usr.Description, "
                         + "usr.ProfilePhotoUrl, usr.DBInstance, sm.SiteMapController, sm.SiteMapView "
                         + "FROM InvoiceManager.Users usr "
-                        + "INNER JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId ";
+                        + "LEFT JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId ";
                     if (!String.IsNullOrEmpty(usr.UserName))
                     {
                         commandText += "WHERE usr.UserName = '" + usr.UserName + "' OR usr.Email = '" + usr.UserName + "'";
@@ -153,7 +153,7 @@ namespace NTWebApp.DBAccess
                         + "usr.PostalCode, usr.Gender, usr.IsActive, usr.Password, usr.SecurityToken, usr.Description, "
                         + "usr.ProfilePhotoUrl, usr.DBInstance, sm.SiteMapController, sm.SiteMapView "
                         + "FROM InvoiceManager.Users usr "
-                        + "INNER JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId "
+                        + "LEFT JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId "
                         + "WHERE usr.UserId = @userId";
                     using (MySqlCommand command = database.CreateCommand(commandText, connection))
                     {

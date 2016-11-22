@@ -188,24 +188,52 @@ namespace NTWebApp.Controllers
             return View();
         }
 
-        public IActionResult Setting()
+        public IActionResult Setting(SettingViewModel model)
         {
-            SettingViewModel model = new SettingViewModel();
-
-            if (ModelState.IsValid)
+            if (Request.Method.Equals("GET"))
             {
+                model = new SettingViewModel();
+
                 UIUser usr = GetUserInfo();
                 model = new SettingViewModel();
                 model.SiteMaps = SiteMapsContext.LoadAllSiteMaps().Select(x => AutoMapperFactory.SiteMapViewModel_UISiteMap.CreateMapper().Map<SiteMapViewModel>(new UISiteMap(x))).ToList();
                 var item = model.SiteMaps.FirstOrDefault(x => x.SiteMapController.Equals(usr.DefaultController) && x.SiteMapView.Equals(usr.DefaultView));
                 item.IsSelected = true;
+
+                return View(model);
             }
             else
             {
-                model.SiteMaps = new List<SiteMapViewModel>();
-            }
+                UIUser usr = GetUserInfo();
+                SiteMapViewModel item = model.SiteMaps.FirstOrDefault(x => x.IsSelected);
+                if(item == null)
+                {
+                    ViewData["ErrorMessage"] = "Unhandled exception: item not found";
+                }
+                else
+                {
+                    bool update = false;
+                    try
+                    {
+                        update = SiteMapsContext.UpdateUserDefaultView(usr, AutoMapperFactory.SiteMapViewModel_UISiteMap.CreateMapper().Map<UISiteMap>(item));
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewData["ErrorMessage"] = ex.Message;
+                    }
+                    
+                    if(update)
+                    {
+                        ViewData["SuccessMessage"] = "Successfully updated the User Front Page";
+                    }
+                    else
+                    {
+                        ViewData["ErrorMessage"] = "Unhandled exception: failed to update the record";
+                    }
+                }
 
-            return View(model);
+                return View(model);
+            }
         }
 
         public IActionResult LoginRouter()

@@ -51,6 +51,55 @@ namespace NTWebApp.DBAccess
 
             return ret;
         }
+
+        public static bool UpdateUserDefaultView(User usr, SiteMap siteMap)
+        {
+            List<SiteMap> ret = new List<SiteMap>();
+            try
+            {
+                using (MySqlConnection connection = database.CreateConnection())
+                {
+                    connection.Open();
+                    string commandText = "UPDATE Users "
+                        + "SET DefaultView = @siteMapId "
+                        + "WHERE Userid IN "
+                        + "( "
+                        + "SELECT UserId "
+                        + "FROM "
+                        + "( "
+                        + "SELECT UserId "
+                        + "FROM Users "
+                        + "WHERE UserName = @usrUserName "
+                        + "OR Email = @usrEmail "
+                        + ") t "
+                        + ")"; ;
+                    using (MySqlCommand command = database.CreateCommand(commandText, connection))
+                    {
+                        command.Parameters.AddWithValue("@siteMapId", siteMap.SiteMapId);
+                        command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                        command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
+                        int row = command.ExecuteNonQuery();
+
+                        if (row == 0)
+                        {
+                            throw new UpdateUserDefaultViewException();
+                        }
+                    }
+                    connection.Close();
+                }
+            }
+            catch(UpdateUserDefaultViewException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Unexpected failure");
+            }
+
+            return true;
+        }
     }
 
     /// <summary>
@@ -70,5 +119,11 @@ namespace NTWebApp.DBAccess
         public string SiteMapView { get; set; }
 
         public string Description { get; set; }
+    }
+
+    public class UpdateUserDefaultViewException : Exception
+    {
+        public UpdateUserDefaultViewException()
+            : base(String.Format("Failed to update User default front page")) { }
     }
 }
