@@ -224,7 +224,7 @@ namespace NTWebApp.Controllers
                     
                     if(update)
                     {
-                        ViewData["SuccessMessage"] = "Successfully updated the User Front Page";
+                        ViewData["SuccessMessage"] = "Successfully updated the User Front Page...";
                     }
                     else
                     {
