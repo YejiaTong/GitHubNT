@@ -3,6 +3,14 @@
     var model;
     var key = 'AIzaSyA2suLtNXrg0wmUColpRWdhT_w93KFL248';
 
+    // Noah - Test if google API is ready
+    /*if (google && google.maps) {
+        alert('Google maps loaded');
+    }
+    if (!google || !google.maps) {
+        alert('Not loaded yet');
+    }*/
+
     function error(msg) {
         var errorMsg = '';
         switch (msg.code) {
@@ -29,14 +37,24 @@
         lats = Math.round(lats * 1000) / 1000;
         lngs = Math.round(lngs * 1000) / 1000;
 
-        $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?key=' + key, {
+        $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?', {
                 sensor: false,
-                latlng: lats + "," + lngs
+                latlng: lats + "," + lngs,
+                key: key
             },
             function (data, textStatus) {
                 $('#addexpense_Address').val(data.results[0].formatted_address);
             }
         );
+
+        /*$.getJSON('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', {
+                location: lats + "," + lngs,
+                key: key
+            },
+            function (data, textStatus) {
+                alert('nice!');
+            }
+        );*/
     };
 
     $("#addexpense-modal").click(function () {
@@ -72,12 +90,17 @@
         var $ae_Location = $('#addexpense_Address').val();
         var $pass = true;
 
-        if ($ae_ExpenseCategId == 0) {
-            $('#categoryGroupAlert').text("** Invalid Expense Category");
+        if (!$ae_ExpenseCategId) {
+            $('#categoryGroupAlert').text("** Please set up your Expense Category");
             $pass = false;
-        }
-        else {
-            $('#categoryGroupAlert').text("");
+        } else {
+            if ($ae_ExpenseCategId == 0) {
+                $('#categoryGroupAlert').text("** Invalid Expense Category");
+                $pass = false;
+            }
+            else {
+                $('#categoryGroupAlert').text("");
+            }
         }
         if ($ae_Name.trim() == "") {
             $('#expenseNameAlert').text("** Empty Expense Name");
