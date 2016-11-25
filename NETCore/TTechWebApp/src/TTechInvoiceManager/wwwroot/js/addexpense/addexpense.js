@@ -1,7 +1,13 @@
 ﻿$(function () {
 
     var model;
-    var key = 'AIzaSyA2suLtNXrg0wmUColpRWdhT_w93KFL248';
+    var geoCodeKey = 'AIzaSyA2suLtNXrg0wmUColpRWdhT_w93KFL248';
+    var staticMapKey = 'AIzaSyDVF4IZYdJKa6Gq7_1_j1GQWbSA7JRWIE0';
+
+    var existedLats = 0;
+    var existedLngs = 0;
+    var existedLocation;
+    var existedImg;
 
     // Noah - Test if google API is ready
     /*if (google && google.maps) {
@@ -29,23 +35,67 @@
         }
         alert('Error in geolocation' + '\n- ' + errorMsg);
         $('#addexpense_Address').val("Current Location");
+        $('#addexpense-img').html("");
     }
 
     function success(position) {
         var lats = position.coords.latitude;
         var lngs = position.coords.longitude;
-        lats = Math.round(lats * 1000) / 1000;
-        lngs = Math.round(lngs * 1000) / 1000;
+        var imgSrc = 'https://maps.googleapis.com/maps/api/staticmap?zoom=12&size=340x100&markers=icon:https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png|' + lats + ',' + lngs + '&key=' + staticMapKey;
+        lats = Math.round(lats * 10000) / 10000;
+        lngs = Math.round(lngs * 10000) / 10000;
 
-        $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?', {
+        if (existedLats == 0 || existedLngs == 0) {
+            existedLats = lats;
+            existedLngs = lngs;
+
+            $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?', {
                 sensor: false,
                 latlng: lats + "," + lngs,
-                key: key
-            },
-            function (data, textStatus) {
-                $('#addexpense_Address').val(data.results[0].formatted_address);
+                key: geoCodeKey
+                },
+                function (data, textStatus) {
+                    $('#addexpense_Address').val(data.results[0].formatted_address);
+                    existedLocation = data.results[0].formatted_address;
+                }
+            );
+
+            $('#addexpense-img').html("");
+            existedImg = new Image();
+            existedImg.src = imgSrc;
+            $('#addexpense-img').append(existedImg);
+            $('#addexpense-img').append('<a href="#" data-toggle="addexpense-tooltip" title="Please enter address if necessary!"><mark>Incorrect Address?</mark></a>');
+            $('[data-toggle="addexpense-tooltip"]').tooltip();
+        } else {
+            if (existedLats != lats || existedLngs != existedLngs) {
+                existedLats = lats;
+                existedLngs = lngs;
+
+                $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?', {
+                        sensor: false,
+                        latlng: lats + "," + lngs,
+                        key: geoCodeKey
+                    },
+                    function (data, textStatus) {
+                        $('#addexpense_Address').val(data.results[0].formatted_address);
+                        existedLocation = data.results[0].formatted_address;
+                    }
+                );
+
+                $('#addexpense-img').html("");
+                existedImg = new Image();
+                existedImg.src = imgSrc;
+                $('#addexpense-img').append(existedImg);
+                $('#addexpense-img').append('<a href="#" data-toggle="addexpense-tooltip" title="Please enter address if necessary!"><mark>Incorrect Address?</mark></a>');
+                $('[data-toggle="addexpense-tooltip"]').tooltip();
+            } else {
+                $('#addexpense_Address').val(existedLocation);
+                $('#addexpense-img').html("");
+                $('#addexpense-img').append(existedImg);
+                $('#addexpense-img').append('<a href="#" data-toggle="addexpense-tooltip" title="Please enter address if necessary!"><mark>Incorrect Address?</mark></a>');
+                $('[data-toggle="addexpense-tooltip"]').tooltip();
             }
-        );
+        }
 
         /*$.getJSON('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', {
                 location: lats + "," + lngs,
@@ -63,6 +113,7 @@
         } else {
             alert('Location not supported');
             $('#addexpense_Address').val("Current Location");
+            $('#addexpense-img').html("");
         }
     });
 
@@ -72,6 +123,7 @@
         $('#addexpense_Cost').val("");
         $('#addexpense_Time').val("");
         $('#addexpense_Address').val("");
+        $('#addexpense-img').html("");
 
         $('#categoryGroupAlert').text("");
         $('#expenseNameAlert').text("");

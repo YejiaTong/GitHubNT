@@ -51,6 +51,9 @@
 .im-addexpense-modal-body {
     margin: 0 auto;
 }
+.im-addexpense-img {
+    margin-left: 80px;
+}
 
 /*!
  * Invoice Manager - Custom CSS - Right offset
