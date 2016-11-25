@@ -108,15 +108,16 @@ img { max-width: 100%; }
 
 .form-top {
 	overflow: hidden;
-	padding: 0 25px 15px 25px;
+	padding: 0 25px 0 25px;
 	background: #fff;
 	-moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
 	text-align: left;
+    margin-bottom: -10px;
 }
 
 .form-top-left {
 	float: left;
-	width: 75%;
+	width: 80%;
 	padding-top: 25px;
 }
 
@@ -124,7 +125,7 @@ img { max-width: 100%; }
 
 .form-top-right {
 	float: left;
-	width: 25%;
+	width: 20%;
 	padding-top: 5px;
 	font-size: 66px;
 	color: #ddd;
@@ -176,6 +177,7 @@ img { max-width: 100%; }
     border: 1px solid #dadfe1;
     height: 30px;
     line-height: 28px;
+    background: #fff;
     transition: all ease-in-out 500ms;
 }
 
