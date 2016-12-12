@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="ApplicationName">TM Invoice Manager</string>
+  <string name="MainTabHome">Home</string>
+  <string name="MainTabAddExpense">Add Expense</string>
+  <string name="MainTabAbout">About</string>
+  <string name="MainTabLogin">Login</string>
+  <string name="MainTabLogout">Logout</string>
+  <string name="Hello">Hello World, Click Me!</string>
+</resources>

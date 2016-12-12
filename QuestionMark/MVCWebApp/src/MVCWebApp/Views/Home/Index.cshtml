@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Get the number of days";
+}
+
+<h2>@ViewData["Title"].</h2>
+<hr />
+
+@model MVCWebApp.Models.Home.IndexViewModel
+<section>
+    @if (Model != null && !String.IsNullOrEmpty(Model.Msg))
+    {
+        <div class="row">
+            @Html.Raw(Model.Msg)
+        </div>
+    }
+</section>
+<section>
+    <form id="login-form" class="form-horizontal" asp-controller="Home" asp-action="Index" method="post">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Year</th>
+                    <th>Month</th>
+                    <th>Day</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        First Date
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.DateOne.Year, new { htmlAttributes = new { @class = "form-control", id = "index_dateOne_year" } })
+                        @Html.ValidationMessageFor(m => m.DateOne.Year, "", new { @class = "bg-warning" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.DateOne.Month, new { htmlAttributes = new { @class = "form-control", id = "index_dateOne_month" } })
+                        @Html.ValidationMessageFor(m => m.DateOne.Month, "", new { @class = "bg-warning" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.DateOne.Day, new { htmlAttributes = new { @class = "form-control", id = "index_dateOne_day" } })
+                        @Html.ValidationMessageFor(m => m.DateOne.Day, "", new { @class = "bg-warning" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Second Date
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.DateTwo.Year, new { htmlAttributes = new { @class = "form-control", id = "index_dateTwo_year" } })
+                        @Html.ValidationMessageFor(m => m.DateTwo.Year, "", new { @class = "bg-warning" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.DateTwo.Month, new { htmlAttributes = new { @class = "form-control", id = "index_dateTwo_month" } })
+                        @Html.ValidationMessageFor(m => m.DateTwo.Month, "", new { @class = "bg-warning" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.DateTwo.Day, new { htmlAttributes = new { @class = "form-control", id = "index_dateTwo_day" } })
+                        @Html.ValidationMessageFor(m => m.DateTwo.Day, "", new { @class = "bg-warning" })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <p><button type="submit" class="btn btn-primary blo">Submit</button></p>
+        </div>
+    </form>
+</section>
