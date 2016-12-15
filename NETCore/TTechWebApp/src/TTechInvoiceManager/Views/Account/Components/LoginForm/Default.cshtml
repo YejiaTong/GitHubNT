@@ -14,66 +14,105 @@
     <div class="top-content">
         <div class="inner-bg">
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2 form-box">
-                        <div class="form-top">
-                            <div class="form-top-left">
-                                <h3>Welcome to T Tech - Invoice Manager</h3>
+                @if (User.Identities.Any(u => u.IsAuthenticated))
+                {
+                    @if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("Member")) != null))
+                    {
+                        <h2 style="color: white;">Welcome back @User.Identity.Name! <i class="fa fa-smile-o"></i></h2>
+                    }
+                    else if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("External")) != null))
+                    {
+                        @if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("LinkedIn")) != null))
+                        {
+                            <h2 style="color: white;">Hello @User.Identity.Name! <i class="fa fa-linkedin"></i></h2>
+                            <h4>Sync with T Tech Inovice Manager &#64; First Time Visit</h4>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" onclick="alert('Ooops! The Account Synchronization is under development, please register!')">
+                                    <i class="fa fa-check"></i> Sync &#38; Login
+                                </a>
+                                <a class="btn btn-link-2" href="~/logoutLinkedIn">
+                                    <i class="fa fa-close"></i> Logout
+                                </a>
                             </div>
-                            <div class="form-top-right">
-                                <i class="fa fa-lock"></i>
+                        }
+                        else if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("Facebook")) != null))
+                        {
+                            <h2 style="color: white;">Hello @User.Identity.Name! <i class="fa fa-facebook"></i></h2>
+                            <h4>Sync with T Tech Inovice Manager &#64; First Time Visit</h4>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" onclick="alert('Ooops! The Account Synchronization is under development, please register!')">
+                                    <i class="fa fa-check"></i> Sync &#38; Login
+                                </a>
+                                <a class="btn btn-link-2" href="~/logoutFacebook">
+                                    <i class="fa fa-close"></i> Logout
+                                </a>
                             </div>
-                        </div>
-                        <div id="div-login-msg">
-                            <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right im-login-glyphicon"></div>
-                            <p><span id="text-login-msg">Type your username and password.</span><p>
-                        </div>
-                        <div class="form-bottom">
-                            <form id="login-form" class="form-horizontal" asp-controller="Account" asp-action="ValidateLogin" method="post">
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.LoginId, "Email or Username", htmlAttributes: new { @class = "control-label im-login-label col-sm-4" })
-                                    <div class="col-sm-8">
-                                        @Html.EditorFor(m => m.LoginId, new { htmlAttributes = new { @class = "form-control input-block-level", id = "login_username" } })
+                        }
+                    }
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 form-box">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>Welcome to T Tech - Invoice Manager</h3>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                            </div>
+                            <div id="div-login-msg">
+                                <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right im-login-glyphicon"></div>
+                                <p><span id="text-login-msg">Type your username and password.</span><p>
+                            </div>
+                            <div class="form-bottom">
+                                <form id="login-form" class="form-horizontal" asp-controller="Account" asp-action="ValidateLogin" method="post">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.LoginId, "Email or Username", htmlAttributes: new { @class = "control-label im-login-label col-sm-4" })
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(m => m.LoginId, new { htmlAttributes = new { @class = "form-control input-block-level", id = "login_username" } })
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.Password, "Password", htmlAttributes: new { @class = "control-label im-login-label col-sm-4" })
-                                    <div class="col-sm-8">
-                                        @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control input-block-level", id = "login_password" } })
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Password, "Password", htmlAttributes: new { @class = "control-label im-login-label col-sm-4" })
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control input-block-level", id = "login_password" } })
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-4 col-sm-8">
-                                        @Html.LabelFor(m => m.RememberMe, "Remember Me?", htmlAttributes: new { @class = "control-label" })
-                                        @Html.CheckBoxFor(m => m.RememberMe, new { htmlAttributes = new { @class = "form-control checkbox" }, @checked = "checked" })
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-sm-8">
+                                            @Html.LabelFor(m => m.RememberMe, "Remember Me?", htmlAttributes: new { @class = "control-label" })
+                                            @Html.CheckBoxFor(m => m.RememberMe, new { htmlAttributes = new { @class = "form-control checkbox" }, @checked = "checked" })
+                                        </div>
                                     </div>
-                                </div>
-                                <button id="login_btn" type="submit" class="btn btn-link-1">Login</button>
-                                <div>
-                                    <a id="login_lost_btn" href="@Url.Action("ForgotPassword", "Account")"><big>Lost Password?</big></a>
-                                    @Html.Raw("&nbsp;&nbsp;&nbsp;")
-                                    <a id="login_register_btn" href="@Url.Action("Register", "Account")"><big>Register</big></a>
-                                </div>
-                            </form>
+                                    <button id="login_btn" type="submit" class="btn btn-link-1">Login</button>
+                                    <div>
+                                        <a id="login_lost_btn" href="@Url.Action("ForgotPassword", "Account")"><big>Lost Password?</big></a>
+                                        @Html.Raw("&nbsp;&nbsp;&nbsp;")
+                                        <a id="login_register_btn" href="@Url.Action("Register", "Account")"><big>Register</big></a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3 social-login">
-                        <h3>...or login with:</h3>
-                        <div class="social-login-buttons">
-                            <a class="btn btn-link-2" onclick="alert('Ooops! Third-Party Login is temporarily down.')">
-                                <i class="fa fa-facebook"></i> Facebook
-                            </a>
-                            <a class="btn btn-link-2" onclick="alert('Ooops! Third-Party Login is temporarily down.')">
-                                <i class="fa fa-twitter"></i> Twitter
-                            </a>
-                            <a class="btn btn-link-2" onclick="alert('Ooops! Third-Party Login is temporarily down.')">
-                                <i class="fa fa-google-plus"></i> Google Plus
-                            </a>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 social-login">
+                            <h3>...or login with:</h3>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" href="~/loginFacebook">
+                                    <i class="fa fa-facebook"></i> Facebook
+                                </a>
+                                <a class="btn btn-link-2" onclick="alert('Ooops! Third-Party Login is temporarily down.')">
+                                    <i class="fa fa-google-plus"></i> Google Plus
+                                </a>
+                                <a class="btn btn-link-2" href="~/loginLinkedIn">
+                                    <i class="fa fa-linkedin"></i> LinkedIn
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>

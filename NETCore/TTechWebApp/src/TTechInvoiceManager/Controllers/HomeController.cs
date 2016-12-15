@@ -36,7 +36,7 @@ namespace NTWebApp.Controllers
             return View();
         }
 
-        public IActionResult Account(AccountViewModel model)
+        public IActionResult Account()
         {
             if (ModelState.IsValid)
             {
@@ -47,10 +47,7 @@ namespace NTWebApp.Controllers
                 // Placeholder
             }
 
-            if (model.UserId == 0)
-            {
-                model = AutoMapperFactory.AccountViewModel_UIUserMapping.CreateMapper().Map<AccountViewModel>(GetUserInfo());
-            }
+            AccountViewModel model = AutoMapperFactory.AccountViewModel_UIUserMapping.CreateMapper().Map<AccountViewModel>(GetUserInfo());
 
             HttpContext.Session.Put(GetSessionPrefix() + "Home_Account", model);
             return View(model);
@@ -234,15 +231,6 @@ namespace NTWebApp.Controllers
 
                 return View(model);
             }
-        }
-
-        public IActionResult LoginRouter()
-        {
-            UIUser usr = GetUserInfo();
-
-            return RedirectToAction(usr.DefaultView, usr.DefaultController);
-
-            //return View();
         }
 
         public IActionResult Invoice()

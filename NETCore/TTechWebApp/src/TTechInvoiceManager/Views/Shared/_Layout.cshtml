@@ -59,10 +59,64 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="LoginRouter" class="navbar-brand">T Tech - Invoice Manager</a>
+                <a asp-area="" asp-controller="Redirect" asp-action="LoginRouter" class="navbar-brand">T Tech - Invoice Manager</a>
             </div>
             <div class="navbar-collapse collapse">
-                @if (!User.Identities.Any(u => u.IsAuthenticated))
+                @if (User.Identities.Any(u => u.IsAuthenticated))
+                {
+                    @if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("Member")) != null))
+                    {
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown" role="menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-home"></span> Home <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class="im-socials"><a asp-area="" asp-controller="Home" asp-action="Account">Account</a></li>
+                                    <li class="im-socials"><a asp-area="" asp-controller="Home" asp-action="Setting">Setting</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" role="menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span> Invoice Management <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="AddExpense">Add Expenses</a></li>
+                                    <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="ManageExpenseCateg">Manage Expense Categories</a></li>
+                                    <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="AllExpense">All Expenses</a></li>
+                                    <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="MonthView">Month View</a></li>
+                                    <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="WeekView">Week View</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown" role="menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="im-socials"><a asp-area="" asp-controller="Account" asp-action="About" hidden>About</a></li>
+                                    <li class="im-socials"><a asp-area="" asp-controller="Account" asp-action="Contact">Contact</a></li>
+                                </ul>
+                            </li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Leave Your Message</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a asp-area="" asp-controller="InvoiceManager" asp-action="AddExpense"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expenses</span></a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="nav navbar-nav">
+                            <li><a asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+                            <li class="dropdown" role="menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="im-socials"><a asp-area="" asp-controller="Account" asp-action="About" hidden>About</a></li>
+                                    <li class="im-socials"><a asp-area="" asp-controller="Account" asp-action="Contact">Contact</a></li>
+                                </ul>
+                            </li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Leave Your Message</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a asp-area="" asp-controller="Account" asp-action="Register"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expenses</span></a></li>
+                        </ul>
+                    }
+                }
+                else
                 {
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-user"></span> Login</a></li>
@@ -79,41 +133,8 @@
                         <li><a asp-area="" asp-controller="Account" asp-action="Register"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expenses</span></a></li>
                     </ul>
                 }
-                else
-                {
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown" role="menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-home"></span> Home <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li class="im-socials"><a asp-area="" asp-controller="Home" asp-action="Account">Account</a></li>
-                                <li class="im-socials"><a asp-area="" asp-controller="Home" asp-action="Setting">Setting</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown" role="menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span> Invoice Management <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="AddExpense">Add Expenses</a></li>
-                                <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="ManageExpenseCateg">Manage Expense Categories</a></li>
-                                <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="AllExpense">All Expenses</a></li>
-                                <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="MonthView">Month View</a></li>
-                                <li class="im-socials"><a asp-area="" asp-controller="InvoiceManager" asp-action="WeekView">Week View</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown" role="menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> About <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li class="im-socials"><a asp-area="" asp-controller="Account" asp-action="About" hidden>About</a></li>
-                                <li class="im-socials"><a asp-area="" asp-controller="Account" asp-action="Contact">Contact</a></li>
-                            </ul>
-                        </li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Leave Your Message</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-area="" asp-controller="InvoiceManager" asp-action="AddExpense"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expenses</span></a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                    </ul>
-                }
             </div>
+
         </div>
     </div>
     <div class="container body-content">

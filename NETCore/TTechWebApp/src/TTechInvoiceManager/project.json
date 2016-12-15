@@ -31,7 +31,9 @@
     "System.Text.Encodings.Web": "4.0.0",
     "Microsoft.jQuery.Unobtrusive.Ajax": "3.2.3",
     "AutoMapper": "5.1.1",
-    "Microsoft.AspNetCore.Authentication.OAuth": "1.1.0"
+    "Microsoft.AspNetCore.Authentication.OAuth": "1.0.0",
+    "Microsoft.AspNetCore.Authentication.Facebook": "1.0.0",
+    "Microsoft.AspNetCore.Authentication.Google": "1.0.0"
   },
 
   "tools": {

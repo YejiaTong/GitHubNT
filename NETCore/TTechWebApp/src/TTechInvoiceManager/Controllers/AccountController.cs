@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Authentication;
 
 using NTWebApp.DBAccess;
@@ -97,7 +98,6 @@ namespace NTWebApp.Controllers
                     var obj = AutoMapperFactory.AccountViewModel_UIUserMapping.CreateMapper().Map<AccountViewModel>(usr);
 
                     return this.Json("Pass---" + obj.DefaultController + "/" + obj.DefaultView);
-                    //return RedirectToAction("Account", "Home", obj);
                 }
                 catch (Exception ex)
                 {
@@ -113,70 +113,11 @@ namespace NTWebApp.Controllers
             }
         }
 
-        /*public async Task<IActionResult> ValidateLogin(LoginViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                UIUser usr = new UIUser();
-                usr.UserName = model.LoginId;
-                usr.Email = model.LoginId;
-                usr.Password = model.Password;
-                try
-                {
-                    try
-                    {
-                        usr.Assign(UsersContext.ValidateUser(usr));
-                    }
-                    catch (Exception ex)
-                    {
-                        ViewData["LoginErrorMessage"] = ex.Message;
-
-                        return View("Login");
-                    }
-
-                    // User  Authentication handling
-                    const string Issuer = "Noah Tong";
-                    var claims = new List<Claim>();
-                    claims.Add(new Claim(ClaimTypes.Name, usr.FirstName + " " + usr.LastName, ClaimValueTypes.String, Issuer));
-                    claims.Add(new Claim(ClaimTypes.Role, "Member", ClaimValueTypes.String, Issuer));
-                    claims.Add(new Claim(ClaimTypes.UserData, usr.UserId.ToString(), ClaimValueTypes.Integer32, Issuer));
-                    var userIdentity = new ClaimsIdentity("SecureLogin");
-                    userIdentity.AddClaims(claims);
-                    var userPrincipal = new ClaimsPrincipal(userIdentity);
-
-                    await HttpContext.Authentication.SignInAsync("CookieMiddlewareInstance", userPrincipal,
-                        new AuthenticationProperties
-                        {
-                            IsPersistent = model.RememberMe,
-                            AllowRefresh = false
-                        });
-
-                    var obj = AutoMapperFactory.AccountViewModel_UIUserMapping.CreateMapper().Map<AccountViewModel>(usr);
-
-                    return RedirectToAction("Account", "Home", obj);
-                }
-                catch (Exception ex)
-                {
-                    ViewData["LoginErrorMessage"] = ex.Message;
-
-                    return View("Login");
-                }
-            }
-            else
-            {
-                return View("Login");
-            }
-        }*/
-
         public async Task<IActionResult> Logout()
         {
             await HttpContext.Authentication.SignOutAsync("CookieMiddlewareInstance");
-            return View("LogoutRed");
-        }
-
-        public IActionResult LogoutRed()
-        {
-            return View();
+            await HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("LogoutRed", "Redirect");
         }
 
         public IActionResult Register()

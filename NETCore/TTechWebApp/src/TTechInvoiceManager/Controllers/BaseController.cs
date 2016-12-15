@@ -24,6 +24,55 @@ namespace NTWebApp.Controllers
             return View();
         }
 
+        public bool IsGuest()
+        {
+            ClaimsPrincipal claims = HttpContext.User;
+            var claim = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Role));
+            if (claim != null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool IsExternalUser(ref UIUser usr)
+        {
+            ClaimsPrincipal claims = HttpContext.User;
+            var claimExternal = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Role) && x.Value.Equals("External"));
+            var claimMember = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Role) && x.Value.Equals("Member"));
+            if (claimExternal != null && claimMember == null)
+            {
+                var claimExternalId = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.NameIdentifier));
+                var claimEmail = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Email));
+
+                usr.Description = claimExternalId.Value;
+                usr.Email = claimEmail.Value;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsMember(ref UIUser usr)
+        {
+            ClaimsPrincipal claims = HttpContext.User;
+            var claimMember = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Role) && x.Value.Equals("Member"));
+            if (claimMember != null)
+            {
+                usr = GetUserInfo();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public UIUser GetUserInfo()
         {
             UIUser ret = new UIUser();
