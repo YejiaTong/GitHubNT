@@ -22,20 +22,7 @@
                     }
                     else if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("External")) != null))
                     {
-                        @if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("LinkedIn")) != null))
-                        {
-                            <h2 style="color: white;">Hello @User.Identity.Name! <i class="fa fa-linkedin"></i></h2>
-                            <h4>Sync with T Tech Inovice Manager &#64; First Time Visit</h4>
-                            <div class="social-login-buttons">
-                                <a class="btn btn-link-2" onclick="alert('Ooops! The Account Synchronization is under development, please register!')">
-                                    <i class="fa fa-check"></i> Sync &#38; Login
-                                </a>
-                                <a class="btn btn-link-2" href="~/logoutLinkedIn">
-                                    <i class="fa fa-close"></i> Logout
-                                </a>
-                            </div>
-                        }
-                        else if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("Facebook")) != null))
+                        @if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("Facebook")) != null))
                         {
                             <h2 style="color: white;">Hello @User.Identity.Name! <i class="fa fa-facebook"></i></h2>
                             <h4>Sync with T Tech Inovice Manager &#64; First Time Visit</h4>
@@ -44,6 +31,32 @@
                                     <i class="fa fa-check"></i> Sync &#38; Login
                                 </a>
                                 <a class="btn btn-link-2" href="~/logoutFacebook">
+                                    <i class="fa fa-close"></i> Logout
+                                </a>
+                            </div>
+                        }
+                        else if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("Google")) != null))
+                        {
+                            <h2 style="color: white;">Hello @User.Identity.Name! <i class="fa fa-google-plus"></i></h2>
+                            <h4>Sync with T Tech Inovice Manager &#64; First Time Visit</h4>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" onclick="alert('Ooops! The Account Synchronization is under development, please register!')">
+                                    <i class="fa fa-check"></i> Sync &#38; Login
+                                </a>
+                                <a class="btn btn-link-2" href="~/logoutGoogle">
+                                    <i class="fa fa-close"></i> Logout
+                                </a>
+                            </div>
+                        }
+                        else if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("LinkedIn")) != null))
+                        {
+                            <h2 style="color: white;">Hello @User.Identity.Name! <i class="fa fa-linkedin"></i></h2>
+                            <h4>Sync with T Tech Inovice Manager &#64; First Time Visit</h4>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" onclick="alert('Ooops! The Account Synchronization is under development, please register!')">
+                                    <i class="fa fa-check"></i> Sync &#38; Login
+                                </a>
+                                <a class="btn btn-link-2" href="~/logoutLinkedIn">
                                     <i class="fa fa-close"></i> Logout
                                 </a>
                             </div>
@@ -103,7 +116,7 @@
                                 <a class="btn btn-link-2" href="~/loginFacebook">
                                     <i class="fa fa-facebook"></i> Facebook
                                 </a>
-                                <a class="btn btn-link-2" onclick="alert('Ooops! Third-Party Login is temporarily down.')">
+                                <a class="btn btn-link-2" href="~/loginGoogle">
                                     <i class="fa fa-google-plus"></i> Google Plus
                                 </a>
                                 <a class="btn btn-link-2" href="~/loginLinkedIn">

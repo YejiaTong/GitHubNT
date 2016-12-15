@@ -92,7 +92,7 @@ namespace NTWebApp
 
             app.UseStaticFiles();
 
-            // Adding the cookie middleware to application - Microsoft.AspNetCore.Authentication.Cookies
+            // The main cookie middleware to application - CookieMiddlewareInstance
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
                 AuthenticationScheme = "CookieMiddlewareInstance",
@@ -144,6 +144,22 @@ namespace NTWebApp
                 SlidingExpiration = true
             });
 
+            FacebookOAuth2Setup(app);
+            GooglePlusOAuth2Setup(app);
+            LinkedInOAuth2Setup(app);
+
+            app.UseSession();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Redirect}/{action=LoginRouter}");
+            });
+        }
+
+        public void FacebookOAuth2Setup(IApplicationBuilder app)
+        {
             // Add the OAuth2 middleware - Facebook
             app.UseFacebookAuthentication(new FacebookOptions
             {
@@ -195,6 +211,14 @@ namespace NTWebApp
                                 context.Options.ClaimsIssuer));
                         }
 
+                        var pictureUrl = @"http://graph.facebook.com/" + userId + @"/picture?type=large";
+
+                        if (!string.IsNullOrEmpty(pictureUrl))
+                        {
+                            context.Identity.AddClaim(new Claim("profile-picture", pictureUrl, ClaimValueTypes.String,
+                                context.Options.ClaimsIssuer));
+                        }
+
                         context.Identity.AddClaim(new Claim("externalSource", "Facebook", ClaimValueTypes.String));
 
                         context.Identity.AddClaim(new Claim(ClaimTypes.Role, "External", ClaimValueTypes.String));
@@ -224,7 +248,110 @@ namespace NTWebApp
                     context.Response.Redirect(new PathString("/Redirect/LogoutRed"));
                 });
             });
+        }
 
+        public void GooglePlusOAuth2Setup(IApplicationBuilder app)
+        {
+            // Add the OAuth2 middleware - Google
+            app.UseGoogleAuthentication(new GoogleOptions
+            {
+                AuthenticationScheme = Configuration.GetConnectionString("GoogleAuthenticationScheme"),
+
+                ClientId = Configuration.GetConnectionString("GoogleClientId"),
+                ClientSecret = Configuration.GetConnectionString("GoogleClientSecret"),
+
+                CallbackPath = new PathString("/signin-google"),
+
+                Events = new OAuthEvents
+                {
+                    // The OnCreatingTicket event is called after the user has been authenticated and the OAuth middleware has
+                    // created an auth ticket. We need to manually call the UserInformationEndpoint to retrieve the user's information,
+                    // parse the resulting JSON to extract the relevant information, and add the correct claims.
+                    OnCreatingTicket = async context =>
+                    {
+                        // Retrieve user info
+                        var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
+                        request.Headers.Add("x-li-format", "json"); // Tell LinkedIn we want the result in JSON, otherwise it will return XML
+
+                        var response = await context.Backchannel.SendAsync(request, context.HttpContext.RequestAborted);
+                        response.EnsureSuccessStatusCode();
+
+                        // Extract the user info object
+                        var user = JObject.Parse(await response.Content.ReadAsStringAsync());
+
+                        // Add the Name Identifier claim
+                        var userId = user.Value<string>("id");
+                        if (!string.IsNullOrEmpty(userId))
+                        {
+                            context.Identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId, ClaimValueTypes.String, context.Options.ClaimsIssuer));
+                        }
+
+                        // Add the Name claim
+                        var name = user.Value<string>("displayName");
+                        if (!string.IsNullOrEmpty(name))
+                        {
+                            context.Identity.AddClaim(new Claim(ClaimTypes.Name, name, ClaimValueTypes.String, context.Options.ClaimsIssuer));
+                        }
+
+                        // Add the email address claim
+                        var emailJArray = (JArray)user["emails"];
+                        if(emailJArray != null && emailJArray.Count != 0)
+                        {
+                            var email = emailJArray[0].Value<string>("value");
+                            if (!string.IsNullOrEmpty(email))
+                            {
+                                context.Identity.AddClaim(new Claim(ClaimTypes.Email, email, ClaimValueTypes.String,
+                                    context.Options.ClaimsIssuer));
+                            }
+                        }
+
+                        // Add the Profile Picture claim
+                        var image = user["image"];
+                        if (image != null)
+                        {
+                            var pictureUrl = image.Value<string>("url");
+
+                            if (!string.IsNullOrEmpty(pictureUrl))
+                            {
+                                context.Identity.AddClaim(new Claim("profile-picture", pictureUrl, ClaimValueTypes.String,
+                                    context.Options.ClaimsIssuer));
+                            }
+                        }
+
+                        context.Identity.AddClaim(new Claim("externalSource", "Google", ClaimValueTypes.String));
+
+                        context.Identity.AddClaim(new Claim(ClaimTypes.Role, "External", ClaimValueTypes.String));
+                    }
+                }
+            });
+
+            // Listen for requests on the /login path, and issue a challenge to log in with the LinkedIn middleware
+            app.Map("/loginGoogle", builder =>
+            {
+                builder.Run(async context =>
+                {
+                    // Return a challenge to invoke the LinkedIn authentication scheme
+                    await context.Authentication.ChallengeAsync(Configuration.GetConnectionString("GoogleAuthenticationScheme"), properties: new AuthenticationProperties() { RedirectUri = new PathString("/Redirect/LoginRed") });
+                });
+            });
+
+            // Listen for requests on the /logout path, and sign the user out
+            app.Map("/logoutGoogle", builder =>
+            {
+                builder.Run(async context =>
+                {
+                    // Sign the user out of the authentication middleware (i.e. it will clear the Auth cookie)
+                    await context.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    // Redirect the user to the home page after signing out
+                    context.Response.Redirect(new PathString("/Redirect/LogoutRed"));
+                });
+            });
+        }
+
+        public void LinkedInOAuth2Setup(IApplicationBuilder app)
+        {
             // Add the OAuth2 middleware - LinkedIn
             app.UseOAuthAuthentication(new OAuthOptions
             {
@@ -283,7 +410,7 @@ namespace NTWebApp
 
                         // Add the Profile Picture claim
                         var pictureUrl = user.Value<string>("pictureUrl");
-                        if (!string.IsNullOrEmpty(email))
+                        if (!string.IsNullOrEmpty(pictureUrl))
                         {
                             context.Identity.AddClaim(new Claim("profile-picture", pictureUrl, ClaimValueTypes.String,
                                 context.Options.ClaimsIssuer));
@@ -317,15 +444,6 @@ namespace NTWebApp
                     // Redirect the user to the home page after signing out
                     context.Response.Redirect(new PathString("/Redirect/LogoutRed"));
                 });
-            });
-
-            app.UseSession();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Redirect}/{action=LoginRouter}");
             });
         }
     }
