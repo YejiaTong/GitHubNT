@@ -61,7 +61,7 @@ namespace NTWebApp.DBAccess
             return ret;
         }
 
-        public static User ValidateExternalUser(User usr, string externalId)
+        public static User ValidateExternalUser(User usr, string externalSource)
         {
             User ret = new User();
             bool existed = false;
@@ -75,19 +75,19 @@ namespace NTWebApp.DBAccess
                         + "usr.ProfilePhotoUrl, usr.DBInstance, sm.SiteMapController, sm.SiteMapView "
                         + "FROM InvoiceManager.Users usr "
                         + "LEFT JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId ";
-                    if(String.IsNullOrEmpty(externalId))
+                    if(String.IsNullOrEmpty(externalSource))
                     {
                         throw new UserNotFoundException();
                     }
-                    if (!String.IsNullOrEmpty(usr.UserName))
+                    /*if (!String.IsNullOrEmpty(usr.UserName))
                     {
                         commandText += "WHERE (usr.UserName = '" + usr.UserName + "' OR usr.Email = '" + usr.UserName + "') ";
-                        //commandText += "AND usr.ExternalId = '" + externalId + "'";
+                        //commandText += "AND usr.externalSource = '" + externalId + "'";
                     }
-                    else if (!String.IsNullOrEmpty(usr.Email))
+                    else*/ if (!String.IsNullOrEmpty(usr.Email))
                     {
                         commandText += "WHERE usr.UserName = '" + usr.Email + "' OR usr.Email = '" + usr.Email + "'";
-                        //commandText += "AND usr.ExternalId = '" + externalId + "'";
+                        //commandText += "AND usr.externalSource = '" + externalId + "'";
                     }
                     else
                     {
@@ -209,7 +209,7 @@ namespace NTWebApp.DBAccess
                     connection.Close();
                 }
 
-                using (MD5 md5Hash = MD5.Create())
+                /*using (MD5 md5Hash = MD5.Create())
                 {
                     string source = usr.Password + ret.SecurityToken;
 
@@ -217,7 +217,7 @@ namespace NTWebApp.DBAccess
                     {
                         throw new UserValidationException();
                     }
-                }
+                }*/
             }
             catch (UserNotFoundException ex)
             {
@@ -413,6 +413,145 @@ namespace NTWebApp.DBAccess
                 throw ex;
             }
             catch(AddNewUserException ex)
+            {
+                throw ex;
+            }
+            catch (EmailHandlingException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Unexpected failure");
+            }
+        }
+
+        public static void RegisterExternalUser(User usr, string externalSource)
+        {
+            try
+            {
+                using (MySqlConnection connection = database.CreateConnection())
+                {
+                    connection.Open();
+                    int existed = 0;
+                    string commandText = "SELECT COUNT(UserId) AS Num "
+                        + "FROM Users "
+                        + "WHERE UserName = @usrUserName "
+                        + "OR Email = @usrEmail";
+                    using (MySqlCommand command = database.CreateCommand(commandText, connection))
+                    {
+                        command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                        command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                existed = !reader.IsDBNull(reader.GetOrdinal("Num")) ? reader.GetInt32("Num") : 0;
+                            }
+                        }
+                    }
+
+                    if (existed != 0)
+                    {
+                        throw new UserAlreadyExistedException();
+                    }
+                    else
+                    {
+                        string passCode = Md5Hash.GetRandomString(12);
+
+                        /*int counter = 0;
+                        while (!Regex.IsMatch(passCode, UIClasses.UIUser.PasswordRegexString))
+                        {
+                            if(counter > 10)
+                            {
+                                throw new PassCodeException();
+                            }
+                            passCode = Md5Hash.GetRandomString(12);
+                            counter++;
+                        }*/
+
+                        string token = Md5Hash.GetRandomString(6);
+                        string hash = String.Empty;
+                        using (MD5 md5Hash = MD5.Create())
+                        {
+                            hash = Md5Hash.GetMd5Hash(md5Hash, passCode + token);
+                        }
+
+                        commandText = "INSERT INTO Users "
+                            + "(UserName, Email, FirstName, LastName, Address, "
+                            + "PostalCode, Gender, IsActive, Password, SecurityToken, Description) "
+                            + "VALUES "
+                            + "(@usrUserName, @usrEmail, NULL, NULL, NULL, "
+                            + "NULL, NULL, 0, @hash, @token, NULL)";
+                        using (MySqlCommand command = database.CreateCommand(commandText, connection))
+                        {
+                            command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                            command.Parameters.AddWithValue("@usrEmail", usr.Email);
+                            command.Parameters.AddWithValue("@hash", hash);
+                            command.Parameters.AddWithValue("@token", token);
+
+                            int row = command.ExecuteNonQuery();
+
+                            if (row == 0)
+                            {
+                                throw new AddNewUserException();
+                            }
+                        }
+
+                        string subject = "T Tech Invoice Manger account receipt for " + usr.Email;
+                        string body = "Welcome! " + usr.UserName
+                            + Environment.NewLine + "Your account has been created and please use the following pass code for your Invoice Manger login"
+                            + Environment.NewLine
+                            + Environment.NewLine + "Code: " + passCode
+                            + Environment.NewLine
+                            + Environment.NewLine
+                            + Environment.NewLine
+                            + Environment.NewLine + "Thank you,"
+                            + Environment.NewLine + "Invoice Manager";
+
+                        try
+                        {
+                            Email.SendEmail(subject, body, "non-reply@gmail.com", "Invoice Manager", usr.Email, usr.UserName, "noah089736@hotmail.com", "Noah Tong");
+                        }
+                        catch (Exception ex)
+                        {
+                            commandText = "DELETE FROM Users "
+                                + "WHERE Userid IN "
+                                + "( "
+                                + "SELECT UserId "
+                                + "FROM "
+                                + "( "
+                                + "SELECT UserId "
+                                + "FROM Users "
+                                + "WHERE UserName = @usrUserName "
+                                + "OR Email = @usrEmail "
+                                + ") t "
+                                + ")";
+                            using (MySqlCommand command = database.CreateCommand(commandText, connection))
+                            {
+                                command.Parameters.AddWithValue("@usrUserName", usr.UserName);
+                                command.Parameters.AddWithValue("@usrEmail", usr.Email);
+
+                                command.ExecuteNonQuery();
+                            }
+
+                            throw ex;
+                        }
+                    }
+
+                    connection.Close();
+                }
+            }
+            catch (UserAlreadyExistedException ex)
+            {
+                throw ex;
+            }
+            catch (PassCodeException ex)
+            {
+                throw ex;
+            }
+            catch (AddNewUserException ex)
             {
                 throw ex;
             }

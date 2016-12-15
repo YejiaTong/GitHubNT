@@ -29,9 +29,11 @@ namespace NTWebApp.Controllers
             UIUser usr = new UIUser();
             if (IsExternalUser(ref usr))
             {
-                usr.Assign(UsersContext.ValidateExternalUser(usr, "Default"));
-                if(usr.UserId != 0)
+                var refUsr = UsersContext.ValidateExternalUser(usr, "External");
+                if(refUsr.UserId != 0)
                 {
+                    usr.Assign(refUsr);
+
                     // User Authentication handling
                     const string Issuer = "Noah Tong";
                     var claims = new List<Claim>();
@@ -68,11 +70,50 @@ namespace NTWebApp.Controllers
             //return View();
         }
 
-        public IActionResult RegisterThroughExternal()
+        [Authorize(Roles = "External")]
+        public async Task<IActionResult> RegisterThroughExternal()
         {
-            UIUser externalUsr = new UIUser();
+            try
+            {
+                UIUser usr = new UIUser();
+                if (IsExternalUser(ref usr))
+                {
+                    if (usr.UserId == 0)
+                    {
+                        UsersContext.RegisterExternalUser(usr, "External");
 
-            return View();
+                        usr.Assign(UsersContext.ValidateUser(usr));
+
+                        if(usr.UserId != 0)
+                        {
+                            // User Authentication handling
+                            const string Issuer = "Noah Tong";
+                            var claims = new List<Claim>();
+                            claims.Add(new Claim(ClaimTypes.Name, usr.FirstName + " " + usr.LastName, ClaimValueTypes.String, Issuer));
+                            claims.Add(new Claim(ClaimTypes.Role, "Member", ClaimValueTypes.String, Issuer));
+                            claims.Add(new Claim(ClaimTypes.UserData, usr.UserId.ToString(), ClaimValueTypes.Integer32, Issuer));
+                            var userIdentity = new ClaimsIdentity("SecureLogin");
+                            userIdentity.AddClaims(claims);
+                            var userPrincipal = new ClaimsPrincipal(userIdentity);
+
+                            await HttpContext.Authentication.SignInAsync("CookieMiddlewareInstance", userPrincipal,
+                                new AuthenticationProperties
+                                {
+                                    IsPersistent = true,
+                                    AllowRefresh = false
+                                });
+
+                            return RedirectToAction("LoginRed", "Redirect");
+                        }
+                    }
+                }
+
+                throw new Exception("Account Synchronization failed. Please retry or contact us.");
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public IActionResult LoginRed()

@@ -48,7 +48,7 @@ namespace NTWebApp.Controllers
                 var claimExternalId = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.NameIdentifier));
                 var claimEmail = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Email));
 
-                usr.Description = claimExternalId.Value;
+                usr.UserName = claimExternalId.Value;
                 usr.Email = claimEmail.Value;
                 return true;
             }
