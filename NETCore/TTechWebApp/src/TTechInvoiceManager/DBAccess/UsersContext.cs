@@ -490,7 +490,7 @@ namespace NTWebApp.DBAccess
                             command.Parameters.AddWithValue("@usrEmail", usr.Email);
                             command.Parameters.AddWithValue("@hash", hash);
                             command.Parameters.AddWithValue("@token", token);
-                            command.Parameters.AddWithValue("@token", usr.ProfilePhotoUrl);
+                            command.Parameters.AddWithValue("@profilePic", usr.ProfilePhotoUrl);
 
                             int row = command.ExecuteNonQuery();
 
