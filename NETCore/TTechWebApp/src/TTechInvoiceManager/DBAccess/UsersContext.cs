@@ -61,6 +61,87 @@ namespace NTWebApp.DBAccess
             return ret;
         }
 
+        public static User ValidateUser(User usr)
+        {
+            User ret = new User();
+            bool existed = false;
+            try
+            {
+                using (MySqlConnection connection = database.CreateConnection())
+                {
+                    connection.Open();
+                    string commandText = "SELECT usr.UserId, usr.UserName, usr.Email, usr.FirstName, usr.LastName, usr.Address, "
+                        + "usr.PostalCode, usr.Gender, usr.IsActive, usr.Password, usr.SecurityToken, usr.Description, "
+                        + "usr.ProfilePhotoUrl, usr.DBInstance, sm.SiteMapController, sm.SiteMapView "
+                        + "FROM InvoiceManager.Users usr "
+                        + "LEFT JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId ";
+                    if (!String.IsNullOrEmpty(usr.UserName))
+                    {
+                        commandText += "WHERE usr.UserName = '" + usr.UserName + "' OR usr.Email = '" + usr.UserName + "'";
+                    }
+                    else if (!String.IsNullOrEmpty(usr.Email))
+                    {
+                        commandText += "WHERE usr.UserName = '" + usr.Email + "' OR usr.Email = '" + usr.Email + "'";
+                    }
+                    else
+                    {
+                        throw new UserNotFoundException();
+                    }
+
+                    using (MySqlCommand command = database.CreateCommand(commandText, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ret.UserId = !reader.IsDBNull(reader.GetOrdinal("UserId")) ? reader.GetInt32("UserId") : 0;
+                                ret.UserName = !reader.IsDBNull(reader.GetOrdinal("UserName")) ? reader.GetString("UserName") : String.Empty;
+                                ret.Email = !reader.IsDBNull(reader.GetOrdinal("Email")) ? reader.GetString("Email") : String.Empty;
+                                ret.FirstName = !reader.IsDBNull(reader.GetOrdinal("FirstName")) ? reader.GetString("FirstName") : String.Empty;
+                                ret.LastName = !reader.IsDBNull(reader.GetOrdinal("LastName")) ? reader.GetString("LastName") : String.Empty;
+                                ret.Address = !reader.IsDBNull(reader.GetOrdinal("Address")) ? reader.GetString("Address") : String.Empty;
+                                ret.PostalCode = !reader.IsDBNull(reader.GetOrdinal("PostalCode")) ? reader.GetString("PostalCode") : String.Empty;
+                                ret.Gender = !reader.IsDBNull(reader.GetOrdinal("Gender")) ? reader.GetString("Gender") : String.Empty;
+                                ret.IsActive = !reader.IsDBNull(reader.GetOrdinal("IsActive")) ? reader.GetInt32("IsActive") : 0;
+                                ret.Password = !reader.IsDBNull(reader.GetOrdinal("Password")) ? reader.GetString("Password") : String.Empty;
+                                ret.SecurityToken = !reader.IsDBNull(reader.GetOrdinal("SecurityToken")) ? reader.GetString("SecurityToken") : String.Empty;
+                                ret.Description = !reader.IsDBNull(reader.GetOrdinal("Description")) ? reader.GetString("Description") : String.Empty;
+                                ret.ProfilePhotoUrl = !reader.IsDBNull(reader.GetOrdinal("ProfilePhotoUrl")) ? reader.GetString("ProfilePhotoUrl") : String.Empty;
+                                ret.DBInstance = !reader.IsDBNull(reader.GetOrdinal("DBInstance")) ? reader.GetString("DBInstance") : String.Empty;
+                                ret.DefaultController = !reader.IsDBNull(reader.GetOrdinal("SiteMapController")) ? reader.GetString("SiteMapController") : String.Empty;
+                                ret.DefaultView = !reader.IsDBNull(reader.GetOrdinal("SiteMapView")) ? reader.GetString("SiteMapView") : String.Empty;
+                            }
+                        }
+                    }
+                    connection.Close();
+                }
+
+                using (MD5 md5Hash = MD5.Create())
+                {
+                    string source = usr.Password + ret.SecurityToken;
+
+                    if (!Md5Hash.VerifyMd5Hash(md5Hash, source, ret.Password))
+                    {
+                        throw new UserValidationException();
+                    }
+                }
+            }
+            catch (UserNotFoundException ex)
+            {
+                throw ex;
+            }
+            catch(UserValidationException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Unexpected failure");
+            }
+
+            return ret;
+        }
+
         public static User ValidateExternalUser(User usr, string externalSource)
         {
             User ret = new User();
@@ -75,7 +156,7 @@ namespace NTWebApp.DBAccess
                         + "usr.ProfilePhotoUrl, usr.DBInstance, sm.SiteMapController, sm.SiteMapView "
                         + "FROM InvoiceManager.Users usr "
                         + "LEFT JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId ";
-                    if(String.IsNullOrEmpty(externalSource))
+                    if (String.IsNullOrEmpty(externalSource))
                     {
                         throw new UserNotFoundException();
                     }
@@ -84,7 +165,8 @@ namespace NTWebApp.DBAccess
                         commandText += "WHERE (usr.UserName = '" + usr.UserName + "' OR usr.Email = '" + usr.UserName + "') ";
                         //commandText += "AND usr.externalSource = '" + externalId + "'";
                     }
-                    else*/ if (!String.IsNullOrEmpty(usr.Email))
+                    else*/
+                    if (!String.IsNullOrEmpty(usr.Email))
                     {
                         commandText += "WHERE usr.UserName = '" + usr.Email + "' OR usr.Email = '" + usr.Email + "'";
                         //commandText += "AND usr.externalSource = '" + externalId + "'";
@@ -144,86 +226,6 @@ namespace NTWebApp.DBAccess
                 throw ex;
             }
             catch (UserValidationException ex)
-            {
-                throw ex;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Unexpected failure");
-            }
-
-            return ret;
-        }
-
-        public static User ValidateUser(User usr)
-        {
-            User ret = new User();
-            try
-            {
-                using (MySqlConnection connection = database.CreateConnection())
-                {
-                    connection.Open();
-                    string commandText = "SELECT usr.UserId, usr.UserName, usr.Email, usr.FirstName, usr.LastName, usr.Address, "
-                        + "usr.PostalCode, usr.Gender, usr.IsActive, usr.Password, usr.SecurityToken, usr.Description, "
-                        + "usr.ProfilePhotoUrl, usr.DBInstance, sm.SiteMapController, sm.SiteMapView "
-                        + "FROM InvoiceManager.Users usr "
-                        + "LEFT JOIN InvoiceManager.SiteMap sm ON usr.DefaultView = sm.SiteMapId ";
-                    if (!String.IsNullOrEmpty(usr.UserName))
-                    {
-                        commandText += "WHERE usr.UserName = '" + usr.UserName + "' OR usr.Email = '" + usr.UserName + "'";
-                    }
-                    else if (!String.IsNullOrEmpty(usr.Email))
-                    {
-                        commandText += "WHERE usr.UserName = '" + usr.Email + "' OR usr.Email = '" + usr.Email + "'";
-                    }
-                    else
-                    {
-                        throw new UserNotFoundException();
-                    }
-
-                    using (MySqlCommand command = database.CreateCommand(commandText, connection))
-                    {
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                ret.UserId = !reader.IsDBNull(reader.GetOrdinal("UserId")) ? reader.GetInt32("UserId") : 0;
-                                ret.UserName = !reader.IsDBNull(reader.GetOrdinal("UserName")) ? reader.GetString("UserName") : String.Empty;
-                                ret.Email = !reader.IsDBNull(reader.GetOrdinal("Email")) ? reader.GetString("Email") : String.Empty;
-                                ret.FirstName = !reader.IsDBNull(reader.GetOrdinal("FirstName")) ? reader.GetString("FirstName") : String.Empty;
-                                ret.LastName = !reader.IsDBNull(reader.GetOrdinal("LastName")) ? reader.GetString("LastName") : String.Empty;
-                                ret.Address = !reader.IsDBNull(reader.GetOrdinal("Address")) ? reader.GetString("Address") : String.Empty;
-                                ret.PostalCode = !reader.IsDBNull(reader.GetOrdinal("PostalCode")) ? reader.GetString("PostalCode") : String.Empty;
-                                ret.Gender = !reader.IsDBNull(reader.GetOrdinal("Gender")) ? reader.GetString("Gender") : String.Empty;
-                                ret.IsActive = !reader.IsDBNull(reader.GetOrdinal("IsActive")) ? reader.GetInt32("IsActive") : 0;
-                                ret.Password = !reader.IsDBNull(reader.GetOrdinal("Password")) ? reader.GetString("Password") : String.Empty;
-                                ret.SecurityToken = !reader.IsDBNull(reader.GetOrdinal("SecurityToken")) ? reader.GetString("SecurityToken") : String.Empty;
-                                ret.Description = !reader.IsDBNull(reader.GetOrdinal("Description")) ? reader.GetString("Description") : String.Empty;
-                                ret.ProfilePhotoUrl = !reader.IsDBNull(reader.GetOrdinal("ProfilePhotoUrl")) ? reader.GetString("ProfilePhotoUrl") : String.Empty;
-                                ret.DBInstance = !reader.IsDBNull(reader.GetOrdinal("DBInstance")) ? reader.GetString("DBInstance") : String.Empty;
-                                ret.DefaultController = !reader.IsDBNull(reader.GetOrdinal("SiteMapController")) ? reader.GetString("SiteMapController") : String.Empty;
-                                ret.DefaultView = !reader.IsDBNull(reader.GetOrdinal("SiteMapView")) ? reader.GetString("SiteMapView") : String.Empty;
-                            }
-                        }
-                    }
-                    connection.Close();
-                }
-
-                /*using (MD5 md5Hash = MD5.Create())
-                {
-                    string source = usr.Password + ret.SecurityToken;
-
-                    if (!Md5Hash.VerifyMd5Hash(md5Hash, source, ret.Password))
-                    {
-                        throw new UserValidationException();
-                    }
-                }*/
-            }
-            catch (UserNotFoundException ex)
-            {
-                throw ex;
-            }
-            catch(UserValidationException ex)
             {
                 throw ex;
             }

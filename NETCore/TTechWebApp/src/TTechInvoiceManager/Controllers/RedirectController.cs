@@ -82,7 +82,7 @@ namespace NTWebApp.Controllers
                     {
                         UsersContext.RegisterExternalUser(usr, "External");
 
-                        usr.Assign(UsersContext.ValidateUser(usr));
+                        usr.Assign(UsersContext.ValidateExternalUser(usr, "External"));
 
                         if(usr.UserId != 0)
                         {
