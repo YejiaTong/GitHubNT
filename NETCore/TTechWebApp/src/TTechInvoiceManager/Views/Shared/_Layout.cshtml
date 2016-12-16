@@ -177,8 +177,10 @@
             }
             */
 
-            var firstTimeVisit = localStorage.getItem('firstTimeVisit') || '';
-            if (firstTimeVisit != 'yes') {
+            var firstTimeVisit = localStorage.getItem('TTechIMFirstTimeVisit') || '';
+            var visitTime = localStorage.getItem('TTechIMVisitTime') || '';
+            var nowTime = new Date().toISOString().slice(0, 10);
+            if (firstTimeVisit != 'yes' || visitTime != nowTime) {
                 $.notify({
                     // options
                     icon: 'glyphicon glyphicon glyphicon-hand-right',
@@ -224,7 +226,8 @@
                     '</div>'
                 });
 
-                localStorage.setItem('firstTimeVisit', 'yes');
+                localStorage.setItem('TTechIMFirstTimeVisit', 'yes');
+                localStorage.setItem('TTechIMVisitTime', 'nowTime');
             }
         });
     </script>

@@ -43,10 +43,16 @@ namespace NTWebApp.Controllers
             ClaimsPrincipal claims = HttpContext.User;
             var claimExternal = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Role) && x.Value.Equals("External"));
             var claimMember = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Role) && x.Value.Equals("Member"));
+            var claimProfilePic = claims.Claims.FirstOrDefault(x => x.Type.Equals("profile-picture"));
             if (claimExternal != null && claimMember == null)
             {
                 var claimExternalId = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.NameIdentifier));
                 var claimEmail = claims.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Email));
+
+                if(claimProfilePic != null)
+                {
+                    usr.ProfilePhotoUrl = claimProfilePic.Value;
+                }
 
                 usr.UserName = claimExternalId.Value;
                 usr.Email = claimEmail.Value;

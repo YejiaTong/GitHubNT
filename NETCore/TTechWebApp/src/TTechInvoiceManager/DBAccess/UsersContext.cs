@@ -480,16 +480,17 @@ namespace NTWebApp.DBAccess
 
                         commandText = "INSERT INTO Users "
                             + "(UserName, Email, FirstName, LastName, Address, "
-                            + "PostalCode, Gender, IsActive, Password, SecurityToken, Description) "
+                            + "PostalCode, Gender, IsActive, Password, SecurityToken, Description, ProfilePhotoUrl) "
                             + "VALUES "
                             + "(@usrUserName, @usrEmail, NULL, NULL, NULL, "
-                            + "NULL, NULL, 0, @hash, @token, NULL)";
+                            + "NULL, NULL, 0, @hash, @token, NULL, @profilePic)";
                         using (MySqlCommand command = database.CreateCommand(commandText, connection))
                         {
                             command.Parameters.AddWithValue("@usrUserName", usr.UserName);
                             command.Parameters.AddWithValue("@usrEmail", usr.Email);
                             command.Parameters.AddWithValue("@hash", hash);
                             command.Parameters.AddWithValue("@token", token);
+                            command.Parameters.AddWithValue("@token", usr.ProfilePhotoUrl);
 
                             int row = command.ExecuteNonQuery();
 
@@ -512,7 +513,7 @@ namespace NTWebApp.DBAccess
 
                         try
                         {
-                            Email.SendEmail(subject, body, "non-reply@gmail.com", "Invoice Manager", usr.Email, usr.UserName, "noah089736@hotmail.com", "Noah Tong");
+                            Email.SendEmail(subject, body, "non-reply@ttech.com", "Invoice Manager", usr.Email, usr.UserName, "noah089736@hotmail.com", "Noah Tong");
                         }
                         catch (Exception ex)
                         {
