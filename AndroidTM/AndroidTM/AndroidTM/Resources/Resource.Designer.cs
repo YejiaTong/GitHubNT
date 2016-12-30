@@ -45,28 +45,34 @@ namespace AndroidTM
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int font_selection_editor = 2130837504;
+			public const int background = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int github_character = 2130837505;
+			public const int font_selection_editor = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int home = 2130837506;
+			public const int github_character = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int plus_black_symbol = 2130837507;
+			public const int home = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int question_sign = 2130837508;
+			public const int icon = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int selectors = 2130837509;
+			public const int plus_black_symbol = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int splash_logo = 2130837510;
+			public const int question_sign = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int splash_screen = 2130837511;
+			public const int selectors = 2130837511;
+			
+			// aapt resource value: 0x7f020008
+			public const int splash_logo = 2130837512;
+			
+			// aapt resource value: 0x7f020009
+			public const int splash_screen = 2130837513;
 			
 			static Drawable()
 			{
@@ -81,14 +87,14 @@ namespace AndroidTM
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070000
-			public const int fragmentContainer = 2131165184;
-			
 			// aapt resource value: 0x7f070001
 			public const int item_subtitle = 2131165185;
 			
 			// aapt resource value: 0x7f070002
 			public const int item_title = 2131165186;
+			
+			// aapt resource value: 0x7f070000
+			public const int localWebView = 2131165184;
 			
 			// aapt resource value: 0x7f070004
 			public const int sliding_tabs = 2131165188;

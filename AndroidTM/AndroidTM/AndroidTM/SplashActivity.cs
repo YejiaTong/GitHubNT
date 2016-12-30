@@ -14,7 +14,7 @@ using Android.Widget;
 
 namespace AndroidTM
 {
-    [Activity(Theme = "@style/TMTheme.Splash", MainLauncher = true, NoHistory = true)]
+    [Activity(Label = "TY Tech IM", Theme = "@style/TMTheme.Splash", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : Activity
     {
         static readonly string TAG = "X:" + typeof(SplashActivity).Name;
@@ -29,7 +29,7 @@ namespace AndroidTM
             base.OnResume();
 
             Task startupWork = new Task(() => {
-                Task.Delay(3000);  // Simulate a bit of startup work.
+                Task.Delay(2000);  // Simulate a bit of startup work.
             });
 
             startupWork.ContinueWith(t => {

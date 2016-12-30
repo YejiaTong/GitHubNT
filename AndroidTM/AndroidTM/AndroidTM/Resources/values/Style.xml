@@ -11,6 +11,7 @@
   </style>
 
   <style name="TMTheme.Regular">
+    <item name="android:windowBackground">@drawable/background</item>
     <item name="android:windowNoTitle">true</item>
   </style>
 </resources>
