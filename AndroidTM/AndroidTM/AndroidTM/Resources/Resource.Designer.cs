@@ -45,10 +45,28 @@ namespace AndroidTM
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int splash_logo = 2130837504;
+			public const int font_selection_editor = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int splash_screen = 2130837505;
+			public const int github_character = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int home = 2130837506;
+			
+			// aapt resource value: 0x7f020003
+			public const int plus_black_symbol = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int question_sign = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int selectors = 2130837509;
+			
+			// aapt resource value: 0x7f020006
+			public const int splash_logo = 2130837510;
+			
+			// aapt resource value: 0x7f020007
+			public const int splash_screen = 2130837511;
 			
 			static Drawable()
 			{
@@ -66,6 +84,18 @@ namespace AndroidTM
 			// aapt resource value: 0x7f070000
 			public const int fragmentContainer = 2131165184;
 			
+			// aapt resource value: 0x7f070001
+			public const int item_subtitle = 2131165185;
+			
+			// aapt resource value: 0x7f070002
+			public const int item_title = 2131165186;
+			
+			// aapt resource value: 0x7f070004
+			public const int sliding_tabs = 2131165188;
+			
+			// aapt resource value: 0x7f070003
+			public const int viewpager = 2131165187;
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -81,6 +111,12 @@ namespace AndroidTM
 			
 			// aapt resource value: 0x7f040000
 			public const int Main = 2130968576;
+			
+			// aapt resource value: 0x7f040001
+			public const int PagerItems = 2130968577;
+			
+			// aapt resource value: 0x7f040002
+			public const int SlidingTabLayout = 2130968578;
 			
 			static Layout()
 			{
@@ -114,8 +150,8 @@ namespace AndroidTM
 			// aapt resource value: 0x7f050000
 			public const int ApplicationName = 2131034112;
 			
-			// aapt resource value: 0x7f050006
-			public const int Hello = 2131034118;
+			// aapt resource value: 0x7f050008
+			public const int Hello = 2131034120;
 			
 			// aapt resource value: 0x7f050003
 			public const int MainTabAbout = 2131034115;
@@ -123,14 +159,20 @@ namespace AndroidTM
 			// aapt resource value: 0x7f050002
 			public const int MainTabAddExpense = 2131034114;
 			
+			// aapt resource value: 0x7f050004
+			public const int MainTabContact = 2131034116;
+			
 			// aapt resource value: 0x7f050001
 			public const int MainTabHome = 2131034113;
 			
-			// aapt resource value: 0x7f050004
-			public const int MainTabLogin = 2131034116;
-			
 			// aapt resource value: 0x7f050005
-			public const int MainTabLogout = 2131034117;
+			public const int MainTabLeaveMsg = 2131034117;
+			
+			// aapt resource value: 0x7f050006
+			public const int MainTabLogin = 2131034118;
+			
+			// aapt resource value: 0x7f050007
+			public const int MainTabLogout = 2131034119;
 			
 			static String()
 			{

@@ -4,6 +4,8 @@
   <string name="MainTabHome">Home</string>
   <string name="MainTabAddExpense">Add Expense</string>
   <string name="MainTabAbout">About</string>
+  <string name="MainTabContact">Contact</string>
+  <string name="MainTabLeaveMsg">Leave Your Message</string>
   <string name="MainTabLogin">Login</string>
   <string name="MainTabLogout">Logout</string>
   <string name="Hello">Hello World, Click Me!</string>
