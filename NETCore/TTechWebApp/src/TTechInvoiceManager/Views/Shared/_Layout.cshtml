@@ -93,10 +93,10 @@
                             </li>
                             <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Leave Your Message</a></li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a asp-area="" asp-controller="InvoiceManager" asp-action="AddExpense"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expenses</span></a></li>
-                            <li><a asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                        </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a asp-area="" asp-controller="InvoiceManager" asp-action="AddExpense"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expenses</span></a></li>
+                                <li><a asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                            </ul>
                     }
                     else
                     {
@@ -111,9 +111,9 @@
                             </li>
                             <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Leave Your Message</a></li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a asp-area="" asp-controller="Account" asp-action="Register"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expenses</span></a></li>
-                        </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a asp-area="" asp-controller="Account" asp-action="Register"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expenses</span></a></li>
+                            </ul>
                     }
                 }
                 else
@@ -129,20 +129,21 @@
                         </li>
                         <li><a asp-area="" asp-controller="Account" asp-action="MessageBoard"><span class="glyphicon glyphicon-pencil"></span> Leave Your Message</a></li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-area="" asp-controller="Account" asp-action="Register"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expenses</span></a></li>
-                    </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a asp-area="" asp-controller="Account" asp-action="Register"><span class="badge progress-bar-danger" data-toggle="tooltip" data-placement="bottom" title="Quick nav button to add new expenses"><span class="glyphicon glyphicon-plus"></span> Add Expenses</span></a></li>
+                        </ul>
                 }
             </div>
 
         </div>
     </div>
+
     <div class="container body-content">
         <br />
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2016 - T Tech - Invoice Manager</p>
+            <p>&copy; 2017 - T Tech - Invoice Manager</p>
         </footer>
     </div>
 
