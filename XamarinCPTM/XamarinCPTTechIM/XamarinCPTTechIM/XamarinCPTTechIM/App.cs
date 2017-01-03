@@ -24,14 +24,14 @@ namespace XamarinCPTTechIM
         {
             var content = new WelcomePage();
 
-            MainPage = new NavigationPage(content);
+            MainPage = content;
         }
 
         protected void MainApp()
         {
             var content = new MainDetailPage();
 
-            (MainPage as NavigationPage).Navigation.PushModalAsync(content, true);
+            MainPage = content;
         }
 
         protected override void OnStart()
