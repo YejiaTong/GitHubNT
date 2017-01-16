@@ -1,0 +1,125 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@section scripts
+{
+    <script src="@Url.Content("~/js/addexpense/addexpense.js")"></script>
+}
+@{
+    ViewData["Title"] = "Add Expenses";
+}
+
+<div class="container-fluid">
+    @model TTechIMCore.Models.InvoiceManager.AddExpenseViewModel
+    <br />
+    <div id="addexpense-success">
+    </div>
+    <br />
+    <div class="row">
+        <p>
+            <button id="addexpense-modal" type="button" class="btn btn-xs" data-toggle="modal" data-target="#addNewItem" value="AddNewItem"><span class="glyphicon glyphicon-plus"></span> Add</button>
+        </p>
+        <div class="modal fade bs-example-modal-sm" id="addNewItem" tabindex="-1" role="dialog" aria-labelledby="addNewItemLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addNewItemLabel">Add New Expense</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addexpense-form" class="form-horizontal col-xs-offset-1 col-xs-offset-right-1" asp-controller="Home" asp-action="" method="post">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="categoryGroupLabel">Category: </span>
+                                    @Html.DropDownListFor(m => m.NewExpense.ExpenseCategId, new SelectList(Model.ExpenseCategs, "ExpenseCategId", "ExpenseCategName"), new { @class = "form-control im-addexpense-minwidth", aria_describedby = "categoryGroupLabel", id = "addexpense_ExpenseCategId" })
+                                </div>
+                                <div>
+                                    <span class="text-danger" id="categoryGroupAlert"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="expenseNameLabel">Expense Name: </span>
+                                    @Html.EditorFor(m => m.NewExpense.Name, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", aria_describedby = "expenseNameLabel", id = "addexpense_Name" } })
+                                </div>
+                                <div>
+                                    <span class="text-danger" id="expenseNameAlert"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="costGroupLabel">Cost: </span>
+                                    @Html.EditorFor(m => m.NewExpense.Cost, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", aria_describedby = "costGroupLabel", id = "addexpense_Cost" } })
+                                </div>
+                                <div>
+                                    <span class="text-danger" id="costGroupAlert"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="timeGroupLabel">Time: </span>
+                                    @Html.EditorFor(m => m.NewExpense.Time, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", aria_describedby = "timeGroupLabel", id = "addexpense_Time" } })
+                                </div>
+                                <div>
+                                    <span class="text-danger" id="timeGroupAlert"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="addressGroupLabel">Location: </span>
+                                    @Html.EditorFor(m => m.NewExpense.Address, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", aria_describedby = "addressGroupLabel", id = "addexpense_Address" } })
+                                </div>
+                                <div>
+                                    <span class="text-danger" id="addressGroupAlert"></span>
+                                </div>
+                            </div>
+                            <div id="addexpense-img" class="im-addexpense-img"></div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="addexpense-cancel" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="addexpense-submit" type="button" class="btn btn-primary">Add New Expense</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="addexpense-submit-form" asp-controller="InvoiceManager" asp-action="AddExpense" method="post">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped" id="addexpense-table">
+                    <thead>
+                        <tr>
+                            <th hidden>Expense Id</th>
+                            <th></th>
+                            <th>Category</th>
+                            <th>Expense Name</th>
+                            <th>Cost</th>
+                            <th>Time</th>
+                            <th>Location</th>
+                            <!--
+                                <th>Description</th>
+                            -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6">
+                                <div class="alert alert-info" role="alert">
+                                    <p>...Add New Item...</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <p>
+                <button type="submit" class="btn btn-primary small" id="submit" name="submit" value="SubmitExpenses">Submit Expenses</button>
+            </p>
+        </div>
+    </form>
+    <div id="addexpense-warning">
+    </div>
+</div>

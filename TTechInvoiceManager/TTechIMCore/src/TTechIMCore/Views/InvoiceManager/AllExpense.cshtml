@@ -1,0 +1,70 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "All Expenses";
+}
+
+<div class="container-fluid">
+    @model TTechIMCore.Models.InvoiceManager.AllExpensePagerViewModel
+    <br />
+    <br />
+    <div class="row">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchWindow">Configure search criteria</button>
+        <div class="modal fade bs-example-modal-sm" id="searchWindow" tabindex="-1" role="dialog" aria-labelledby="searchWindowLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form asp-controller="InvoiceManager" asp-action="AllExpense" method="post">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="searchWindowLabel">Configure search criteria</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-striped">
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" style="width: 100px;" id="searchPageSize">Page Size: </span>
+                                            @Html.DropDownListFor(m => m.PageSize, new SelectList(Model.PageSizeOpts), new { @class = "form-control im-addexpense-minwidth", aria_describedby = "searchPageSize" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" style="width: 100px;" id="searchStartDate">Start Date: </span>
+                                            @Html.EditorFor(m => m.StartTs, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", aria_describedby = "searchStartDate" } })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" style="width: 100px;" id="searchEndDate">End Date: </span>
+                                            @Html.EditorFor(m => m.EndTs, new { htmlAttributes = new { @class = "form-control im-addexpense-minwidth", aria_describedby = "searchEndDate" } })
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save change</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h4>
+            <span class="label label-default">
+            @Html.DisplayFor(m => m.StartTs, new { htmlAttributes = new { @class = "form-control" } })
+            <span> - </span>
+            @Html.DisplayFor(m => m.EndTs, new { htmlAttributes = new { @class = "form-control" } })</span>
+        </h4>
+    </div>
+    <div class="row">
+        @await Component.InvokeAsync("AllExpensePaged", new { pagerModel = Model })
+    </div>
+</div>

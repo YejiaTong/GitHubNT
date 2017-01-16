@@ -1,0 +1,132 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<section>
+    @model TTechIMCore.Models.Account.LoginViewModel
+
+    <marquee class="im-html-marquee" behavior="scroll" direction="left">
+        <strong>Invoice Manager</strong> is a light weight cross-platform web-based application that serves people to better manage their day-to-day expenses. And it provides analytic tools to encourage saving...
+    </marquee>
+
+    <div class="top-content">
+        <div class="inner-bg">
+            <div class="container">
+                @if (User.Identities.Any(u => u.IsAuthenticated))
+                {
+                    @if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("Member")) != null))
+                    {
+                        <h2 style="color: white;">Welcome back @User.Identity.Name! <i class="fa fa-smile-o"></i></h2>
+                    }
+                    else if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("External")) != null))
+                    {
+                        @if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("Facebook")) != null))
+                        {
+                            <h2 style="color: white;">Hello @User.Identity.Name! <i class="fa fa-facebook"></i></h2>
+                            <h4>Sync with T Tech Inovice Manager &#64; First Time Visit</h4>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" href="~/Redirect/RegisterThroughExternal">
+                                    <i class="fa fa-check"></i> Sync &#38; Login
+                                </a>
+                                <a class="btn btn-link-2" href="~/logoutFacebook">
+                                    <i class="fa fa-close"></i> Logout
+                                </a>
+                            </div>
+                        }
+                        else if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("Google")) != null))
+                        {
+                            <h2 style="color: white;">Hello @User.Identity.Name! <i class="fa fa-google-plus"></i></h2>
+                            <h4>Sync with T Tech Inovice Manager &#64; First Time Visit</h4>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" href="~/Redirect/RegisterThroughExternal">
+                                    <i class="fa fa-check"></i> Sync &#38; Login
+                                </a>
+                                <a class="btn btn-link-2" href="~/logoutGoogle">
+                                    <i class="fa fa-close"></i> Logout
+                                </a>
+                            </div>
+                        }
+                        else if (User.Identities.Any(u => u.Claims.FirstOrDefault(x => x.Value.Equals("LinkedIn")) != null))
+                        {
+                            <h2 style="color: white;">Hello @User.Identity.Name! <i class="fa fa-linkedin"></i></h2>
+                            <h4>Sync with T Tech Inovice Manager &#64; First Time Visit</h4>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" href="~/Redirect/RegisterThroughExternal">
+                                    <i class="fa fa-check"></i> Sync &#38; Login
+                                </a>
+                                <a class="btn btn-link-2" href="~/logoutLinkedIn">
+                                    <i class="fa fa-close"></i> Logout
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 form-box">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>Welcome to T Tech - Invoice Manager</h3>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                            </div>
+                            <div id="div-login-msg">
+                                <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right im-login-glyphicon"></div>
+                                <p><span id="text-login-msg">Type your username and password.</span><p>
+                            </div>
+                            <div class="form-bottom">
+                                <form id="login-form" class="form-horizontal" asp-controller="Account" asp-action="ValidateLogin" method="post">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.LoginId, "Email or Username", htmlAttributes: new { @class = "control-label im-login-label col-sm-4" })
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(m => m.LoginId, new { htmlAttributes = new { @class = "form-control input-block-level", id = "login_username" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Password, "Password", htmlAttributes: new { @class = "control-label im-login-label col-sm-4" })
+                                        <div class="col-sm-8">
+                                            @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control input-block-level", id = "login_password" } })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-sm-8">
+                                            @Html.LabelFor(m => m.RememberMe, "Remember Me?", htmlAttributes: new { @class = "control-label" })
+                                            @Html.CheckBoxFor(m => m.RememberMe, new { htmlAttributes = new { @class = "form-control checkbox" }, @checked = "checked" })
+                                        </div>
+                                    </div>
+                                    <button id="login_btn" type="submit" class="btn btn-link-1">Login</button>
+                                    <div>
+                                        <a id="login_lost_btn" href="@Url.Action("ForgotPassword", "Account")"><big>Lost Password?</big></a>
+                                        @Html.Raw("&nbsp;&nbsp;&nbsp;")
+                                        <a id="login_register_btn" href="@Url.Action("Register", "Account")"><big>Register</big></a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 social-login">
+                            <h3>...or login with:</h3>
+                            <div class="social-login-buttons">
+                                <a class="btn btn-link-2" href="~/loginFacebook">
+                                    <i class="fa fa-facebook"></i> Facebook
+                                </a>
+                                <a class="btn btn-link-2" href="~/loginGoogle">
+                                    <i class="fa fa-google-plus"></i> Google Plus
+                                </a>
+                                <a class="btn btn-link-2" href="~/loginLinkedIn">
+                                    <i class="fa fa-linkedin"></i> LinkedIn
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

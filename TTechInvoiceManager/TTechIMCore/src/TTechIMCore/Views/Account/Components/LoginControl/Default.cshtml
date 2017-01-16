@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<section>
+    <h2><small>Login</small></h2>
+    @model TTechIMCore.Models.Account.LoginViewModel
+    <form asp-controller="Account" asp-action="ValidateLogin" method="post">
+        <div class="form-group">
+            @Html.LabelFor(m => m.LoginId, "Email or Username", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(m => m.LoginId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.LoginId, "", new { @class = "bg-warning" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, "Password", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "bg-warning" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.RememberMe, "Remember Me?", htmlAttributes: new { @class = "control-label" })
+            @Html.CheckBoxFor(m => m.RememberMe, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.RememberMe, "", new { @class = "bg-warning" })
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <p><button type="submit" class="btn btn-primary">Login</button></p>
+            </div>
+            <div class="col-sm-3">
+                <p><button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Register", "Account")'">New User</button></p>
+            </div>
+        </div>
+        <div class="row">
+            @if (ViewData["LoginErrorMessage"] != null)
+            {
+                <p class="bg-warning">@Html.Raw(@ViewData["LoginErrorMessage"])</p>
+            }
+        </div>
+    </form>
+</section>

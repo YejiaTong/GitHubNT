@@ -1,0 +1,14 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Login Redirection";
+}
+
+<h4>@ViewData["Title"].</h4>
+
+<p>Login redirecting...</p>
+
+<script type="text/javascript">
+    window.location.href = "@Url.Action("LoginRouter", "Redirect")";
+</script>

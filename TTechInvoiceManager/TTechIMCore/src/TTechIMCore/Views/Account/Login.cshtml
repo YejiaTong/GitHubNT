@@ -1,0 +1,25 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@section scripts
+{
+    <!--<link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500" rel="stylesheet" asp-file-version="true" />
+    <link href="~/css/login/style.css" rel="stylesheet" asp-file-version="true" />
+    <link href="~/css/login/font-awesome.min.css" rel="stylesheet" asp-file-version="true" />
+    <link href="~/css/login/form-elements.css" rel="stylesheet" asp-file-version="true" />-->
+    <script src="@Url.Content("~/js/login/jquery.backstretch.min.js")"></script>
+    <script src="@Url.Content("~/js/login/scripts.js")"></script>
+}
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h4>@ViewData["Title"].</h4>
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            @await Component.InvokeAsync("LoginForm")
+        </div>
+    </div>
+</section>

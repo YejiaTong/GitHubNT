@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+<h4>@ViewData["Title"].</h4>
+<hr />
+
+@if (!User.Identities.Any(u => u.IsAuthenticated))
+{
+    @await Component.InvokeAsync("VisitorAbout")
+}
+else
+{
+    @await Component.InvokeAsync("UserAbout")
+}

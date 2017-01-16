@@ -21,6 +21,12 @@ using TTechIMCore.Models.InvoiceManager;
 using TTechIMCore.UIClasses;
 using TTechIMCore.Controllers;
 
+/*
+ * TTech IM - Global Shared Classes
+ * 
+ * Noah Tong - Jan 15, 2017
+ * */
+
 namespace TTechIMCore
 {
     public static class Global

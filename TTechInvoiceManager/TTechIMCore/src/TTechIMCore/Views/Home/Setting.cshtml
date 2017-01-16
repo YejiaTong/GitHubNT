@@ -1,0 +1,81 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@section scripts
+{
+    <script src="@Url.Content("~/js/setting/setting.js")"></script>
+}
+@{
+    ViewData["Title"] = "Setting";
+}
+
+<h4>@ViewData["Title"].</h4>
+<hr />
+
+@model TTechIMCore.Models.Home.SettingViewModel
+<section>
+    <div>
+        @if (ViewData["SuccessMessage"] != null)
+            {
+            <p class="bg-success">@Html.Raw(@ViewData["SuccessMessage"])</p>
+        }
+        @if (ViewData["ErrorMessage"] != null)
+            {
+            <p class="bg-warning">@Html.Raw(@ViewData["ErrorMessage"])</p>
+        }
+    </div>
+    <form id="settingForm" asp-controller="Home" asp-action="Setting" method="post">
+        <div class="row">
+            <table id="settingCheckboxesTable" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Site</th>
+                        <th>Page</th>
+                        <th>Default</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.SiteMaps.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="3">
+                                <div class="alert alert-info" role="alert">
+                                    <p>...No Site Map item...</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @for (int i = 0; i < Model.SiteMaps.Count(); ++i)
+                        {
+                            <tr>
+                                <td hidden>@Html.HiddenFor(m => m.SiteMaps[i].SiteMapId)</td>
+                                <td hidden>@Html.HiddenFor(m => m.SiteMaps[i].SiteMapName)</td>
+                                <td hidden>@Html.HiddenFor(m => m.SiteMaps[i].SiteMapController)</td>
+                                <td hidden>@Html.HiddenFor(m => m.SiteMaps[i].SiteMapView)</td>
+                                <td hidden>@Html.HiddenFor(m => m.SiteMaps[i].Description)</td>
+                                <td>@Html.DisplayFor(m => m.SiteMaps[i].SiteMapController, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                                <td>@Html.DisplayFor(m => m.SiteMaps[i].SiteMapView, new { htmlAttributes = new { @class = "form-control im-allexpense-minwidth" } })</td>
+                                <td>@Html.CheckBoxFor(m => m.SiteMaps[i].IsSelected, new { htmlAttributes = new { @class = "form-control im-setting-checkbox" } })</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <dl class="row">
+                                        <dt class="col-sm-3"><small>@Html.DisplayFor(m => m.SiteMaps[i].SiteMapName, new { htmlAttributes = new { @class = "form-control" } })</small></dt>
+                                        <dd class="col-sm-9">@Html.DisplayFor(m => m.SiteMaps[i].Description, new { htmlAttributes = new { @class = "form-control" } })</dd>
+                                    </dl>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <p>
+                <button type="submit" class="btn btn-primary small" id="submit" name="submit" value="SubmitExpenses">Update User Front Page</button>
+            </p>
+        </div>
+    </form>
+</section>
