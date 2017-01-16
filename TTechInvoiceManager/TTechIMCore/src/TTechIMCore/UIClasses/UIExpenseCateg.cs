@@ -5,6 +5,12 @@ using System.Threading.Tasks;
 
 using TTechIMCore.DBAccess;
 
+/*
+ * TTech IM - Data-Business Transition for Expense Categories
+ * 
+ * Noah Tong - Jan 05, 2017
+ * */
+
 namespace TTechIMCore.UIClasses
 {
     public class UIExpenseCateg : ExpenseCateg

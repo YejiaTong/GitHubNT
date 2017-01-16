@@ -7,6 +7,12 @@ using MySql.Data.MySqlClient;
 
 using TTechIMCore.Messaging;
 
+/*
+ * TTech IM - Data Layer for App Users
+ * 
+ * Noah Tong - Jan 05, 2017
+ * */
+
 namespace TTechIMCore.DBAccess
 {
     public class UsersContext : DBWorker

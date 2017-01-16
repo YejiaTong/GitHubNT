@@ -8,11 +8,17 @@ using Microsoft.Extensions.Configuration;
 
 using MySql.Data.MySqlClient;
 
+/*
+ * TTech IM Data Manager base class
+ * 
+ * Noah Tong - Jan 05, 2017
+ * */
+
 namespace TTechIMCore.DBAccess
 {
     public sealed class DBManager
     {
-        protected static string ConnectionString = String.Empty;
+        public static string ConnectionString = String.Empty;
 
         private DBManager() { }
 

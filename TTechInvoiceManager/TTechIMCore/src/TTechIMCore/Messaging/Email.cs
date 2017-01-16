@@ -7,6 +7,12 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using MailKit.Security;
 
+/*
+ * TTech IM - Email/Message Handler
+ * 
+ * Noah Tong - Jan 05, 2017
+ * */
+
 namespace TTechIMCore.Messaging
 {
     public class Email

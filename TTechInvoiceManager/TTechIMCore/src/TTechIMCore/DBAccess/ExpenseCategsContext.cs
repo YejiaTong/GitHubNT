@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 using MySql.Data.MySqlClient;
 
+/*
+ * TTech IM - Data Layer for Expense Categories
+ * 
+ * Noah Tong - Jan 05, 2017
+ * */
+
 namespace TTechIMCore.DBAccess
 {
     public class ExpenseCategsContext : DBWorker

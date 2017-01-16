@@ -7,6 +7,12 @@ using MySql.Data.MySqlClient;
 
 using TTechIMCore.Messaging;
 
+/*
+ * TTech IM - Data Layer for MessageBorad Messages
+ * 
+ * Noah Tong - Jan 05, 2017
+ * */
+
 namespace TTechIMCore.DBAccess
 {
     public class MessageBoardMsgsContext : DBWorker
