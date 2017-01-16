@@ -907,7 +907,7 @@ namespace NTWebApp.DBAccess
     }
 
     /// <summary>
-    /// A basic class for an User
+    /// A basic class for a User
     /// </summary>
     public class User
     {

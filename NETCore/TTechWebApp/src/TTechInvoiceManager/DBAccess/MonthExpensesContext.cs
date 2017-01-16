@@ -63,6 +63,9 @@ namespace NTWebApp.DBAccess
         }
     }
 
+    /// <summary>
+    /// A basic class for an Monthly Expense
+    /// </summary>
     public class MonthExpense
     {
         public int UserId { get; set; }

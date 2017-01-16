@@ -62,6 +62,9 @@ namespace NTWebApp.DBAccess
         }
     }
 
+    /// <summary>
+    /// A basic class for an Weekly Expense
+    /// </summary>
     public class WeekExpense
     {
         public int UserId { get; set; }
