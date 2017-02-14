@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelImporter", "ExcelImporter\ExcelImporter.csproj", "{8DC963BD-3B2C-4CBA-8E30-0396EF7C409C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImporterLibrary", "ImporterLibrary\ImporterLibrary.csproj", "{7A34480A-6759-4AB5-B895-649A61B6A7B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReader", "ExcelReader\ExcelReader.csproj", "{97E7E58B-E30F-4EA0-B58C-8226659E2F60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataManager", "DataManager\DataManager.csproj", "{FCFED3EF-0B52-48E8-A3E2-5A168BD248BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DC963BD-3B2C-4CBA-8E30-0396EF7C409C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DC963BD-3B2C-4CBA-8E30-0396EF7C409C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DC963BD-3B2C-4CBA-8E30-0396EF7C409C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DC963BD-3B2C-4CBA-8E30-0396EF7C409C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A34480A-6759-4AB5-B895-649A61B6A7B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A34480A-6759-4AB5-B895-649A61B6A7B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A34480A-6759-4AB5-B895-649A61B6A7B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A34480A-6759-4AB5-B895-649A61B6A7B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97E7E58B-E30F-4EA0-B58C-8226659E2F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97E7E58B-E30F-4EA0-B58C-8226659E2F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97E7E58B-E30F-4EA0-B58C-8226659E2F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97E7E58B-E30F-4EA0-B58C-8226659E2F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCFED3EF-0B52-48E8-A3E2-5A168BD248BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCFED3EF-0B52-48E8-A3E2-5A168BD248BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCFED3EF-0B52-48E8-A3E2-5A168BD248BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCFED3EF-0B52-48E8-A3E2-5A168BD248BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
