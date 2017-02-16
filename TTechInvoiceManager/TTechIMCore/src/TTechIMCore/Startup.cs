@@ -107,7 +107,7 @@ namespace TTechIMCore
                 AccessDeniedPath = new PathString("/Account/Forbidden/"),
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
-                CookieDomain = ".ttechcode.com",
+                //CookieDomain = ".ttechcode.com",
                 ExpireTimeSpan = TimeSpan.FromDays(7),
                 SlidingExpiration = true
             });
