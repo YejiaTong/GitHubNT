@@ -115,13 +115,66 @@ namespace ExcelReader.Classes.Readers
 
                 FileStream stream = File.Open(FileLocation, FileMode.Open, FileAccess.Read);
 
-                ImporterTable table = new ImporterTable();
-
                 using (XLSPackage = ExcelReaderFactory.CreateBinaryReader(stream))
                 {
+                    var content = XLSPackage.AsDataSet();
+
+                    int numTableSheets = content.Tables.Count;
+                    int tableIndex = 0;
+                    int tableTotNum = 0;
+                    int threshold = 5;
+
+                    try
+                    {
+                        while (tableIndex < numTableSheets)
+                        {
+                            DataTable workSheet = content.Tables[tableIndex];
+
+                            tableIndex++;
+                            tableTotNum++;
+
+                            if (workSheet == null)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                ImporterTable table = new ImporterTable();
+
+                                var rows = from DataRow row in workSheet.Rows select row;
+
+                                foreach (var row in rows)
+                                {
+                                    ImporterObject item = new ImporterObject();
+                                    item["001"] = row[0].ToString();
+                                    item["002"] = row[1].ToString();
+                                    item["003"] = row[2].ToString();
+                                    item["004"] = row[3].ToString();
+                                    item["005"] = row[4].ToString();
+                                    item["006"] = row[5].ToString();
+                                    item["007"] = row[6].ToString();
+                                    item["008"] = row[7].ToString();
+                                    item["009"] = row[8].ToString();
+                                    item["010"] = row[9].ToString();
+                                    table.Objects.Add(item);
+                                }
+
+                                Importer.Tables.Add(table);
+                            }
+
+                            if (tableTotNum > numTableSheets + threshold)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        throw ex;
+                    }
+
                     /*DataSet result = XLSPackage.AsDataSet();*/
-                    int i = 0;
-                    while (XLSPackage.Read())
+                    /*while (XLSPackage.Read())
                     {
                         ImporterObject item = new ImporterObject();
                         item["001"] = XLSPackage.GetString(0);
@@ -135,10 +188,9 @@ namespace ExcelReader.Classes.Readers
                         item["009"] = XLSPackage.GetString(8);
                         item["010"] = XLSPackage.GetString(9);
                         table.Objects.Add(item);
-                    }
+                    }*/
                 }
 
-                Importer.Tables.Add(table);
                 Importer.ImportRecords();
             }
             catch (Exception ex)
