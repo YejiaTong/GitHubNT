@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('icomoon.eot?uwq542');
+  src:  url('icomoon.eot?uwq542#iefix') format('embedded-opentype'),
+    url('icomoon.ttf?uwq542') format('truetype'),
+    url('icomoon.woff?uwq542') format('woff'),
+    url('icomoon.svg?uwq542#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-the_tong_group_logo:before {
+  content: "\e900";
+}
