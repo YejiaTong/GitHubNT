@@ -156,8 +156,8 @@ a.down-btn span.fa.fa-angle-down {
 
 .img-responsive {
     display: block;
-	max-width: 100%;
-	height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 .img-circle {
@@ -310,6 +310,10 @@ address {
     height: auto;
 }
 
+#contact .form-control-bottom {
+    margin-bottom: 30px;
+}
+
 #contact .form-control:focus {
     border-color: #C59A6D;
     outline: 0;
@@ -364,4 +368,8 @@ address {
 .form-spacing {
     padding-left: 5px;
     padding-right: 5px;
+}
+
+.font-oblique {
+    font-style: oblique;
 }
