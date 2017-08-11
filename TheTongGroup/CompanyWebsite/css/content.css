@@ -60,10 +60,6 @@ a.down-btn span.fa.fa-angle-down {
     color: #c59a6d;
 }
 
-.go-to-btn-placeholder {
-    height: 40px;
-}
-
 .text-center {
     text-align: center;
 }
@@ -73,8 +69,6 @@ a.down-btn span.fa.fa-angle-down {
 }
 
 .go-to-btn-container {
-    left: 0;
-    position: absolute;
     width: 100vw;
     background-color: #25283D;
     padding: 10px;
@@ -185,15 +179,9 @@ a.down-btn span.fa.fa-angle-down {
 }
 
 .sectionbreak-placeholder {
-    height: 20px;
-}
-
-.sectionbreak-container {
-    left: 0;
-    position: absolute;
     width: 100vw;
     background-color: #25283D;
-    height: 20px;
+    height: 2em;
 }
 
 .team {
@@ -372,4 +360,8 @@ address {
 
 .font-oblique {
     font-style: oblique;
+}
+
+.background-white {
+    background-color: #ffffff;
 }
