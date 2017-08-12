@@ -19,6 +19,11 @@ progress {
     background-image: linear-gradient(to left, transparent 20%, #25283D 80%);
 }
 
+    progress.person {
+        /* Positioning */
+        position: relative;
+    }
+
     progress::-webkit-progress-bar {
         background-color: transparent;
     }
@@ -50,6 +55,10 @@ progress {
     height: 5px;
     display: block;
 }
+
+    .progress-container.person {
+        position: relative;
+    }
 
 .progress-bar {
     background-color: black;

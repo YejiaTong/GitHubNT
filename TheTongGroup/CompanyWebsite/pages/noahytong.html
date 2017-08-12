@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic Page Needs
+         ================================================== -->
+    <meta charset="utf-8">
+    <!--[if IE]>
+      <meta http-equiv="x-ua-compatible" content="IE=9" />
+      <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Tong Group - Noah Y. Tong</title>
+    <meta name="description" content="The Tong Group Corporation. Profession in Software Design and Development, Web Application Hosting and Financial Advising.">
+    <meta name="keywords" content="The Tong Group, The Tong Group Corporation, Services, Consulting, Software Design, Software Development, Web Application Hosting, Financial Advising">
+    <meta name="author" content="Noah Y. Tong">
+
+    <!-- Favicons
+         ================================================== -->
+    <link rel="apple-touch-icon" sizes="57x57" href="../img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../img/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="../img/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- W3 CSS
+         ================================================== -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <!-- CSS reset
+         ================================================== -->
+    <link rel="stylesheet" href="../css/reset.css">
+
+    <!-- Resource style
+         ================================================== -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Contents style
+         ================================================== -->
+    <link rel="stylesheet" href="../css/content.css">
+
+    <!-- Progress bar style
+         ================================================== -->
+    <link rel="stylesheet" href="../css/progress-bar.css">
+
+    <!-- Font awesome
+         ================================================== -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Resource jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script>
+        if (!window.jQuery) document.write('<script src="../js/jquery-3.0.0.min.js"><\/script>');
+    </script>
+    <script type="text/javascript" src="../js/progress-bar.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+       <![endif]-->
+
+    <style>
+        .sticky {
+            width: 100vw;
+            background-color: transparent;
+        }
+
+            .sticky.stick {
+                margin-top: 0 !important;
+                width: 100vw;
+                position: fixed;
+                top: 0;
+                z-index: 10000;
+            }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function sticky_relocate() {
+                var window_top = $(window).scrollTop();
+                var div_top = $(".sticky-anchor").offset().top;
+                if (window_top > div_top) {
+                    $(".sticky").addClass("stick");
+                    $(".sticky-anchor").height($(".sticky").outerHeight());
+                } else {
+                    $(".sticky").removeClass("stick");
+                    $(".sticky-anchor").height(0);
+                }
+            }
+
+            $(function () {
+                $(window).scroll(sticky_relocate);
+                sticky_relocate();
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <section id="top" class="cd-main-content person">
+        <div class="team-img01 person">
+        </div>
+    </section>
+    <div class="sticky-anchor"></div>
+    <div class="sticky">
+        <div class="cd-main-content person background-siteblue">
+            <ul class="social person w3-left">
+                <li><span>Social:</span></li>
+                <li><a href="#top"><span class="fa fa-home"></span></a></li>
+                <li><a href="#top"><span class="fa fa-linkedin"></span></a></li>
+                <li><a href="#top"><span class="fa fa-facebook"></span></a></li>
+                <li><a href="#top"><span class="fa fa-google-plus"></span></a></li>
+            </ul>
+
+            <div class="w3-right">
+                <span class="font-white">Noah Y. Tong</span>
+            </div>
+        </div>
+        <progress value="0" id="progressBar" class="single person">
+            <div class="progress-container person">
+                <span class="progress-bar"></span>
+            </div>
+        </progress>
+    </div>
+    <div class="cd-main-content">
+        <p>Internet of Things Enthusiast!</p>
+        <p>
+            Certified ScrumMaster&reg; (CSM), Oracle Certified Associate (OCA), MBA Participant. Passionate, responsible and committed software developer with strong educational background in Computer Science and extensive hands-on experience in software development. Productive in both team-based and self-managed projects. A lead developer with proven expertise in Microsoft Technology Stack, Three-Tiered Architecture, Relational Database (Oracle), Application Life Cycle Management and SaaS (Software as a Service). Proficient in the Smart Metering, GIS, Billing and Data Analytics software solutions, especially interested in IoT, SaaS and Cloud.
+        </p>
+        <blockquote>
+            <p>
+                <q>Constantly think about how you could be doing things better and questioning yourself.</q>
+                <br /> - <a>Elon Musk</a>
+            </p>
+        </blockquote>
+        <hr />
+        <div class="w3-container">
+            <h3>Highlights</h3>
+            <div class="w3-card-2 w3-padding-16">
+                <ul class="w3-ul w3-hoverable">
+                    <li>* Strong Object Oriented concepts for software design and implementation</li>
+                    <li>* Web Apps development in a SaaS model using Microsoft Technologies upon AWS Cloud Platform</li>
+                    <li>* Design and development experience with MVC 6 and .NET Core, utilizing JS Front-end Framework</li>
+                    <li>* Experienced in software development in a MVVM pattern, utilizing Telerik Silverlight, Google Map APIs and Bing Map APIs</li>
+                    <li>* Sophisticated Oracle PL/SQL Developer; Hands-on practices with Microsoft SQL Server; Experienced in MySQL</li>
+                    <li>* Knowledge and programming experience with Kdb+ Column-based Relational Time-series Database</li>
+                    <li>* Source Revision Control & Continuous Integration with SubVersion, TFS and .NET Unit Test Framework</li>
+                    <li>* Scrum Master with experience of facilitating Daily Scrum and Bi-weekly Dev Huddle (Retrospective)</li>
+                    <li>* Built Back-end Services in SOA utilizing RDS, MSMQ, Windows Services and Distributed Computing, in support of IoT Time-series Data, and Data Warehouse</li>
+                    <li>* Agile Development Methodology; TDD Methodology; Mobile First Methodology</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <nav class="cd-main-content cd-footer">
+        <section id="contact">
+            <div class="w3-row section-title">
+                <h2>Contact Us</h2>
+                <hr class="line-break" />
+            </div>
+            <div class="space"></div>
+            <div class="w3-row">
+                <div class="w3-col s9 m6 form-spacing">
+                    <address class="footer-address">
+                        <strong>Address</strong><br>
+                        <br>
+                        The Tong Group<br>
+                        #17, 305-4625 Varsity Dr. NW<br>
+                        Calgary, Alberta<br>
+                        Phone: 1 (519) 562-6035
+                        <ul class="social">
+                            <li><a href="../index.html"><span class="fa fa-home"></span></a></li>
+                            <li><a href="#top"><span class="fa fa-linkedin"></span></a></li>
+                            <li><a href="#top"><span class="fa fa-facebook"></span></a></li>
+                            <li><a href="#top"><span class="fa fa-google-plus"></span></a></li>
+                            <li><a href="#top"><span class="fa fa-twitter"></span></a></li>
+                        </ul>
+                    </address>
+                    <div class="space"></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="space"></div>
+        <div class="space"></div>
+        <div class="space"></div>
+    </nav>
+
+    <div class="cd-main-content cd-footer-copyright">
+        <div class="w3-left">
+            <span>
+                2017 &copy; The Tong Group.
+                <br />All Rights Reserved.
+            </span>
+        </div>
+        <div class="w3-right">
+            <a href="../index.html">Back to HOME</a>
+        </div>
+    </div>
+    <!-- .cd-footer -->
+</body>
+
+<script type="text/javascript" src="../js//smoothscroll.js"></script>
+
+</html>

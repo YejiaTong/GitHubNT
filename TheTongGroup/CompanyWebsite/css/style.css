@@ -12,7 +12,7 @@ html {
 }
 
 body {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
     color: #25283D;
     background-color: #ECF0F1;
@@ -449,7 +449,7 @@ Main content
 
 -------------------------------- */
 .cd-main-content {
-    padding: 1em 5%;
+    padding: 2em 5%;
     overflow: hidden;
 }
 
@@ -467,6 +467,10 @@ Main content
             margin-top: 50px;
         }
 
+    .cd-main-content.person {
+        padding: 0px 5%;
+    }
+
     .cd-main-content p {
         max-width: 1024px;
         line-height: 1.6;
@@ -477,7 +481,7 @@ Main content
 
 @media only screen and (min-width: 1024px) {
     .cd-main-content {
-        padding-top: 80px;
+        padding-top: 3em;
     }
 
         .cd-main-content.sub-nav {
@@ -563,3 +567,14 @@ Intro Section
     background-color: #25283D;
     color: #ffffff;
 }
+
+.cd-footer-copyright {
+    background-color: #3F4257;
+    color: #ffffff;
+    font-size: 1.2rem;
+}
+
+    .cd-footer-copyright a {
+        color: #ffffff;
+        text-decoration: underline;
+    }
