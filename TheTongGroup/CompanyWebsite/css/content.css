@@ -394,3 +394,12 @@ address {
 .background-siteblue {
     background-color: #25283D;
 }
+
+.font-larger {
+    font-size: larger;
+}
+
+.site-label {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
