@@ -1,113 +1,171 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en" class="no-js">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Timeline, Picture, Travel, Life, Calgary, Alberta, Canada">
+    <meta name="keywords" content="Timeline, Picture, Travel, Life, Calgary, Alberta, Canada">
+    <meta name="author" content="Noah Y. Tong">
 
-	<link href='http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <!-- Icon package -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/img/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="manifest" href="/img/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
-	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
-	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
-	<script src="js/modernizr.js"></script> <!-- Modernizr -->
-  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="js/main.js"></script> <!-- Resource jQuery -->
-	<script>
-	/*window.addEventListener?
-		window.addEventListener('load',init,false):
-		window.attachEvent('onload',init);*/
-		
-	$(document).ready(function () {
-		'use strict';
-		
-		var dbh, sto, num = 1, temp = 0, scrolldelay = 25;
-		
-		function startScroll() { 
-			dbh = document.body.offsetHeight;
-			pageScroll();
-		}
-		
-		function pageScroll() {
-			window.scrollBy(0, num);
-			temp += num;
-			if ((temp>=dbh)||(temp<=0)) {
-				num =- num;S
-			}
-			sto = setTimeout(function() {
-				pageScroll();
-			}, scrolldelay);
-		}
-		
-		function stopScroll() { 
-			clearTimeout(sto);
-		}
-	
-		var flag = 0;
-		$('.scrollBtn').click(function () {
-			$(this).text(function(i, text){
-				if (flag == 0) {
-					startScroll();
-					flag = 1;
-					return 'Stop Auto-scoll';
-				} else {
-					stopScroll();
-					flag = 0;
-					return 'Start Auto-scoll';
-				}
-			})
-		});
-	});
-	</script>
-	
-	<title>Timeline - 2017</title>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+    <script src="js/modernizr.js"></script> <!-- Modernizr -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/main.js"></script> <!-- Resource jQuery -->
+    <script>
+        /*window.addEventListener?
+            window.addEventListener('load',init,false):
+            window.attachEvent('onload',init);*/
+
+        $(document).ready(function () {
+            'use strict';
+
+            var dbh, sto, num = 1, temp = 0, scrolldelay = 25;
+
+            function startScroll() {
+                dbh = document.body.offsetHeight;
+                pageScroll();
+            }
+
+            function pageScroll() {
+                window.scrollBy(0, num);
+                temp += num;
+                if ((temp >= dbh) || (temp <= 0)) {
+                    num = -num; S
+                }
+                sto = setTimeout(function () {
+                    pageScroll();
+                }, scrolldelay);
+            }
+
+            function stopScroll() {
+                clearTimeout(sto);
+            }
+
+            var flag = 0;
+            $('.scrollBtn').click(function () {
+                $(this).text(function (i, text) {
+                    if (flag == 0) {
+                        startScroll();
+                        flag = 1;
+                        return 'Stop Auto-scoll';
+                    } else {
+                        stopScroll();
+                        flag = 0;
+                        return 'Start Auto-scoll';
+                    }
+                })
+            });
+        });
+    </script>
+
+    <title>Timeline - 2017</title>
 </head>
 <body>
-	<header>
-		<h1>- 2017 -</h1>
-	</header>
-	
-	<button class="scrollBtn">Start Auto-scroll</button>
+    <header>
+        <h1>- 2017 -</h1>
+    </header>
 
-	<section id="cd-timeline" class="cd-container">
-		<div class="cd-timeline-block">
-			<div class="cd-timeline-img cd-location">
-				<img src="img/cd-icon-location.svg" alt="Location">
-			</div> <!-- cd-timeline-img -->
+    <button class="scrollBtn">Start Auto-scroll</button>
+    <section id="cd-timeline" class="cd-container">
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-location">
+                <img src="img/cd-icon-location.svg" alt="Location">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content">
+                <h2>Waterton National Park Long Weekend Trip</h2>
+                <p>First time @ Waterton National Park</p>
+                <img class="block"
+                     src="http://maps.googleapis.com/maps/api/staticmap?zoom=14&size=900x300&maptype=roadmap&markers=icon:https://s3-us-west-2.amazonaws.com/traveltimeline.thetonggroup.com/img/map_marker_xs.ico|49.0510,%20-113.9086&key=AIzaSyB-yWLqiotBFrfxaoV6_y6Trya15e-WeWc"
+                     alt="Waterton National Park, Alberta, Canada">
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">Sep 02, 2017</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
 
-			<div class="cd-timeline-content">
-				<h2>Waterton National Park Long Weekend Trip</h2>
-				<p>First time @ Waterton National Park</p>
-				<img class="block" src="http://maps.googleapis.com/maps/api/staticmap?zoom=14&size=900x300&maptype=roadmap&markers=icon:https://s3-us-west-2.amazonaws.com/traveltimeline.thetonggroup.com/img/map_marker_xs.ico|49.0510,%20-113.9086" alt="Waterton National Park, Alberta, Canada">
-				<a href="#0" class="cd-read-more">Read more</a>
-				<span class="cd-date">Sep 02, 2017</span>
-			</div> <!-- cd-timeline-content -->
-		</div> <!-- cd-timeline-block -->
-	
-		<div class="cd-timeline-block">
-			<div class="cd-timeline-img cd-picture">
-				<img src="img/cd-icon-picture.svg" alt="Picture">
-			</div> <!-- cd-timeline-img -->
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="img/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content">
+                <h2>On top of the mountain!</h2>
+                <p>One hour climb.</p>
+                <img src="resource/2017_09_01_0001.jpg" alt="On top of the mountain!">
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">Sep 02, 2017</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
 
-			<div class="cd-timeline-content">
-				<h2>On top of the mountain!</h2>
-				<p>One hour climb.</p>
-				<img src="resource/2017_09_01_0001.jpg" alt="On top of the mountain!">
-				<a href="#0" class="cd-read-more">Read more</a>
-				<span class="cd-date">Sep 02, 2017</span>
-			</div> <!-- cd-timeline-content -->
-		</div> <!-- cd-timeline-block -->
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-location">
+                <img src="img/cd-icon-location.svg" alt="Location">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content">
+                <h2>Calgary Beakerhead Event</h2>
+                <p><a href="https://beakerhead.com" target="_blank">Beakerhead :: Home</a> Workshop Highlights 2017, Calgary</p>
+                <img class="block"
+                     src="http://maps.googleapis.com/maps/api/staticmap?zoom=12&size=900x300&maptype=roadmap&markers=icon:https://s3-us-west-2.amazonaws.com/traveltimeline.thetonggroup.com/img/map_marker_xs.ico|51.0535,%20-114.0745&key=AIzaSyB-yWLqiotBFrfxaoV6_y6Trya15e-WeWc"
+                     alt="Calgary Beakerhead Event, Alberta, Canada">
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">Sep 16, 2017</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
 
-		<div class="cd-timeline-block">
-			<div class="cd-timeline-img cd-movie">
-				<img src="img/cd-icon-movie.svg" alt="Movie">
-			</div> <!-- cd-timeline-img -->
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-picture">
+                <img src="img/cd-icon-picture.svg" alt="Picture">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content">
+                <h2>Beakerhead Event Day</h2>
+                <p>A wonderful-fulfilling day with friends.</p>
+                <img src="resource/2017_09_16_0001.jpg" alt="Lunch at Gyu-Kaku Japanese BBQ">
+                <img src="resource/2017_09_16_0002.jpg" alt="Beakerhead Event Map">
+                <img src="resource/2017_09_16_0003.jpg" alt="Live Claw Machine">
+                <img src="resource/2017_09_16_0004.jpg" alt="Wonton super at home">
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">Sep 02, 2017</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
 
-			<div class="cd-timeline-content">
-				<h2>Placeholder</h2>
-				<p>... ... ...</p>
-				<a href="#0" class="cd-read-more">Read more</a>
-				<span class="cd-date">Sep 02, 2017</span>
-			</div> <!-- cd-timeline-content -->
-		</div> <!-- cd-timeline-block -->
-	</section> <!-- cd-timeline -->
+        <div class="cd-timeline-block">
+            <div class="cd-timeline-img cd-movie">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content">
+                <p>To be continued...</p>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+
+        <div class="cd-timeline-block" hidden>
+            <div class="cd-timeline-img cd-movie">
+                <img src="img/cd-icon-movie.svg" alt="Movie">
+            </div> <!-- cd-timeline-img -->
+            <div class="cd-timeline-content">
+                <h2>Placeholder</h2>
+                <p>... ... ...</p>
+                <a href="#0" class="cd-read-more">Read more</a>
+                <span class="cd-date">MMM DD, YYYY</span>
+            </div> <!-- cd-timeline-content -->
+        </div> <!-- cd-timeline-block -->
+    </section> <!-- cd-timeline -->
 </body>
 </html>
