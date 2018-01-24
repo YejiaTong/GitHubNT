@@ -1,94 +1,109 @@
-<!DOCTYPE html>
-<html>
-<title>Noah Y. Tong</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Mr. Noah Y. Tong is a passionate, responsible and committed software developer with strong educational background in Computer Science and extensive hands-on experience in software development.">
-<meta name="keyword" content="software, developer, saas, cloud, calgary, mba, iot, internet of things, business, application, service">
-<link rel="icon" type="image/png" href="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-837354652660/icon.PNG">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-    body,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-family: "Montserrat", sans-serif
-    }
-    .w3-row-padding img {
-        margin-bottom: 12px
-    }
-    .bgimg {
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-image: url('NoahYTongImg.jpg');
-        min-height: 100%;
-    }
-    .animatedButton {
-        border-radius: 4px;
-        background-color: #f4511e;
-        border: none;
-        color: #FFFFFF;
-        text-align: center;
-        font-size: 18px;
-        padding: 20px;
-        width: 200px;
-        transition: all 0.5s;
-        cursor: pointer;
-        margin: 5px;
-    }
-    .animatedButton span {
-        cursor: pointer;
-        display: inline-block;
-        position: relative;
-        transition: 0.5s;
-    }
-    .animatedButton span:after {
-        content: '\2193';
-        position: absolute;
-        opacity: 0;
-        top: 0;
-        right: -20px;
-        transition: 0.5s;
-    }
-    .animatedButton:hover span {
-        padding-right: 25px;
-    }
-    .animatedButton:hover span:after {
-        opacity: 1;
-        right: 0;
-    }
-</style>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        var myEmailAddress = "noah089736@gmail.com";
+﻿<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+    <title>Noah Y. Tong</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Mr. Noah Y. Tong is a passionate, responsible and committed software developer with strong educational background in Computer Science and extensive hands-on experience in software development.">
+    <meta name="keyword" content="software, developer, saas, cloud, calgary, mba, iot, internet of things, business, application, service">
+    
+    <meta property="og:title" content="Noah Y. Tong" />
+    <meta property="og:description" content="Mr. Noah Y. Tong is a passionate, responsible and committed software developer with strong educational background in Computer Science and extensive hands-on experience in software development." />
+    <meta property="og:url" content="http://ntong.thetonggroup.com/Noah_Y_Tong.html" />
+    <meta property="og:image" content="http://ntong.thetonggroup.com/NoahYTongImg.jpg" />
+    <meta property="og:image:type" content="image/jpg" />
+    
+    <link rel="icon" type="image/png" href="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-837354652660/icon.PNG">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Montserrat", sans-serif;
+        }
 
-        $('#emailForm').submit(function(event) {
-            if (this.checkValidity() == false) {
-                // Placeholder
-            } else {
-                var emailName = $('#emailName').val();
-                var emailFrom = $('#emailFrom').val();
-                var emailSubject = $('#emailSubject').val();
-                var emailMessage = $('#emailMessage').val();
-                var mailToStr = "mailto:" + myEmailAddress + "?subject=" + emailSubject + "&cc=" + emailFrom + "&body=" + emailMessage;
+        .w3-row-padding img {
+            margin-bottom: 12px;
+        }
 
-                alert(mailToStr);
-                $('#emailHiddenField').attr('href', mailToStr);
-                window.location.href = mailToStr;
+        .bgimg {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: url('NoahYTongImg.jpg');
+            min-height: 100%;
+        }
 
-                return false;
+        .animatedButton {
+            border-radius: 4px;
+            background-color: #f4511e;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 18px;
+            padding: 20px;
+            width: 200px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+            .animatedButton span {
+                cursor: pointer;
+                display: inline-block;
+                position: relative;
+                transition: 0.5s;
             }
-        });
-    });
-</script>
 
+                .animatedButton span:after {
+                    content: '\2193';
+                    position: absolute;
+                    opacity: 0;
+                    top: 0;
+                    right: -20px;
+                    transition: 0.5s;
+                }
+
+            .animatedButton:hover span {
+                padding-right: 25px;
+            }
+
+                .animatedButton:hover span:after {
+                    opacity: 1;
+                    right: 0;
+                }
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var myEmailAddress = "noah089736@gmail.com";
+
+            $('#emailForm').submit(function (event) {
+                if (this.checkValidity() == false) {
+                    // Placeholder
+                } else {
+                    var emailName = $('#emailName').val();
+                    var emailFrom = $('#emailFrom').val();
+                    var emailSubject = $('#emailSubject').val();
+                    var emailMessage = $('#emailMessage').val();
+                    var mailToStr = "mailto:" + myEmailAddress + "?subject=" + emailSubject + "&cc=" + emailFrom + "&body=" + emailMessage;
+
+                    alert(mailToStr);
+                    $('#emailHiddenField').attr('href', mailToStr);
+                    window.location.href = mailToStr;
+
+                    return false;
+                }
+            });
+        });
+    </script>
+</head>
 <body>
     <!-- Sidebar with image -->
     <nav class="w3-sidebar w3-hide-medium w3-hide-small" style="width:40%">
@@ -126,7 +141,8 @@
         <div class="w3-content w3-justify w3-text-grey w3-padding-32" id="about">
             <h2>About</h2>
             <hr class="w3-opacity" />
-            <p><a href="https://www.dropbox.com/s/be9f5huuornpp4q/Yejia%20Tong-ScrumAlliance_CSM_Certificate.pdf?dl=0&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BJR%2FLmYsuS42%2FGMGT9r5caw%3D%3D" target="_blank">Certified ScrumMaster&reg; (CSM)</a>, <a href="https://www.youracclaim.com/badges/bf34a963-edbe-4339-8854-7e285f04e7af/linked_in_profile?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BJR%2FLmYsuS42%2FGMGT9r5caw%3D%3D" target="_blank">Oracle Certified Associate (OCA)</a>, <a href="https://www.youracclaim.com/badges/a7a5fe00-27f1-4f75-b263-cc6ddb57fae8/linked_in_profile?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BJR%2FLmYsuS42%2FGMGT9r5caw%3D%3D" target="_blank">Database SQL Expert</a>, <a href="https://en.wikipedia.org/wiki/DevOps" target="_blank">DevOps</a>, Internet of Things Enthusiast &amp; MBA Participant.<br/>Passionate, responsible and committed software developer with a strong educational background in Computer Science and extensive hands-on experience in software development. Productive in both team-based and self-managed projects. A lead developer with proven expertise in Microsoft Technology Stack, Three-Tiered Architecture, Relational Database (Oracle), Application Life Cycle Management and SaaS (Software as a Service). Proficient in the Smart Metering, GIS, Billing, and Data Analytics software solutions, especially interested in IoT, SaaS, and Cloud.
+            <p>
+                <a href="https://www.dropbox.com/s/be9f5huuornpp4q/Yejia%20Tong-ScrumAlliance_CSM_Certificate.pdf?dl=0&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BJR%2FLmYsuS42%2FGMGT9r5caw%3D%3D" target="_blank">Certified ScrumMaster&reg; (CSM)</a>, <a href="https://www.youracclaim.com/badges/bf34a963-edbe-4339-8854-7e285f04e7af/linked_in_profile?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BJR%2FLmYsuS42%2FGMGT9r5caw%3D%3D" target="_blank">Oracle Certified Associate (OCA)</a>, <a href="https://www.youracclaim.com/badges/a7a5fe00-27f1-4f75-b263-cc6ddb57fae8/linked_in_profile?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BJR%2FLmYsuS42%2FGMGT9r5caw%3D%3D" target="_blank">Database SQL Expert</a>, <a href="https://en.wikipedia.org/wiki/DevOps" target="_blank">DevOps</a>, Internet of Things Enthusiast &amp; MBA Participant.<br />Passionate, responsible and committed software developer with a strong educational background in Computer Science and extensive hands-on experience in software development. Productive in both team-based and self-managed projects. A lead developer with proven expertise in Microsoft Technology Stack, Three-Tiered Architecture, Relational Database (Oracle), Application Life Cycle Management and SaaS (Software as a Service). Proficient in the Smart Metering, GIS, Billing, and Data Analytics software solutions, especially interested in IoT, SaaS, and Cloud.
             </p>
             <button onclick="showAccordion('highlights')" class="animatedButton w3-button w3-block w3-left-align w3-light-grey">
                 <span><u>Highlights...</u></span>
@@ -144,7 +160,7 @@
                         <li>&#8226; Source Revision Control & Continuous Integration with SubVersion, TFS, and .NET Unit Test Framework</li>
                         <li>&#8226; Certified Scrum Master with experience in facilitating Daily Scrum and Bi-weekly Dev Huddle (Retrospective)</li>
                         <li>&#8226; Built Back-end Services in SOA utilizing RDS, MSMQ, Windows Services and Distributed Computing, in support of IoT Time-series Data, and Data Warehouse</li>
-						<li>&#8226; Agile Development Methodology; TDD Methodology; Mobile First Methodology</li>
+                        <li>&#8226; Agile Development Methodology; TDD Methodology; Mobile First Methodology</li>
                     </ul>
                 </div>
             </div>
@@ -169,8 +185,10 @@
                     <tr>
                         <td>2017-Present</td>
                         <td>Degree in Master of Business Administration</td>
-                        <td>Haskayne School of Business - University of Calgary
-                            <br />Calgary, AB, Canada</td>
+                        <td>
+                            Haskayne School of Business - University of Calgary
+                            <br />Calgary, AB, Canada
+                        </td>
                     </tr>
                     <tr class="w3-white">
                         <td>2015-2017</td>
@@ -185,14 +203,18 @@
                     <tr class="w3-white">
                         <td>2010-2013</td>
                         <td>Degree in Bachelor of Science</td>
-                        <td>Dalhousie University
-                            <br />Halifax, NS, Canada</td>
+                        <td>
+                            Dalhousie University
+                            <br />Halifax, NS, Canada
+                        </td>
                     </tr>
                     <tr>
                         <td>2007-2010</td>
                         <td>Degree in Bachelor of Engineer</td>
-                        <td>Shenzhen University
-                            <br />Shenzhen, Guangdong, China</td>
+                        <td>
+                            Shenzhen University
+                            <br />Shenzhen, Guangdong, China
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -241,22 +263,26 @@
             <hr class="w3-opacity" />
             <!-- Testimonials -->
             <img src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-837354652660/Work001.PNG" alt="T Tech Invoice Manager" class="w3-left w3-margin-right" style="width:80px" />
-            <p><a href="https://im.ttechcode.com" target="_blank"><span class="w3-large w3-text-black w3-margin-right">T Tech Invoice Manager</span></a>
+            <p>
+                <a href="https://im.ttechcode.com" target="_blank"><span class="w3-large w3-text-black w3-margin-right">T Tech Invoice Manager</span></a>
             </p>
             <p>Invoice Manager is a light weight cross-platform web-based application that serves people to better manage their day-to-day expenses. It provides analytic tools to encourage saving.</p>
             <br />
             <img src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-837354652660/Work004.PNG" alt="EcLife E-Commerce" class="w3-left w3-margin-right" style="width:80px" />
-            <p><a href="http://eclife.ca" target="_blank"><span class="w3-large w3-text-black w3-margin-right">EcLife E-Commerce</span></a>
+            <p>
+                <a href="http://eclife.ca" target="_blank"><span class="w3-large w3-text-black w3-margin-right">EcLife E-Commerce</span></a>
             </p>
             <p>Eclife E-Commerce is a Multicultural Online Community platform that provides free local community services to immigrant and international students in NS, Canada. It has more than 20,000 registered users, and approx. 2000 daily active users. Services include social media and social networking, and online classified advertising.</p>
             <br />
             <img src="https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-837354652660/Work003.PNG" alt="Dalhousie University DCSI" class="w3-left w3-margin-right" style="width:80px" />
-            <p><a href="http://dcsi.cs.dal.ca/DCSI2012" target="_blank"><span class="w3-large w3-text-black w3-margin-right">Dalhousie University DCSI</span></a>
+            <p>
+                <a href="http://dcsi.cs.dal.ca/DCSI2012" target="_blank"><span class="w3-large w3-text-black w3-margin-right">Dalhousie University DCSI</span></a>
             </p>
             <p>DCSI is an official website that serves Dalhousie Computer Science In-House Conference (DCSI). It is an annual event started from 2012.</p>
             <br />
             <img src="http://www.thetonggroup.com/img/home/thetonggroup.jpg" alt="The Tong Group" class="w3-left w3-margin-right" style="width:80px" />
-            <p><a href="http://www.thetonggroup.com" target="_blank"><span class="w3-large w3-text-black w3-margin-right">The Tong Group</span></a>
+            <p>
+                <a href="http://www.thetonggroup.com" target="_blank"><span class="w3-large w3-text-black w3-margin-right">The Tong Group</span></a>
             </p>
             <p>The Tong Group Corporation. Profession in Software Design and Development, Web Application Hosting and Financial Advising.</p>
             <br />
@@ -268,10 +294,10 @@
             <hr class="w3-opacity" />
             <div class="w3-section">
                 <address>
-                  <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> Calgary, AB, Canada</p>
-                  <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> <abbr title="Phone">P:</abbr> <a href="tel:15195626035">1 (519) 562-6035</a></p>
-                  <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> <abbr title="Email">E:</abbr> <a href="mailto:noah089736@gmail.com">noah089736@gmail.com</a></p>
-               </address>
+                    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> Calgary, AB, Canada</p>
+                    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> <abbr title="Phone">P:</abbr> <a href="tel:15195626035">1 (519) 562-6035</a></p>
+                    <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> <abbr title="Email">E:</abbr> <a href="mailto:noah089736@gmail.com">noah089736@gmail.com</a></p>
+                </address>
             </div>
             <!-- Google Map -->
             <div id="googleMap" class="w3-grayscale-min" style="width:100%;height:300px;margin:36px 0;"></div>
@@ -303,7 +329,8 @@
             <a href="http://www.linkedin.com/in/ntongyj" target="_blank"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
             <a href="https://plus.google.com/115124239429569972718" target="_blank"><i class="fa fa-google-plus w3-hover-opacity"></i></a>
             <a href="#"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-            <p class="w3-medium">&copy; 2018 - <strong><a href="http://www.thetonggroup.com" target="_blank">The Tong Group</a></strong>
+            <p class="w3-medium">
+                &copy; 2018 - <strong><a href="http://www.thetonggroup.com" target="_blank">The Tong Group</a></strong>
             </p>
             <!-- End footer -->
         </footer>
