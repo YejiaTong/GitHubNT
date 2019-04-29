@@ -31,7 +31,7 @@ $(document).ready(function () {
 
     function processForm(event) {
         $.ajax({
-            url: "http://nodejs.ttechcode.com/sendgrid/mail",
+            url: "https://nodejs.ttechcode.com/sendgrid/mail",
             dataType: "json",
             type: "post",
             data: {
